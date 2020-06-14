@@ -1,0 +1,1829 @@
+Open Watcom Linker Version 1.9
+Portions Copyright (c) 1985-2002 Sybase, Inc. All Rights Reserved.
+Created on:       12/12/22 18:26:33
+Executable Image: Debug\cvpack.exe
+creating a PE executable
+
+
+                        +------------+
+                        |   Groups   |
+                        +------------+
+
+Group                           Address              Size
+=====                           =======              ====
+
+.idata                          00440000             00000686
+DGROUP                          00441000             0003dbb0
+
+
+
+                        +--------------+
+                        |   Segments   |
+                        +--------------+
+
+Segment                Class          Group          Address         Size
+=======                =====          =====          =======         ====
+
+BEGTEXT                CODE           AUTO           00401000        00000007
+_TEXT                  CODE           AUTO           00401010        0003ea25
+TRANSFER CODE          CODE           AUTO           0043fa38        00000162
+.idata                 .idata         .idata         00440000        00000686
+_NULL                  BEGDATA        DGROUP         00441000        00000004
+_AFTERNULL             BEGDATA        DGROUP         00441004        00000000
+CONST                  DATA           DGROUP         00441004        0000045c
+CONST2                 DATA           DGROUP         00441460        00009b3c
+_DATA                  DATA           DGROUP         0044afa0        00002b0c
+XIB                    DATA           DGROUP         0044daac        00000000
+XI                     DATA           DGROUP         0044daac        00000048
+XIE                    DATA           DGROUP         0044daf4        00000000
+YIB                    DATA           DGROUP         0044daf4        00000000
+YI                     DATA           DGROUP         0044daf4        00000024
+YIE                    DATA           DGROUP         0044db18        00000000
+TIB                    DATA           DGROUP         0044db18        00000000
+TI                     DATA           DGROUP         0044db18        00000000
+TIE                    DATA           DGROUP         0044db18        00000000
+DATA                   DATA           DGROUP         0044db18        00000000
+_BSS                   BSS            DGROUP         0044e000        00010bac
+STACK                  STACK          DGROUP         0045ebb0        00020000
+
+
+                        +----------------+
+                        |   Memory Map   |
+                        +----------------+
+
+* = unreferenced symbol
++ = symbol only referenced locally
+
+Address        Symbol
+=======        ======
+
+Module: Debug\cvpack.obj(C:\Projects\JWlink\cvpack\cpp\cvpack.cpp)
+004036e0+      near FileError::~FileError()
+00403710       near OutOfMemory::~OutOfMemory()
+00403740       near MiscError::~MiscError()
+00403770       near WCExcept::WCExcept()
+004037b0       near WCExcept::~WCExcept()
+00403860+      near TypeIndexMap::~TypeIndexMap()
+004039a0       near WCIsvListBase::WCIsvListBase()
+00403a40+      near Retriever::~Retriever()
+00403b10+      near ODirectory::~ODirectory()
+00403c60+      near ExeMaker::~ExeMaker()
+00403cb0+      near TypeArray::TypeArray()
+00403da0       near TypeArray::~TypeArray()
+00403e90       near GlobalTypeArray::~GlobalTypeArray()
+00404070+      near LocalTypeArray::LocalTypeArray()
+004044e0+      near LocalTypeArray::~LocalTypeArray()
+004048b0+      near SstGlobalTypes::SstGlobalTypes()
+00404cb0+      near SstGlobalTypes::~SstGlobalTypes()
+00405220+      near SstGlobalSym::SstGlobalSym()
+00405370+      near SstGlobalSym::~SstGlobalSym()
+004054b0+      near CVpack::~CVpack()
+00405700+      near SymbolDistributor::~SymbolDistributor()
+00401080       int unsigned near NumLeafLength( char const near * )
+004010f0+      void near ConvertFName( char near * )
+00401180+      void near outOfMemory()
+004011b0+      void near CVpack::DoExeCode()
+004012d0+      int unsigned near CVpack::DoSstModule()
+004013b0+      void near CVpack::DumpSig()
+00401400*      int unsigned near CVpack::DoSrcModule( int unsigned )
+004014d0+      int unsigned near CVpack::DoSegMap()
+004015c0+      void near CVpack::DoAlignSym( SstAlignSym near *, int unsigned )
+00401650+      void near CVpack::DoGlobalSym( SstGlobalSym near &, int unsigned )
+00401710+      void near CVpack::DoStaticSym( SstGlobalSym near &, int unsigned )
+004017d0+      void near CVpack::DoDirectory()
+00405830       near MiscError::MiscError( MiscError const near & )
+00405890       near OutOfMemory::OutOfMemory( OutOfMemory const near & )
+004058f0+      near FileError::FileError( FileError const near & )
+00405970       near RetrieveError::RetrieveError( RetrieveError const near & )
+004059c0       near RetrieveError::~RetrieveError()
+004059f0       near CVpackError::CVpackError( CVpackError const near & )
+00405a20       near CVpackError::~CVpackError()
+00405a50       void near WCBareVectorBase<TypeIndexMap::__304un0mappingStruct near >::base_init_upto( int )
+00405ac0       near WCBareVectorBase<TypeIndexMap::__304un0mappingStruct near >::~WCBareVectorBase()
+00405bc0       void near WCBareVectorBase<void near * near >::base_init_upto( int )
+00405c30       near WCBareVectorBase<void near * near >::~WCBareVectorBase()
+00405d10       near WCVectorBase<void near * near >::~WCVectorBase()
+00405d50       near WCOrderedVectorBase<void near * near >::~WCOrderedVectorBase()
+00405dc0       int near WCOrderedVectorBase<void near * near >::base_find( void near * const near &, WCVectorBase<void near * near >::find_type, int near * ) const
+00405e40       void near WCPtrVectorBase<LFTypeRecord near,WCOrderedVectorBase<void near * near > near >::base_init_upto( int )
+00405ea0       near WCPtrVectorBase<LFTypeRecord near,WCOrderedVectorBase<void near * near > near >::~WCPtrVectorBase()
+00405f30       near WCValVector<TypeIndexMap::__304un0mappingStruct near >::~WCValVector()
+00406020+      near WCValVector<void near * near >::~WCValVector()
+00406110+      near WCPtrVector<SymbolStruct near >::WCPtrVector( int unsigned )
+004061d0+      near WCPtrVector<SymbolStruct near >::~WCPtrVector()
+00406300       void near WCPtrVector<SymbolStruct near >::base_init_upto( int )
+00406360       int near WCPtrOrderedVector<LFTypeRecord near >::base_equivalent( void near * const near &, void near * const near & ) const
+004063a0       near WCPtrOrderedVector<LFTypeRecord near >::WCPtrOrderedVector( int unsigned, int unsigned )
+00406530       near WCPtrOrderedVector<LFTypeRecord near >::~WCPtrOrderedVector()
+00406680       near MyValBoundVector<TypeIndexMap::__304un0mappingStruct near >::~MyValBoundVector()
+00406800       void near WCIsvSListBase<WCNIsvSLink<cv_dir_entry near * near > near >::WCListDelete( WCSLink near * )
+004068b0       near WCIsvSListBase<WCNIsvSLink<cv_dir_entry near * near > near >::~WCIsvSListBase()
+004068f0       void near WCIsvSListBase<WCNIsvSLink<LFSubField near * near > near >::WCListDelete( WCSLink near * )
+004069a0       near WCIsvSListBase<WCNIsvSLink<LFSubField near * near > near >::~WCIsvSListBase()
+004069e0       void near WCIsvSListBase<WCNIsvSLink<my_ct_mlist near * near > near >::WCListDelete( WCSLink near * )
+00406a90       near WCIsvSListBase<WCNIsvSLink<my_ct_mlist near * near > near >::~WCIsvSListBase()
+00406ad0       void near WCIsvSListBase<WCNIsvSLink<short unsigned near > near >::WCListDelete( WCSLink near * )
+00406b80       near WCIsvSListBase<WCNIsvSLink<short unsigned near > near >::~WCIsvSListBase()
+00406bc0       void near WCIsvSListBase<WCNIsvSLink<LFGlobalTypeRecord near * near > near >::WCListDelete( WCSLink near * )
+00406c70       near WCIsvSListBase<WCNIsvSLink<LFGlobalTypeRecord near * near > near >::~WCIsvSListBase()
+00406cb0       void near WCIsvSListBase<WCNIsvSLink<LFTypeRecord near * near > near >::WCListDelete( WCSLink near * )
+00406d60       near WCIsvSListBase<WCNIsvSLink<LFTypeRecord near * near > near >::~WCIsvSListBase()
+00406da0       void near WCIsvSListBase<WCNIsvSLink<SymbolStruct near * near > near >::WCListDelete( WCSLink near * )
+00406e50       near WCIsvSListBase<WCNIsvSLink<SymbolStruct near * near > near >::~WCIsvSListBase()
+00406e90       void near WCIsvSListBase<WCNIsvSLink<NameHashTable::chain_table near * near > near >::WCListDelete( WCSLink near * )
+00406f40       near WCIsvSListBase<WCNIsvSLink<NameHashTable::chain_table near * near > near >::~WCIsvSListBase()
+00406f80       void near WCIsvSListBase<WCNIsvSLink<AddrHashTable::offset_table near * near > near >::WCListDelete( WCSLink near * )
+00407030       near WCIsvSListBase<WCNIsvSLink<AddrHashTable::offset_table near * near > near >::~WCIsvSListBase()
+00407070       void near WCValListBase<cv_dir_entry near * near,WCIsvSListBase<WCNIsvSLink<cv_dir_entry near * near > near > near,WCNIsvSLink<cv_dir_entry near * near > near >::WCListDelete( WCSLink near * )
+004070d0       near WCValListBase<cv_dir_entry near * near,WCIsvSListBase<WCNIsvSLink<cv_dir_entry near * near > near > near,WCNIsvSLink<cv_dir_entry near * near > near >::~WCValListBase()
+004071a0       void near WCValListBase<LFSubField near * near,WCIsvSListBase<WCNIsvSLink<LFSubField near * near > near > near,WCNIsvSLink<LFSubField near * near > near >::WCListDelete( WCSLink near * )
+00407200       near WCValListBase<LFSubField near * near,WCIsvSListBase<WCNIsvSLink<LFSubField near * near > near > near,WCNIsvSLink<LFSubField near * near > near >::~WCValListBase()
+004072d0       void near WCValListBase<my_ct_mlist near * near,WCIsvSListBase<WCNIsvSLink<my_ct_mlist near * near > near > near,WCNIsvSLink<my_ct_mlist near * near > near >::WCListDelete( WCSLink near * )
+00407330       near WCValListBase<my_ct_mlist near * near,WCIsvSListBase<WCNIsvSLink<my_ct_mlist near * near > near > near,WCNIsvSLink<my_ct_mlist near * near > near >::~WCValListBase()
+00407400       void near WCValListBase<short unsigned near,WCIsvSListBase<WCNIsvSLink<short unsigned near > near > near,WCNIsvSLink<short unsigned near > near >::WCListDelete( WCSLink near * )
+00407460       near WCValListBase<short unsigned near,WCIsvSListBase<WCNIsvSLink<short unsigned near > near > near,WCNIsvSLink<short unsigned near > near >::~WCValListBase()
+00407530       void near WCValListBase<LFGlobalTypeRecord near * near,WCIsvSListBase<WCNIsvSLink<LFGlobalTypeRecord near * near > near > near,WCNIsvSLink<LFGlobalTypeRecord near * near > near >::WCListDelete( WCSLink near * )
+00407590       near WCValListBase<LFGlobalTypeRecord near * near,WCIsvSListBase<WCNIsvSLink<LFGlobalTypeRecord near * near > near > near,WCNIsvSLink<LFGlobalTypeRecord near * near > near >::~WCValListBase()
+00407660       void near WCValListBase<LFTypeRecord near * near,WCIsvSListBase<WCNIsvSLink<LFTypeRecord near * near > near > near,WCNIsvSLink<LFTypeRecord near * near > near >::WCListDelete( WCSLink near * )
+004076c0       near WCValListBase<LFTypeRecord near * near,WCIsvSListBase<WCNIsvSLink<LFTypeRecord near * near > near > near,WCNIsvSLink<LFTypeRecord near * near > near >::~WCValListBase()
+00407790       void near WCValListBase<SymbolStruct near * near,WCIsvSListBase<WCNIsvSLink<SymbolStruct near * near > near > near,WCNIsvSLink<SymbolStruct near * near > near >::WCListDelete( WCSLink near * )
+004077f0       near WCValListBase<SymbolStruct near * near,WCIsvSListBase<WCNIsvSLink<SymbolStruct near * near > near > near,WCNIsvSLink<SymbolStruct near * near > near >::~WCValListBase()
+004078c0       void near WCValListBase<NameHashTable::chain_table near * near,WCIsvSListBase<WCNIsvSLink<NameHashTable::chain_table near * near > near > near,WCNIsvSLink<NameHashTable::chain_table near * near > near >::WCListDelete( WCSLink near * )
+00407920       near WCValListBase<NameHashTable::chain_table near * near,WCIsvSListBase<WCNIsvSLink<NameHashTable::chain_table near * near > near > near,WCNIsvSLink<NameHashTable::chain_table near * near > near >::~WCValListBase()
+004079f0       void near WCValListBase<AddrHashTable::offset_table near * near,WCIsvSListBase<WCNIsvSLink<AddrHashTable::offset_table near * near > near > near,WCNIsvSLink<AddrHashTable::offset_table near * near > near >::WCListDelete( WCSLink near * )
+00407a50       near WCValListBase<AddrHashTable::offset_table near * near,WCIsvSListBase<WCNIsvSLink<AddrHashTable::offset_table near * near > near > near,WCNIsvSLink<AddrHashTable::offset_table near * near > near >::~WCValListBase()
+00407b20+      near WCPtrListBase<cv_dir_entry near,WCValSList<cv_dir_entry near * near > near >::~WCPtrListBase()
+00407be0       void near WCPtrListBase<cv_dir_entry near,WCValSList<cv_dir_entry near * near > near >::clearAndDestroy()
+00407c90       void near WCPtrListBase<LFSubField near,WCValSList<LFSubField near * near > near >::clearAndDestroy()
+00407d50       void near WCPtrListBase<my_ct_mlist near,WCValSList<my_ct_mlist near * near > near >::clearAndDestroy()
+00407e00       near WCPtrListBase<LFTypeRecord near,WCValSList<LFTypeRecord near * near > near >::~WCPtrListBase()
+00407ec0       near WCPtrListBase<SymbolStruct near,WCValSList<SymbolStruct near * near > near >::~WCPtrListBase()
+00407f80       void near WCPtrListBase<SymbolStruct near,WCValSList<SymbolStruct near * near > near >::clearAndDestroy()
+00408040       void near WCPtrListBase<NameHashTable::chain_table near,WCValSList<NameHashTable::chain_table near * near > near >::clearAndDestroy()
+004080f0       void near WCPtrListBase<AddrHashTable::offset_table near,WCValSList<AddrHashTable::offset_table near * near > near >::clearAndDestroy()
+004081a0+      int near WCValSList<cv_dir_entry near * near >::base_equivalent( cv_dir_entry near * const near &, cv_dir_entry near * const near & ) const
+004081f0+      near WCValSList<cv_dir_entry near * near >::~WCValSList()
+004082e0       int near WCValSList<LFTypeRecord near * near >::base_equivalent( LFTypeRecord near * const near &, LFTypeRecord near * const near & ) const
+00408330       near WCValSList<LFTypeRecord near * near >::~WCValSList()
+00408420       int near WCValSList<SymbolStruct near * near >::base_equivalent( SymbolStruct near * const near &, SymbolStruct near * const near & ) const
+00408470       near WCValSList<SymbolStruct near * near >::~WCValSList()
+00408560+      int near WCPtrSList<cv_dir_entry near >::base_equivalent( cv_dir_entry near * const near &, cv_dir_entry near * const near & ) const
+004085a0+      near WCPtrSList<cv_dir_entry near >::WCPtrSList()
+00408720+      near WCPtrSList<cv_dir_entry near >::~WCPtrSList()
+00408870       int near WCPtrSList<LFTypeRecord near >::base_equivalent( LFTypeRecord near * const near &, LFTypeRecord near * const near & ) const
+004088b0       near WCPtrSList<LFTypeRecord near >::WCPtrSList()
+00408a30       near WCPtrSList<LFTypeRecord near >::~WCPtrSList()
+00408b80       int near WCPtrSList<SymbolStruct near >::base_equivalent( SymbolStruct near * const near &, SymbolStruct near * const near & ) const
+00408bc0       near WCPtrSList<SymbolStruct near >::WCPtrSList()
+00408d40       near WCPtrSList<SymbolStruct near >::~WCPtrSList()
+00408e90       int near WCBareVectorBase<void near * near >::resize( int unsigned )
+00408fc0       int near WCVectorBase<void near * near >::base_index_check( int ) const
+00409090       int near WCVectorBase<void near * near >::resize( int unsigned )
+004090e0       near WCPtrVectorBase<LFTypeRecord near,WCOrderedVectorBase<void near * near > near >::WCPtrVectorBase( int unsigned, int unsigned )
+00409200       near WCValVector<TypeIndexMap::__304un0mappingStruct near >::WCValVector( int unsigned )
+00409250       TypeIndexMap::__304un0mappingStruct near & near WCValVector<TypeIndexMap::__304un0mappingStruct near >::operator []( int )
+00409300+      near WCValVector<void near * near >::WCValVector( int unsigned )
+00409350       near MyValBoundVector<TypeIndexMap::__304un0mappingStruct near >::MyValBoundVector( short unsigned, int unsigned )
+00409420       int near WCValListBase<short unsigned near,WCIsvSListBase<WCNIsvSLink<short unsigned near > near > near,WCNIsvSLink<short unsigned near > near >::insert( short unsigned const near & )
+00409490       int near WCValListBase<LFGlobalTypeRecord near * near,WCIsvSListBase<WCNIsvSLink<LFGlobalTypeRecord near * near > near > near,WCNIsvSLink<LFGlobalTypeRecord near * near > near >::insert( LFGlobalTypeRecord near * const near & )
+00409500       LFGlobalTypeRecord near * near WCValListBase<LFGlobalTypeRecord near * near,WCIsvSListBase<WCNIsvSLink<LFGlobalTypeRecord near * near > near > near,WCNIsvSLink<LFGlobalTypeRecord near * near > near >::get( int )
+00409570       int near WCValListBase<LFTypeRecord near * near,WCIsvSListBase<WCNIsvSLink<LFTypeRecord near * near > near > near,WCNIsvSLink<LFTypeRecord near * near > near >::append( LFTypeRecord near * const near & )
+00409600       int near WCValListBase<SymbolStruct near * near,WCIsvSListBase<WCNIsvSLink<SymbolStruct near * near > near > near,WCNIsvSLink<SymbolStruct near * near > near >::append( SymbolStruct near * const near & )
+00409690+      near WCPtrListBase<cv_dir_entry near,WCValSList<cv_dir_entry near * near > near >::WCPtrListBase( void near * (near *)( ), void (near *)())
+00409820       near WCPtrListBase<LFTypeRecord near,WCValSList<LFTypeRecord near * near > near >::WCPtrListBase( void near * (near *)( ), void (near *)())
+004099b0       near WCPtrListBase<SymbolStruct near,WCValSList<SymbolStruct near * near > near >::WCPtrListBase( void near * (near *)( ), void (near *)())
+00409b40+      near WCValSList<cv_dir_entry near * near >::WCValSList( void near * (near *)( ), void (near *)())
+00409c90       near WCValSList<LFTypeRecord near * near >::WCValSList( void near * (near *)( ), void (near *)())
+00409de0       near WCValSList<SymbolStruct near * near >::WCValSList( void near * (near *)( ), void (near *)())
+00409f30       near WCBareVectorBase<TypeIndexMap::__304un0mappingStruct near >::WCBareVectorBase( int unsigned )
+0040a010       int near WCBareVectorBase<TypeIndexMap::__304un0mappingStruct near >::resize( int unsigned )
+0040a1c0       near WCBareVectorBase<void near * near >::WCBareVectorBase( int unsigned )
+0040a2a0       int near WCVectorBase<void near * near >::base_insert_at( int, void near * const near & )
+0040a450       near WCOrderedVectorBase<void near * near >::WCOrderedVectorBase( int unsigned, int unsigned )
+0040a540+      near WCValListBase<cv_dir_entry near * near,WCIsvSListBase<WCNIsvSLink<cv_dir_entry near * near > near > near,WCNIsvSLink<cv_dir_entry near * near > near >::WCValListBase( void near * (near *)( ), void (near *)())
+0040a670       cv_dir_entry near * near WCValListBase<cv_dir_entry near * near,WCIsvSListBase<WCNIsvSLink<cv_dir_entry near * near > near > near,WCNIsvSLink<cv_dir_entry near * near > near >::get( int )
+0040a6e0       LFSubField near * near WCValListBase<LFSubField near * near,WCIsvSListBase<WCNIsvSLink<LFSubField near * near > near > near,WCNIsvSLink<LFSubField near * near > near >::get( int )
+0040a750       my_ct_mlist near * near WCValListBase<my_ct_mlist near * near,WCIsvSListBase<WCNIsvSLink<my_ct_mlist near * near > near > near,WCNIsvSLink<my_ct_mlist near * near > near >::get( int )
+0040a7c0       WCNIsvSLink<short unsigned near > near * near WCValListBase<short unsigned near,WCIsvSListBase<WCNIsvSLink<short unsigned near > near > near,WCNIsvSLink<short unsigned near > near >::WCListNew( short unsigned const near & )
+0040a880       WCNIsvSLink<LFGlobalTypeRecord near * near > near * near WCValListBase<LFGlobalTypeRecord near * near,WCIsvSListBase<WCNIsvSLink<LFGlobalTypeRecord near * near > near > near,WCNIsvSLink<LFGlobalTypeRecord near * near > near >::WCListNew( LFGlobalTypeRecord near * const near & )
+0040a940       near WCValListBase<LFTypeRecord near * near,WCIsvSListBase<WCNIsvSLink<LFTypeRecord near * near > near > near,WCNIsvSLink<LFTypeRecord near * near > near >::WCValListBase( void near * (near *)( ), void (near *)())
+0040aa70       WCNIsvSLink<LFTypeRecord near * near > near * near WCValListBase<LFTypeRecord near * near,WCIsvSListBase<WCNIsvSLink<LFTypeRecord near * near > near > near,WCNIsvSLink<LFTypeRecord near * near > near >::WCListNew( LFTypeRecord near * const near & )
+0040ab30       near WCValListBase<SymbolStruct near * near,WCIsvSListBase<WCNIsvSLink<SymbolStruct near * near > near > near,WCNIsvSLink<SymbolStruct near * near > near >::WCValListBase( void near * (near *)( ), void (near *)())
+0040ac60       WCNIsvSLink<SymbolStruct near * near > near * near WCValListBase<SymbolStruct near * near,WCIsvSListBase<WCNIsvSLink<SymbolStruct near * near > near > near,WCNIsvSLink<SymbolStruct near * near > near >::WCListNew( SymbolStruct near * const near & )
+0040ad20       SymbolStruct near * near WCValListBase<SymbolStruct near * near,WCIsvSListBase<WCNIsvSLink<SymbolStruct near * near > near > near,WCNIsvSLink<SymbolStruct near * near > near >::get( int )
+0040ad90       NameHashTable::chain_table near * near WCValListBase<NameHashTable::chain_table near * near,WCIsvSListBase<WCNIsvSLink<NameHashTable::chain_table near * near > near > near,WCNIsvSLink<NameHashTable::chain_table near * near > near >::get( int )
+0040ae00       AddrHashTable::offset_table near * near WCValListBase<AddrHashTable::offset_table near * near,WCIsvSListBase<WCNIsvSLink<AddrHashTable::offset_table near * near > near > near,WCNIsvSLink<AddrHashTable::offset_table near * near > near >::get( int )
+0040ae70       near WCVectorBase<void near * near >::WCVectorBase( int unsigned, int unsigned )
+0040af20+      near WCIsvSListBase<WCNIsvSLink<cv_dir_entry near * near > near >::WCIsvSListBase()
+0040b000       near WCIsvSListBase<WCNIsvSLink<LFTypeRecord near * near > near >::WCIsvSListBase()
+0040b0e0       near WCIsvSListBase<WCNIsvSLink<SymbolStruct near * near > near >::WCIsvSListBase()
+00401940+      void near CVpack::DoPublics( int unsigned, int unsigned )
+00401ef0+      void near CVpack::DoLibraries()
+00401fb0+      void near CVpack::DoGlobalTypes( SstGlobalTypes near & )
+00402070+      void near CVpack::CreatePackExe()
+00403230       main_
+0044e110       TypeIndexMap near TypeMap
+Module: Debug\retrieve.obj(C:\Projects\JWlink\cvpack\cpp\retrieve.cpp)
+0040c180+      near DebugInfoError::DebugInfoError()
+0040c1b0+      near DebugInfoError::~DebugInfoError()
+0040c1e0       near InternalError::~InternalError()
+0040b220       bool near cv_dir_entry::operator ==( cv_dir_entry const near & ) const
+0040b260+      near Directory::Directory( std::ifstream near &, long )
+0040b470+      int near Directory::CompMod( long unsigned, long unsigned )
+0040b4c0+      int near Directory::CompSub( short unsigned, short unsigned )
+0040b530+      bool near Directory::IsModule( short unsigned )
+0040b580+      bool near Directory::IsModuleBasis( short unsigned, short unsigned )
+0040b5d0+      int near Directory::Compare( void const near *, void const near * )
+0040b6b0+      bool near Directory::GetDirInfo( __2c62hldir_info near &, __anonymous_enum, long unsigned )
+0040b750+      bool near Directory::IsAtSubsection( __anonymous_enum )
+0040b7a0       near Directory::~Directory()
+0040b800+      long near Retriever::GetBasePos()
+0040b8d0+      long near Retriever::GetPEDebugDirCVEntryPos()
+0040b980+      long near Retriever::GetDirPos()
+0040ba10       long unsigned near Retriever::SeekRead( void near *, long, int unsigned )
+0040bbd0       near Retriever::Retriever( std::ifstream near & )
+0040bd50+      void near Retriever::CheckSig()
+0040be00+      long unsigned near Retriever::LocalPageOff( long unsigned ) const
+0040be30*      bool near Retriever::IsCrossPage( __2c62hldir_info const near & ) const
+0040be80+      void near Retriever::ReadPage( long unsigned )
+0040bef0*      bool near Retriever::IsInCurrentPage( long unsigned ) const
+0040bf40*      char near * near Retriever::Read( __2c62hldir_info const near & )
+0040c390       near InternalError::InternalError( InternalError const near & )
+0040c3f0+      near CVSigError::CVSigError()
+0040c420+      near CVSigError::CVSigError( CVSigError const near & )
+0040c490+      near CVSigError::~CVSigError()
+0040c4c0+      near DebugInfoError::DebugInfoError( DebugInfoError const near & )
+0040c040       bool near Retriever::ReadSubsection( char near * near &, long unsigned near &, __anonymous_enum, long unsigned )
+0040c130       bool near Retriever::IsAtSubsection( __anonymous_enum )
+0044b2d0       char unsigned near Directory::_orderTable[]
+0044e130       char near Retriever::_inputBuffer[]
+Module: Debug\cverror.obj(C:\Projects\JWlink\cvpack\cpp\cverror.cpp)
+0040c530       void near CVpackError::ErrorPrint() const
+0040c560       void near RetrieveError::ErrorPrint() const
+0040c5a0       void near WriteError::ErrorPrint() const
+0040c5f0       near FileError::FileError( char const near * )
+0040c630       void near FileError::ErrorPrint() const
+0040c680       void near DebugInfoError::ErrorPrint() const
+0040c6c0       void near CVSigError::ErrorPrint() const
+0040c700       near OutOfMemory::OutOfMemory( int unsigned )
+0040c740       void near OutOfMemory::ErrorPrint() const
+0040c7b0       near InternalError::InternalError( char const near * )
+0040c7f0       void near InternalError::ErrorPrint() const
+0040c840       near MiscError::MiscError( char const near * )
+0040c880       void near MiscError::ErrorPrint() const
+Module: Debug\packtype.obj(C:\Projects\JWlink\cvpack\cpp\packtype.cpp)
+00415610       near WCIterExcept::WCIterExcept()
+00415650       near WCIterExcept::~WCIterExcept()
+00415700       near WCListIterBase::WCListIterBase( WCIsvListBase near * )
+004157b0       near WCListIterBase::~WCListIterBase()
+00415830       near VariantString::~VariantString()
+00415870+      near LFLeafStruct::~LFLeafStruct()
+00415980+      void near LFLeafStruct::FixTypeIndex()
+004159a0+      bool near LFLeafStruct::IsEqual( LFLeafStruct const near & ) const
+004159d0+      void near LFLeafStruct::DerivedPut( ExeMaker near & ) const
+004159f0+      near LFSubField::~LFSubField()
+00415b00+      void near LFSubField::FixTypeIndex()
+00415b20+      bool near LFSubField::IsSubFieldEqual( LFSubField const near & ) const
+00415b50+      void near LFSubField::DerivedPut( ExeMaker near & ) const
+00415b70+      near LFNotTrans::LFNotTrans()
+00415c10+      near LFNotTrans::~LFNotTrans()
+00415d20+      near LFNull::LFNull()
+00415dc0+      near LFNull::~LFNull()
+00415ed0+      near LFModifier::~LFModifier()
+00415fe0+      near LFPointer::~LFPointer()
+004160f0+      near LFArray::~LFArray()
+00416200+      near LFClass::~LFClass()
+00416310+      near LFUnion::~LFUnion()
+00416420+      near LFEnum::~LFEnum()
+00416530+      near LFProcedure::~LFProcedure()
+00416640+      near LFMFunction::~LFMFunction()
+00416750+      near LFVtShape::~LFVtShape()
+00416860+      near LFCobol0::~LFCobol0()
+00416970+      near LFCobol1::~LFCobol1()
+00416a80+      near LFBArray::~LFBArray()
+00416b90+      near LFLabel::~LFLabel()
+00416ca0+      near LFDimArray::~LFDimArray()
+00416db0+      near LFVftPath::~LFVftPath()
+00416ed0+      near LFArgList::~LFArgList()
+00416ff0+      near LFDefArg::~LFDefArg()
+00417100+      near LFFieldList::~LFFieldList()
+00417320+      near LFDerived::~LFDerived()
+00417440+      near LFBitField::~LFBitField()
+00417550+      near LFMethodList::~LFMethodList()
+004176a0+      near LFDimConu::~LFDimConu()
+004177b0+      near LFDimConlu::~LFDimConlu()
+004178c0+      near LFBClass::~LFBClass()
+004179d0+      near LFVBClass::~LFVBClass()
+00417ae0+      near LFEnumerate::~LFEnumerate()
+00417bf0+      near LFFriendFcn::~LFFriendFcn()
+00417d00+      near LFIndex::~LFIndex()
+00417e10+      near LFMember::~LFMember()
+00417f20+      near LFMethod::~LFMethod()
+00418030+      near LFNestedType::~LFNestedType()
+00418140+      near LFVFuncTab::~LFVFuncTab()
+00418250+      near LFFriendCls::~LFFriendCls()
+00418360+      near LFOneMethod::~LFOneMethod()
+00418470+      near LFVFuncOff::~LFVFuncOff()
+0040c9b0*      bool near LFLeafStruct::operator ==( LFLeafStruct const near & ) const
+0040c9f0+      bool near LFSubField::operator ==( LFSubField const near & ) const
+0040ca30+      bool near my_ct_mlist::operator ==( my_ct_mlist const near & ) const
+0040ca70+      near LFLeafStruct::LFLeafStruct( short unsigned, char const near *, int unsigned )
+0040cb30       bool near LFLeafStruct::IsEquivalent( LFLeafStruct const near & ) const
+0040cbf0       LFLeafStruct near * near LFLeafStruct::Error( char const near *, int unsigned )
+0040cc30       void near LFLeafStruct::SetLocalTypeArray( TypeArray near & )
+0040cc60       void near LFLeafStruct::SetGlobalTypeArray( TypeArray near & )
+0040cc90       void near LFLeafStruct::Put( ExeMaker near & ) const
+0040cd10+      bool near LFLeafStruct::TypeEqual( short unsigned, short unsigned )
+0040cee0+      bool near LFLeafStruct::TypeListEqual( short unsigned const near *, short unsigned const near *, int unsigned )
+0040cf50+      bool near LFLeafStruct::AttrEqual( cv_fldattr, cv_fldattr )
+0040d010+      bool near LFLeafStruct::AttrEqual( cv_attrib, cv_attrib )
+0040d090+      bool near LFLeafStruct::AttrEqual( cv_ptrattr, cv_ptrattr )
+0040d170+      bool near LFLeafStruct::AttrEqual( cv_sprop, cv_sprop )
+0040d2a0+      near LFSubField::LFSubField( short unsigned, int unsigned, char const near *, int unsigned )
+0040d350+      bool near LFModifier::IsEqual( LFLeafStruct const near & ) const
+0040d3e0+      bool near LFPointer::IsEqual( LFLeafStruct const near & ) const
+0040d490+      bool near LFArray::IsEqual( LFLeafStruct const near & ) const
+0040d520+      bool near LFClass::IsEqual( LFLeafStruct const near & ) const
+0040d600+      bool near LFUnion::IsEqual( LFLeafStruct const near & ) const
+0040d6b0+      bool near LFEnum::IsEqual( LFLeafStruct const near & ) const
+0040d790+      bool near LFProcedure::IsEqual( LFLeafStruct const near & ) const
+0040d860+      bool near LFMFunction::IsEqual( LFLeafStruct const near & ) const
+0040d9a0+      bool near LFVtShape::IsEqual( LFLeafStruct const near & ) const
+0040d9f0+      bool near LFCobol0::IsEqual( LFLeafStruct const near & ) const
+0040da50+      bool near LFBArray::IsEqual( LFLeafStruct const near & ) const
+0040dab0+      bool near LFLabel::IsEqual( LFLeafStruct const near & ) const
+0040db00+      bool near LFDimArray::IsEqual( LFLeafStruct const near & ) const
+0040db90+      bool near LFVftPath::IsEqual( LFLeafStruct const near & ) const
+0040dc20+      bool near LFArgList::IsEqual( LFLeafStruct const near & ) const
+0040dcb0+      bool near LFDefArg::IsEqual( LFLeafStruct const near & ) const
+0040dd10+      bool near LFDerived::IsEqual( LFLeafStruct const near & ) const
+0040dda0+      bool near LFBitField::IsEqual( LFLeafStruct const near & ) const
+0040de40+      bool near LFMethodList::IsEqual( LFLeafStruct const near & ) const
+0040e4c0+      bool near LFDimConu::IsEqual( LFLeafStruct const near & ) const
+0040e540+      bool near LFDimConlu::IsEqual( LFLeafStruct const near & ) const
+0040e5c0+      bool near LFBClass::IsSubFieldEqual( LFSubField const near & ) const
+0040e650+      bool near LFVBClass::IsSubFieldEqual( LFSubField const near & ) const
+0040e700+      bool near LFEnumerate::IsSubFieldEqual( LFSubField const near & ) const
+0040e760+      bool near LFFriendFcn::IsSubFieldEqual( LFSubField const near & ) const
+0040e7c0+      bool near LFIndex::IsSubFieldEqual( LFSubField const near & ) const
+0040e820+      bool near LFMember::IsSubFieldEqual( LFSubField const near & ) const
+0040e8b0+      bool near LFMethod::IsSubFieldEqual( LFSubField const near & ) const
+0040e930+      bool near LFNestedType::IsSubFieldEqual( LFSubField const near & ) const
+0040e990+      bool near LFVFuncTab::IsSubFieldEqual( LFSubField const near & ) const
+0040e9f0+      bool near LFFriendCls::IsSubFieldEqual( LFSubField const near & ) const
+0040ea50+      bool near LFOneMethod::IsSubFieldEqual( LFSubField const near & ) const
+0040eae0+      bool near LFVFuncOff::IsSubFieldEqual( LFSubField const near & ) const
+0040eb60+      bool near LFSubField::IsEqual( LFLeafStruct const near & ) const
+0040ebf0+      bool near LFFieldList::IsEqual( LFLeafStruct const near & ) const
+0040f1e0+      void near LFLeafStruct::FixTypeList( short unsigned near *, int unsigned )
+0040f240+      void near LFModifier::FixTypeIndex()
+0040f280+      void near LFPointer::FixTypeIndex()
+0040f2c0+      void near LFArray::FixTypeIndex()
+0040f310+      void near LFClass::FixTypeIndex()
+0040f380+      void near LFUnion::FixTypeIndex()
+0040f3c0+      void near LFEnum::FixTypeIndex()
+0040f410+      void near LFProcedure::FixTypeIndex()
+0040f460+      void near LFMFunction::FixTypeIndex()
+0040f4e0+      void near LFCobol0::FixTypeIndex()
+0040f520+      void near LFCobol1::FixTypeIndex()
+0040f540+      void near LFBArray::FixTypeIndex()
+0040f580+      void near LFLabel::FixTypeIndex()
+0040f5a0+      void near LFDimArray::FixTypeIndex()
+0040f5f0+      void near LFVftPath::FixTypeIndex()
+0040f620+      void near LFArgList::FixTypeIndex()
+0040f650+      void near LFDefArg::FixTypeIndex()
+0040f690+      void near LFFieldList::FixTypeIndex()
+0040f920+      void near LFDerived::FixTypeIndex()
+0040f950+      void near LFBitField::FixTypeIndex()
+0040f990+      void near LFMethodList::FixTypeIndex()
+0040fc60+      void near LFDimConu::FixTypeIndex()
+0040fca0+      void near LFDimConlu::FixTypeIndex()
+0040fce0+      void near LFBClass::FixTypeIndex()
+0040fd20+      void near LFVBClass::FixTypeIndex()
+0040fd70+      void near LFEnumerate::FixTypeIndex()
+0040fd90+      void near LFFriendFcn::FixTypeIndex()
+0040fdd0+      void near LFIndex::FixTypeIndex()
+0040fe10+      void near LFMember::FixTypeIndex()
+0040fe50+      void near LFMethod::FixTypeIndex()
+0040fe90+      void near LFNestedType::FixTypeIndex()
+0040fed0+      void near LFVFuncTab::FixTypeIndex()
+0040ff10+      void near LFFriendCls::FixTypeIndex()
+0040ff50+      void near LFOneMethod::FixTypeIndex()
+0040ff90+      void near LFVFuncOff::FixTypeIndex()
+0040ffd0       LFLeafStruct near * near LFNotTrans::Construct( char const near *, int unsigned )
+004100e0       LFLeafStruct near * near LFNull::Construct( char const near *, int unsigned )
+004101f0       LFLeafStruct near * near LFModifier::Construct( char const near *, int unsigned )
+004103c0       LFLeafStruct near * near LFPointer::Construct( char const near *, int unsigned )
+004105e0       LFLeafStruct near * near LFArray::Construct( char const near *, int unsigned )
+00410770       LFLeafStruct near * near LFClass::Construct( char const near *, int unsigned )
+00410990       LFLeafStruct near * near LFUnion::Construct( char const near *, int unsigned )
+00410b90       LFLeafStruct near * near LFEnum::Construct( char const near *, int unsigned )
+00410da0       LFLeafStruct near * near LFProcedure::Construct( char const near *, int unsigned )
+00410f50       LFLeafStruct near * near LFMFunction::Construct( char const near *, int unsigned )
+00411130       LFLeafStruct near * near LFVtShape::Construct( char const near *, int unsigned )
+004112b0       LFLeafStruct near * near LFCobol0::Construct( char const near *, int unsigned )
+00411430       LFLeafStruct near * near LFCobol1::Construct( char const near *, int unsigned )
+004115b0       LFLeafStruct near * near LFBArray::Construct( char const near *, int unsigned )
+00411730       LFLeafStruct near * near LFLabel::Construct( char const near *, int unsigned )
+004118b0       LFLeafStruct near * near LFDimArray::Construct( char const near *, int unsigned )
+00411a40       LFLeafStruct near * near LFVftPath::Construct( char const near *, int unsigned )
+00411c30       LFLeafStruct near * near LFArgList::Construct( char const near *, int unsigned )
+00411e20       LFLeafStruct near * near LFDefArg::Construct( char const near *, int unsigned )
+00411fa0       LFLeafStruct near * near LFDerived::Construct( char const near *, int unsigned )
+00412190       LFLeafStruct near * near LFBitField::Construct( char const near *, int unsigned )
+00412330       LFLeafStruct near * near LFMethodList::Construct( char const near *, int unsigned )
+00412700       LFLeafStruct near * near LFDimConu::Construct( char const near *, int unsigned )
+00412890       LFLeafStruct near * near LFDimConlu::Construct( char const near *, int unsigned )
+00412a20+      near LFFieldList::LFFieldList( char const near *, int unsigned )
+00412c90+      int unsigned near LFFieldList::ConvertIndex( short unsigned )
+00412cf0       LFLeafStruct near * near LFFieldList::Construct( char const near *, int unsigned )
+00412dc0+      LFSubField near * near LFSubField::Error( char const near * )
+00412e00+      char unsigned near LFSubField::PadLen( char const near * )
+00412e50+      LFSubField near * near LFBClass::Construct( char const near * )
+00413060+      LFSubField near * near LFVBClass::Construct( char const near * )
+00413290+      LFSubField near * near LFEnumerate::Construct( char const near * )
+00413490+      LFSubField near * near LFFriendFcn::Construct( char const near * )
+00413620+      LFSubField near * near LFIndex::Construct( char const near * )
+00413770+      LFSubField near * near LFMember::Construct1( char const near * )
+004139a0+      LFSubField near * near LFMember::Construct2( char const near * )
+00413bb0+      LFSubField near * near LFMethod::Construct( char const near * )
+00413d60+      LFSubField near * near LFNestedType::Construct( char const near * )
+00413ef0+      LFSubField near * near LFVFuncTab::Construct( char const near * )
+00414040+      LFSubField near * near LFFriendCls::Construct( char const near * )
+00414190+      LFSubField near * near LFOneMethod::Construct( char const near * )
+00414390+      LFSubField near * near LFVFuncOff::Construct( char const near * )
+004144f0+      void near LFNotTrans::DerivedPut( ExeMaker near & ) const
+00414530+      void near LFNull::DerivedPut( ExeMaker near & ) const
+00414570+      void near LFModifier::DerivedPut( ExeMaker near & ) const
+004145c0+      void near LFPointer::DerivedPut( ExeMaker near & ) const
+00414630+      void near LFArray::DerivedPut( ExeMaker near & ) const
+00414680+      void near LFClass::DerivedPut( ExeMaker near & ) const
+004146d0+      void near LFUnion::DerivedPut( ExeMaker near & ) const
+00414720+      void near LFEnum::DerivedPut( ExeMaker near & ) const
+00414770+      void near LFProcedure::DerivedPut( ExeMaker near & ) const
+004147c0+      void near LFMFunction::DerivedPut( ExeMaker near & ) const
+00414810+      void near LFVtShape::DerivedPut( ExeMaker near & ) const
+00414860+      void near LFCobol0::DerivedPut( ExeMaker near & ) const
+004148b0+      void near LFBArray::DerivedPut( ExeMaker near & ) const
+00414900+      void near LFLabel::DerivedPut( ExeMaker near & ) const
+00414950+      void near LFDimArray::DerivedPut( ExeMaker near & ) const
+004149a0+      void near LFVftPath::DerivedPut( ExeMaker near & ) const
+00414a20+      void near LFArgList::DerivedPut( ExeMaker near & ) const
+00414aa0+      void near LFDefArg::DerivedPut( ExeMaker near & ) const
+00414af0+      void near LFFieldList::DerivedPut( ExeMaker near & ) const
+00414da0+      void near LFDerived::DerivedPut( ExeMaker near & ) const
+00414e20+      void near LFBitField::DerivedPut( ExeMaker near & ) const
+00414e70+      void near LFMethodList::DerivedPut( ExeMaker near & ) const
+004151b0+      void near LFDimConu::DerivedPut( ExeMaker near & ) const
+00415200+      void near LFDimConlu::DerivedPut( ExeMaker near & ) const
+00415250+      void near LFBClass::DerivedPut( ExeMaker near & ) const
+004152a0+      void near LFVBClass::DerivedPut( ExeMaker near & ) const
+004152f0+      void near LFEnumerate::DerivedPut( ExeMaker near & ) const
+00415340+      void near LFFriendFcn::DerivedPut( ExeMaker near & ) const
+00415390+      void near LFIndex::DerivedPut( ExeMaker near & ) const
+004153e0+      void near LFMember::DerivedPut( ExeMaker near & ) const
+00415430+      void near LFMethod::DerivedPut( ExeMaker near & ) const
+00415480+      void near LFNestedType::DerivedPut( ExeMaker near & ) const
+004154d0+      void near LFVFuncTab::DerivedPut( ExeMaker near & ) const
+00415520+      void near LFFriendCls::DerivedPut( ExeMaker near & ) const
+00418650+      near cv_sprop::__2ghtsf::__2ghtsf( cv_sprop::__2ghtsf const near & )
+00418740+      near cv_fldattr::__902tsf::__902tsf( cv_fldattr::__902tsf const near & )
+004187d0+      near cv_ptrattr::__101t1f::__101t1f( cv_ptrattr::__101t1f const near & )
+004188a0+      near cv_attrib::__ru3sof::__ru3sof( cv_attrib::__ru3sof const near & )
+00418920+      near WCPtrListBase<LFSubField near,WCValSList<LFSubField near * near > near >::~WCPtrListBase()
+004189e0+      near WCPtrListBase<my_ct_mlist near,WCValSList<my_ct_mlist near * near > near >::~WCPtrListBase()
+00418aa0+      int near WCValSList<LFSubField near * near >::base_equivalent( LFSubField near * const near &, LFSubField near * const near & ) const
+00418af0+      near WCValSList<LFSubField near * near >::~WCValSList()
+00418be0+      int near WCValSList<my_ct_mlist near * near >::base_equivalent( my_ct_mlist near * const near &, my_ct_mlist near * const near & ) const
+00418c30+      near WCValSList<my_ct_mlist near * near >::~WCValSList()
+00418d20+      int near WCPtrSList<LFSubField near >::base_equivalent( LFSubField near * const near &, LFSubField near * const near & ) const
+00418d60+      near WCPtrSList<LFSubField near >::WCPtrSList()
+00418ee0+      near WCPtrSList<LFSubField near >::~WCPtrSList()
+00419030+      int near WCPtrSList<my_ct_mlist near >::base_equivalent( my_ct_mlist near * const near &, my_ct_mlist near * const near & ) const
+00419070+      near WCPtrSList<my_ct_mlist near >::WCPtrSList()
+004191f0+      near WCPtrSList<my_ct_mlist near >::~WCPtrSList()
+00419340+      near WCValListIterBase<my_ct_mlist near * near,WCPtrSList<my_ct_mlist near > near,WCNIsvSLink<my_ct_mlist near * near > near >::~WCValListIterBase()
+004193f0+      my_ct_mlist near * near WCValListIterBase<my_ct_mlist near * near,WCPtrSList<my_ct_mlist near > near,WCNIsvSLink<my_ct_mlist near * near > near >::current() const
+00419440+      near WCValListIterBase<LFSubField near * near,WCPtrSList<LFSubField near > near,WCNIsvSLink<LFSubField near * near > near >::~WCValListIterBase()
+004194f0+      LFSubField near * near WCValListIterBase<LFSubField near * near,WCPtrSList<LFSubField near > near,WCNIsvSLink<LFSubField near * near > near >::current() const
+00419540+      near WCPtrSListIter<my_ct_mlist near >::~WCPtrSListIter()
+00419680+      near WCPtrSListIter<LFSubField near >::~WCPtrSListIter()
+004197c0+      near WCPtrConstSListIter<my_ct_mlist near >::~WCPtrConstSListIter()
+00419930+      near WCPtrConstSListIter<LFSubField near >::~WCPtrConstSListIter()
+00419aa0+      int near WCValListBase<LFSubField near * near,WCIsvSListBase<WCNIsvSLink<LFSubField near * near > near > near,WCNIsvSLink<LFSubField near * near > near >::append( LFSubField near * const near & )
+00419b30+      int near WCValListBase<my_ct_mlist near * near,WCIsvSListBase<WCNIsvSLink<my_ct_mlist near * near > near > near,WCNIsvSLink<my_ct_mlist near * near > near >::append( my_ct_mlist near * const near & )
+00419bc0+      near WCPtrListBase<LFSubField near,WCValSList<LFSubField near * near > near >::WCPtrListBase( void near * (near *)( ), void (near *)())
+00419d50+      near WCValSList<LFSubField near * near >::WCValSList( void near * (near *)( ), void (near *)())
+00419ea0+      near WCValSList<my_ct_mlist near * near >::WCValSList( void near * (near *)( ), void (near *)())
+00419ff0+      near WCValListBase<LFSubField near * near,WCIsvSListBase<WCNIsvSLink<LFSubField near * near > near > near,WCNIsvSLink<LFSubField near * near > near >::WCValListBase( void near * (near *)( ), void (near *)())
+0041a120+      WCNIsvSLink<LFSubField near * near > near * near WCValListBase<LFSubField near * near,WCIsvSListBase<WCNIsvSLink<LFSubField near * near > near > near,WCNIsvSLink<LFSubField near * near > near >::WCListNew( LFSubField near * const near & )
+0041a1e0+      near WCValListBase<my_ct_mlist near * near,WCIsvSListBase<WCNIsvSLink<my_ct_mlist near * near > near > near,WCNIsvSLink<my_ct_mlist near * near > near >::WCValListBase( void near * (near *)( ), void (near *)())
+0041a310+      WCNIsvSLink<my_ct_mlist near * near > near * near WCValListBase<my_ct_mlist near * near,WCIsvSListBase<WCNIsvSLink<my_ct_mlist near * near > near > near,WCNIsvSLink<my_ct_mlist near * near > near >::WCListNew( my_ct_mlist near * const near & )
+0041a3d0+      near WCIsvSListBase<WCNIsvSLink<LFSubField near * near > near >::WCIsvSListBase()
+0041a4b0+      near WCIsvSListBase<WCNIsvSLink<my_ct_mlist near * near > near >::WCIsvSListBase()
+00415570+      void near LFOneMethod::DerivedPut( ExeMaker near & ) const
+004155c0+      void near LFVFuncOff::DerivedPut( ExeMaker near & ) const
+0044b348+      LFSubField near * (near * near LFFieldList::_subFieldConstructorTable[])( char const near * )
+0045e13c       TypeArray near * near LFLeafStruct::_localTypeArray
+0045e140       TypeArray near * near LFLeafStruct::_globalTypeArray
+Module: Debug\subsect.obj(C:\Projects\JWlink\cvpack\cpp\subsect.cpp)
+0041e480       near VariantString::VariantString( char const near *, int unsigned )
+0041e500       near WCListIterBase::WCListIterBase()
+0041e5b0+      void near WCListIterBase::base_reset()
+0041e5e0       near SymbolStruct::SymbolStruct()
+0041e6a0       near SymbolStruct::~SymbolStruct()
+0041e7b0       int unsigned near SymbolStruct::CodeSegment() const
+0041e7e0       int unsigned near SymbolStruct::DataSegment() const
+0041e810       int unsigned near SymbolStruct::MemOffset() const
+0041e840       void near SymbolStruct::SetParent( long unsigned )
+0041e860       void near SymbolStruct::SetNext( long unsigned )
+0041e880       void near SymbolStruct::SetEnd( long unsigned )
+0041e8a0       void near SymbolStruct::FixType()
+0041e8c0       bool near SymbolStruct::IsStartSym() const
+0041e8f0       long unsigned near SymbolStruct::cSum() const
+0041e940       char const near * near SymbolStruct::Name() const
+0041e970       void near SymbolStruct::DerivedPut( ExeMaker near & ) const
+0041e990       void near CSStartSearch::SetNext( long unsigned )
+0041e9c0       near CSStartSearch::~CSStartSearch()
+0041ead0+      near CSPageAlign::~CSPageAlign()
+0041ebe0+      near NameHashTable::~NameHashTable()
+0041ec70+      near AddrHashTable::~AddrHashTable()
+0041a6c0+      void near SstGlobalTypes::FixUpTypes( short unsigned )
+0041a7a0+      void near SstGlobalTypes::ProcessTypes( LFTypeRecord near * )
+0041ab80       bool near SstGlobalTypes::LoadTypes( Retriever near &, long unsigned )
+0041b8f0+      void near SstGlobalTypes::Append( LFTypeRecord near * )
+0041ba00       void near SstGlobalTypes::Put( ExeMaker near & ) const
+0041bcb0+      int unsigned near SymbolSubsection::DumpPageAlign( ExeMaker near &, int unsigned, char unsigned )
+0041bd60+      int unsigned near SymbolSubsection::PageAlign( ExeMaker near &, int unsigned, long unsigned )
+0041bdb0+      int unsigned near SymbolSubsection::PadCount( int unsigned, long unsigned )
+0041be00+      int near SstAlignSym::InsertOneRecord( SymbolStruct near * )
+0041c040       int near SstAlignSym::Insert( SymbolStruct near * )
+0041c5b0       void near SstAlignSym::Put( ExeMaker near & ) const
+0041c890       void near SstGlobalSym::Put( ExeMaker near &, int unsigned )
+0041cf50+      SymbolStruct near * near NameHashTable::Find( WCPtrSList<NameHashTable::chain_table near > const near &, long unsigned ) const
+0041d410+      bool near NameHashTable::TryToInsert( SymbolStruct near * )
+0041d710+      void near NameHashTable::Put( ExeMaker near & ) const
+0041eda0+      near WCPtrListBase<NameHashTable::chain_table near,WCValSList<NameHashTable::chain_table near * near > near >::~WCPtrListBase()
+0041ee60+      near WCPtrListBase<AddrHashTable::offset_table near,WCValSList<AddrHashTable::offset_table near * near > near >::~WCPtrListBase()
+0041ef20+      int near WCValSList<NameHashTable::chain_table near * near >::base_equivalent( NameHashTable::chain_table near * const near &, NameHashTable::chain_table near * const near & ) const
+0041ef70+      near WCValSList<NameHashTable::chain_table near * near >::~WCValSList()
+0041f060+      int near WCValSList<AddrHashTable::offset_table near * near >::base_equivalent( AddrHashTable::offset_table near * const near &, AddrHashTable::offset_table near * const near & ) const
+0041f0b0+      near WCValSList<AddrHashTable::offset_table near * near >::~WCValSList()
+0041f1a0+      int near WCPtrSList<NameHashTable::chain_table near >::base_equivalent( NameHashTable::chain_table near * const near &, NameHashTable::chain_table near * const near & ) const
+0041f200+      near WCPtrSList<NameHashTable::chain_table near >::WCPtrSList()
+0041f380+      near WCPtrSList<NameHashTable::chain_table near >::~WCPtrSList()
+0041f4d0+      int near WCPtrSList<AddrHashTable::offset_table near >::base_equivalent( AddrHashTable::offset_table near * const near &, AddrHashTable::offset_table near * const near & ) const
+0041f530+      near WCPtrSList<AddrHashTable::offset_table near >::WCPtrSList()
+0041f6b0+      near WCPtrSList<AddrHashTable::offset_table near >::~WCPtrSList()
+0041f800+      near WCStack<SymbolStruct near * near,WCPtrSList<SymbolStruct near > near >::WCStack()
+0041f970+      near WCStack<SymbolStruct near * near,WCPtrSList<SymbolStruct near > near >::~WCStack()
+0041fb20       near WCValListIterBase<LFTypeRecord near * near,WCPtrSList<LFTypeRecord near > near,WCNIsvSLink<LFTypeRecord near * near > near >::~WCValListIterBase()
+0041fbd0       LFTypeRecord near * near WCValListIterBase<LFTypeRecord near * near,WCPtrSList<LFTypeRecord near > near,WCNIsvSLink<LFTypeRecord near * near > near >::current() const
+0041fc20+      near WCValListIterBase<SymbolStruct near * near,WCPtrSList<SymbolStruct near > near,WCNIsvSLink<SymbolStruct near * near > near >::~WCValListIterBase()
+0041fcd0+      SymbolStruct near * near WCValListIterBase<SymbolStruct near * near,WCPtrSList<SymbolStruct near > near,WCNIsvSLink<SymbolStruct near * near > near >::current() const
+0041fd20+      near WCValListIterBase<NameHashTable::chain_table near * near,WCPtrSList<NameHashTable::chain_table near > near,WCNIsvSLink<NameHashTable::chain_table near * near > near >::~WCValListIterBase()
+0041fdd0+      NameHashTable::chain_table near * near WCValListIterBase<NameHashTable::chain_table near * near,WCPtrSList<NameHashTable::chain_table near > near,WCNIsvSLink<NameHashTable::chain_table near * near > near >::current() const
+0041fe20+      near WCValListIterBase<AddrHashTable::offset_table near * near,WCPtrSList<AddrHashTable::offset_table near > near,WCNIsvSLink<AddrHashTable::offset_table near * near > near >::~WCValListIterBase()
+0041fed0+      AddrHashTable::offset_table near * near WCValListIterBase<AddrHashTable::offset_table near * near,WCPtrSList<AddrHashTable::offset_table near > near,WCNIsvSLink<AddrHashTable::offset_table near * near > near >::current() const
+0041ff20       near WCPtrSListIter<LFTypeRecord near >::~WCPtrSListIter()
+00420060+      near WCPtrSListIter<SymbolStruct near >::~WCPtrSListIter()
+004201a0+      near WCPtrSListIter<NameHashTable::chain_table near >::~WCPtrSListIter()
+004202e0+      near WCPtrSListIter<AddrHashTable::offset_table near >::~WCPtrSListIter()
+00420420+      near WCPtrConstSListIter<SymbolStruct near >::~WCPtrConstSListIter()
+00420590+      near WCPtrConstSListIter<NameHashTable::chain_table near >::WCPtrConstSListIter()
+004206d0+      near WCPtrConstSListIter<NameHashTable::chain_table near >::~WCPtrConstSListIter()
+00420840+      near WCPtrConstSListIter<AddrHashTable::offset_table near >::WCPtrConstSListIter()
+00420980+      near WCPtrConstSListIter<AddrHashTable::offset_table near >::~WCPtrConstSListIter()
+00420af0+      int near WCValListBase<SymbolStruct near * near,WCIsvSListBase<WCNIsvSLink<SymbolStruct near * near > near > near,WCNIsvSLink<SymbolStruct near * near > near >::insert( SymbolStruct near * const near & )
+00420b60+      int near WCValListBase<NameHashTable::chain_table near * near,WCIsvSListBase<WCNIsvSLink<NameHashTable::chain_table near * near > near > near,WCNIsvSLink<NameHashTable::chain_table near * near > near >::append( NameHashTable::chain_table near * const near & )
+00420bf0+      int near WCValListBase<AddrHashTable::offset_table near * near,WCIsvSListBase<WCNIsvSLink<AddrHashTable::offset_table near * near > near > near,WCNIsvSLink<AddrHashTable::offset_table near * near > near >::append( AddrHashTable::offset_table near * const near & )
+00420c80+      near WCPtrListBase<NameHashTable::chain_table near,WCValSList<NameHashTable::chain_table near * near > near >::WCPtrListBase( void near * (near *)( ), void (near *)())
+00420e10+      near WCPtrListBase<AddrHashTable::offset_table near,WCValSList<AddrHashTable::offset_table near * near > near >::WCPtrListBase( void near * (near *)( ), void (near *)())
+00420fa0+      near WCValSList<NameHashTable::chain_table near * near >::WCValSList( void near * (near *)( ), void (near *)())
+004210f0+      near WCValSList<AddrHashTable::offset_table near * near >::WCValSList( void near * (near *)( ), void (near *)())
+00421240+      near WCPtrSListIter<NameHashTable::chain_table near >::WCPtrSListIter()
+00421350+      near WCPtrSListIter<AddrHashTable::offset_table near >::WCPtrSListIter()
+00421460+      void near WCBareVectorBase<void near * near >::clear()
+00421490+      void near * near & near WCValVector<void near * near >::operator []( int )
+00421540+      void near WCIsvSListBase<WCNIsvSLink<LFTypeRecord near * near > near >::clearAndDestroy()
+00421570+      int near WCIsvSListBase<WCNIsvSLink<SymbolStruct near * near > near >::isEmpty() const
+004215b0+      SymbolStruct near * near WCValListBase<SymbolStruct near * near,WCIsvSListBase<WCNIsvSLink<SymbolStruct near * near > near > near,WCNIsvSLink<SymbolStruct near * near > near >::find( int ) const
+00421610+      near WCValListBase<NameHashTable::chain_table near * near,WCIsvSListBase<WCNIsvSLink<NameHashTable::chain_table near * near > near > near,WCNIsvSLink<NameHashTable::chain_table near * near > near >::WCValListBase( void near * (near *)( ), void (near *)())
+00421740+      WCNIsvSLink<NameHashTable::chain_table near * near > near * near WCValListBase<NameHashTable::chain_table near * near,WCIsvSListBase<WCNIsvSLink<NameHashTable::chain_table near * near > near > near,WCNIsvSLink<NameHashTable::chain_table near * near > near >::WCListNew( NameHashTable::chain_table near * const near & )
+00421800+      near WCValListBase<AddrHashTable::offset_table near * near,WCIsvSListBase<WCNIsvSLink<AddrHashTable::offset_table near * near > near > near,WCNIsvSLink<AddrHashTable::offset_table near * near > near >::WCValListBase( void near * (near *)( ), void (near *)())
+00421930+      WCNIsvSLink<AddrHashTable::offset_table near * near > near * near WCValListBase<AddrHashTable::offset_table near * near,WCIsvSListBase<WCNIsvSLink<AddrHashTable::offset_table near * near > near > near,WCNIsvSLink<AddrHashTable::offset_table near * near > near >::WCListNew( AddrHashTable::offset_table near * const near & )
+004219f0+      near WCValListIterBase<NameHashTable::chain_table near * near,WCPtrSList<NameHashTable::chain_table near > near,WCNIsvSLink<NameHashTable::chain_table near * near > near >::WCValListIterBase()
+00421ad0+      near WCValListIterBase<AddrHashTable::offset_table near * near,WCPtrSList<AddrHashTable::offset_table near > near,WCNIsvSLink<AddrHashTable::offset_table near * near > near >::WCValListIterBase()
+00421bb0+      near WCIsvSListBase<WCNIsvSLink<NameHashTable::chain_table near * near > near >::WCIsvSListBase()
+00421c90+      near WCIsvSListBase<WCNIsvSLink<AddrHashTable::offset_table near * near > near >::WCIsvSListBase()
+0041dbf0+      bool near AddrHashTable::TryToInsert( SymbolStruct near * )
+0041dd70+      int near AddrHashTable::Compare( void const near *, void const near * )
+0041dde0+      void near AddrHashTable::Put( ExeMaker near & ) const
+0045e154       WCStack<SymbolStruct near * near,WCPtrSList<SymbolStruct near > near > near SstAlignSym::symStack
+Module: Debug\cssymbol.obj(C:\Projects\JWlink\cvpack\cpp\cssymbol.cpp)
+00427710+      near CSCompile::~CSCompile()
+00427830+      near CSRegister::~CSRegister()
+00427940+      void near CSRegister::FixType()
+00427980+      near CSConstant::~CSConstant()
+00427ac0+      void near CSConstant::FixType()
+00427b00+      near CSUdt::~CSUdt()
+00427c10+      void near CSUdt::FixType()
+00427c50+      near CSEndBlock::~CSEndBlock()
+00427d60+      near CSObjName::~CSObjName()
+00427e70+      near CSEndOfArg::~CSEndOfArg()
+00427f80+      near CSCobolUdt::~CSCobolUdt()
+00428090+      void near CSCobolUdt::FixType()
+004280d0+      near CSManyReg::~CSManyReg()
+00428210+      void near CSManyReg::FixType()
+00428250+      near CSReturn::~CSReturn()
+00428390+      near CSEntryThis::~CSEntryThis()
+004284d0+      near CSBPRel16::~CSBPRel16()
+004285e0+      void near CSBPRel16::FixType()
+00428620+      near CSLData16::~CSLData16()
+00428730+      int unsigned near CSLData16::DataSegment() const
+00428760+      int unsigned near CSLData16::MemOffset() const
+00428790+      void near CSLData16::FixType()
+004287d0+      near CSPub16::~CSPub16()
+004288e0+      int unsigned near CSPub16::DataSegment() const
+00428910+      int unsigned near CSPub16::CodeSegment() const
+00428940+      int unsigned near CSPub16::MemOffset() const
+00428970+      void near CSPub16::FixType()
+004289b0+      near CSLProc16::~CSLProc16()
+00428ac0+      int unsigned near CSLProc16::CodeSegment() const
+00428af0+      int unsigned near CSLProc16::MemOffset() const
+00428b20+      bool near CSLProc16::IsStartSym() const
+00428b50+      void near CSLProc16::SetParent( long unsigned )
+00428b80+      void near CSLProc16::SetNext( long unsigned )
+00428bb0+      void near CSLProc16::SetEnd( long unsigned )
+00428be0+      void near CSLProc16::FixType()
+00428c20+      near CSThunk16::~CSThunk16()
+00428d30+      bool near CSThunk16::IsStartSym() const
+00428d60+      int unsigned near CSThunk16::CodeSegment() const
+00428d90+      int unsigned near CSThunk16::MemOffset() const
+00428dc0+      void near CSThunk16::SetParent( long unsigned )
+00428df0+      void near CSThunk16::SetNext( long unsigned )
+00428e20+      void near CSThunk16::SetEnd( long unsigned )
+00428e50+      near CSBlock16::~CSBlock16()
+00428f60+      bool near CSBlock16::IsStartSym() const
+00428f90+      int unsigned near CSBlock16::CodeSegment() const
+00428fc0+      int unsigned near CSBlock16::MemOffset() const
+00428ff0+      void near CSBlock16::SetParent( long unsigned )
+00429020+      void near CSBlock16::SetEnd( long unsigned )
+00429050+      near CSWith16::~CSWith16()
+00429170+      bool near CSWith16::IsStartSym() const
+004291a0+      int unsigned near CSWith16::CodeSegment() const
+004291d0+      int unsigned near CSWith16::MemOffset() const
+00429200+      void near CSWith16::SetParent( long unsigned )
+00429230+      void near CSWith16::SetEnd( long unsigned )
+00429260+      near CSLabel16::~CSLabel16()
+00429370+      int unsigned near CSLabel16::CodeSegment() const
+004293a0+      int unsigned near CSLabel16::MemOffset() const
+004293d0+      near CSCExModel16::~CSCExModel16()
+00429510+      near CSVftPath16::~CSVftPath16()
+00429620+      int unsigned near CSVftPath16::DataSegment() const
+00429650+      int unsigned near CSVftPath16::MemOffset() const
+00429680+      void near CSVftPath16::FixType()
+004296d0+      near CSRegRel16::~CSRegRel16()
+004297e0+      void near CSRegRel16::FixType()
+00429820+      near CSBPRel32::~CSBPRel32()
+00429930+      void near CSBPRel32::FixType()
+00429970+      near CSLData32::~CSLData32()
+00429a80+      int unsigned near CSLData32::DataSegment() const
+00429ab0+      int unsigned near CSLData32::MemOffset() const
+00429ae0+      void near CSLData32::FixType()
+00429b20+      near CSPub32::~CSPub32()
+00429c30+      int unsigned near CSPub32::DataSegment() const
+00429c60+      int unsigned near CSPub32::CodeSegment() const
+00429c90+      int unsigned near CSPub32::MemOffset() const
+00429cc0+      void near CSPub32::FixType()
+00429d00+      near CSPub32_new::~CSPub32_new()
+00429e10+      int unsigned near CSPub32_new::DataSegment() const
+00429e40+      int unsigned near CSPub32_new::CodeSegment() const
+00429e70+      int unsigned near CSPub32_new::MemOffset() const
+00429ea0+      void near CSPub32_new::FixType()
+00429ee0+      near CSLProc32::~CSLProc32()
+00429ff0+      int unsigned near CSLProc32::CodeSegment() const
+0042a020+      int unsigned near CSLProc32::MemOffset() const
+0042a050+      bool near CSLProc32::IsStartSym() const
+0042a080+      void near CSLProc32::SetParent( long unsigned )
+0042a0b0+      void near CSLProc32::SetNext( long unsigned )
+0042a0e0+      void near CSLProc32::SetEnd( long unsigned )
+0042a110+      void near CSLProc32::FixType()
+0042a150+      near CSThunk32::~CSThunk32()
+0042a260+      bool near CSThunk32::IsStartSym() const
+0042a290+      int unsigned near CSThunk32::CodeSegment() const
+0042a2c0+      int unsigned near CSThunk32::MemOffset() const
+0042a2f0+      void near CSThunk32::SetParent( long unsigned )
+0042a320+      void near CSThunk32::SetNext( long unsigned )
+0042a350+      void near CSThunk32::SetEnd( long unsigned )
+0042a380+      near CSBlock32::~CSBlock32()
+0042a490+      bool near CSBlock32::IsStartSym() const
+0042a4c0+      int unsigned near CSBlock32::CodeSegment() const
+0042a4f0+      int unsigned near CSBlock32::MemOffset() const
+0042a520+      void near CSBlock32::SetParent( long unsigned )
+0042a550+      void near CSBlock32::SetEnd( long unsigned )
+0042a580+      near CSWith32::~CSWith32()
+0042a6a0+      bool near CSWith32::IsStartSym() const
+0042a6d0+      int unsigned near CSWith32::CodeSegment() const
+0042a700+      int unsigned near CSWith32::MemOffset() const
+0042a730+      void near CSWith32::SetParent( long unsigned )
+0042a760+      void near CSWith32::SetEnd( long unsigned )
+0042a790+      near CSLabel32::~CSLabel32()
+0042a8a0+      int unsigned near CSLabel32::CodeSegment() const
+0042a8d0+      int unsigned near CSLabel32::MemOffset() const
+0042a900+      near CSCExModel32::~CSCExModel32()
+0042aa40+      near CSVftPath32::~CSVftPath32()
+0042ab50+      int unsigned near CSVftPath32::DataSegment() const
+0042ab80+      int unsigned near CSVftPath32::MemOffset() const
+0042abb0+      void near CSVftPath32::FixType()
+0042ac00+      near CSRegRel32::~CSRegRel32()
+0042ad10+      void near CSRegRel32::FixType()
+0042ad50+      near CSLThread32::~CSLThread32()
+0042ae60+      int unsigned near CSLThread32::DataSegment() const
+0042ae90+      int unsigned near CSLThread32::MemOffset() const
+0042aec0+      void near CSLThread32::FixType()
+00421d70       bool near SymbolStruct::operator ==( SymbolStruct const near & ) const
+00421db0       near SymbolStruct::SymbolStruct( short unsigned, short unsigned )
+00421ee0+      near SymbolStruct::SymbolStruct( s_common )
+00422010+      near SymbolStruct::SymbolStruct( s_common, char const near *, int unsigned )
+00422140+      char unsigned near SymbolStruct::byt_toupper( char unsigned )
+00422170+      long unsigned near SymbolStruct::dwrd_toupper( long unsigned )
+004221a0       long unsigned near SymbolStruct::checkSum( char const near * )
+00422260       SymbolStruct near * near SymbolStruct::Error( char const near * )
+004222a0       SymbolStruct near * near CSCompile::Construct( char const near * )
+004224b0       SymbolStruct near * near CSRegister::Construct( char const near * )
+00422680       SymbolStruct near * near CSConstant::Construct( char const near * )
+00422970       SymbolStruct near * near CSUdt::Construct( char const near * )
+00422b30       SymbolStruct near * near CSStartSearch::Construct( char const near * )
+00422ca0       SymbolStruct near * near CSEndBlock::Construct( char const near * )
+00422dc0       SymbolStruct near * near CSSkipRecord::Construct( char const near * )
+00422df0       SymbolStruct near * near CSObjName::Construct( char const near * )
+00422fb0       SymbolStruct near * near CSEndOfArg::Construct( char const near * )
+004230d0       SymbolStruct near * near CSCobolUdt::Construct( char const near * )
+00423290       SymbolStruct near * near CSManyReg::Construct( char const near * )
+00423550       SymbolStruct near * near CSReturn::Construct( char const near * )
+00423820       SymbolStruct near * near CSEntryThis::Construct( char const near * )
+004239e0       SymbolStruct near * near CSBPRel16::Construct( char const near * )
+00423bb0       SymbolStruct near * near CSLData16::Construct( char const near * )
+00423d90       SymbolStruct near * near CSPub16::Construct( char const near * )
+00423f70       SymbolStruct near * near CSLProc16::Construct( char const near * )
+00424210       SymbolStruct near * near CSThunk16::Construct( char const near * )
+00424430       SymbolStruct near * near CSBlock16::Construct( char const near * )
+00424630       SymbolStruct near * near CSWith16::Construct( char const near * )
+00424800       SymbolStruct near * near CSLabel16::Construct( char const near * )
+004249e0       SymbolStruct near * near CSCExModel16::Construct( char const near * )
+00424c90       SymbolStruct near * near CSVftPath16::Construct( char const near * )
+00424e10       SymbolStruct near * near CSRegRel16::Construct( char const near * )
+00424ff0       SymbolStruct near * near CSBPRel32::Construct( char const near * )
+004251c0       SymbolStruct near * near CSLData32::Construct( char const near * )
+004253a0       SymbolStruct near * near CSPub32::Construct( char const near * )
+00425580       SymbolStruct near * near CSPub32_new::Construct( char const near * )
+00425760       SymbolStruct near * near CSLProc32::Construct( char const near * )
+004259f0       SymbolStruct near * near CSThunk32::Construct( char const near * )
+00425c00       SymbolStruct near * near CSBlock32::Construct( char const near * )
+00425df0       SymbolStruct near * near CSWith32::Construct( char const near * )
+00425fc0       SymbolStruct near * near CSLabel32::Construct( char const near * )
+004261a0       SymbolStruct near * near CSCExModel32::Construct( char const near * )
+00426450       SymbolStruct near * near CSVftPath32::Construct( char const near * )
+004265d0       SymbolStruct near * near CSRegRel32::Construct( char const near * )
+004267b0       SymbolStruct near * near CSLThread32::Construct( char const near * )
+00426990       void near SymbolStruct::Put( ExeMaker near & ) const
+00426a70+      void near CSCompile::DerivedPut( ExeMaker near & ) const
+00426ae0+      void near CSRegister::DerivedPut( ExeMaker near & ) const
+00426b30+      void near CSConstant::DerivedPut( ExeMaker near & ) const
+00426ba0+      void near CSUdt::DerivedPut( ExeMaker near & ) const
+00426bf0       void near CSStartSearch::DerivedPut( ExeMaker near & ) const
+00426c40+      void near CSObjName::DerivedPut( ExeMaker near & ) const
+00426c90+      void near CSCobolUdt::DerivedPut( ExeMaker near & ) const
+00426ce0+      void near CSManyReg::DerivedPut( ExeMaker near & ) const
+00426d50+      void near CSReturn::DerivedPut( ExeMaker near & ) const
+00426dc0+      void near CSEntryThis::DerivedPut( ExeMaker near & ) const
+00426df0+      void near CSBPRel16::DerivedPut( ExeMaker near & ) const
+00426e40+      void near CSLData16::DerivedPut( ExeMaker near & ) const
+00426e90+      void near CSPub16::DerivedPut( ExeMaker near & ) const
+00426ee0+      void near CSLProc16::DerivedPut( ExeMaker near & ) const
+00426f30+      void near CSThunk16::DerivedPut( ExeMaker near & ) const
+00426f80+      void near CSBlock16::DerivedPut( ExeMaker near & ) const
+00426fd0+      void near CSWith16::DerivedPut( ExeMaker near & ) const
+00427020+      void near CSLabel16::DerivedPut( ExeMaker near & ) const
+00427070+      void near CSCExModel16::DerivedPut( ExeMaker near & ) const
+004270e0+      void near CSVftPath16::DerivedPut( ExeMaker near & ) const
+00427130+      void near CSRegRel16::DerivedPut( ExeMaker near & ) const
+00427180+      void near CSBPRel32::DerivedPut( ExeMaker near & ) const
+004271d0+      void near CSLData32::DerivedPut( ExeMaker near & ) const
+00427220+      void near CSPub32::DerivedPut( ExeMaker near & ) const
+00427270+      void near CSPub32_new::DerivedPut( ExeMaker near & ) const
+004272c0+      void near CSLProc32::DerivedPut( ExeMaker near & ) const
+00427310+      void near CSThunk32::DerivedPut( ExeMaker near & ) const
+00427360+      void near CSBlock32::DerivedPut( ExeMaker near & ) const
+004273b0+      void near CSWith32::DerivedPut( ExeMaker near & ) const
+00427400+      void near CSLabel32::DerivedPut( ExeMaker near & ) const
+00427450+      void near CSCExModel32::DerivedPut( ExeMaker near & ) const
+004274c0+      void near CSVftPath32::DerivedPut( ExeMaker near & ) const
+00427510+      void near CSRegRel32::DerivedPut( ExeMaker near & ) const
+00427560+      void near CSLThread32::DerivedPut( ExeMaker near & ) const
+004275b0       void near CSProcRef::DerivedPut( ExeMaker near & ) const
+00427630       void near CSDataRef::DerivedPut( ExeMaker near & ) const
+0042af80+      near cv_proc::__sspdf::__sspdf( cv_proc::__sspdf const near & )
+0042b010+      near __8tjdl6cv_return_flags::__uiq7nf::__uiq7nf( __8tjdl6cv_return_flags::__uiq7nf const near & )
+0042b060+      near __6bn8u8cv_compile::__101t1f::__101t1f( __6bn8u8cv_compile::__101t1f const near & )
+004276b0       void near CSPageAlign::DerivedPut( ExeMaker near & ) const
+0044ba9c       char near * near SymbolStruct::_padTable[]
+Module: Debug\makeexe.obj(C:\Projects\JWlink\cvpack\cpp\makeexe.cpp)
+0042b560+      near WriteError::~WriteError()
+0042b590+      near WriteError::WriteError( WriteError const near & )
+0042b5f0+      near WCValListIterBase<cv_dir_entry near * near,WCPtrSList<cv_dir_entry near > near,WCNIsvSLink<cv_dir_entry near * near > near >::~WCValListIterBase()
+0042b6a0+      cv_dir_entry near * near WCValListIterBase<cv_dir_entry near * near,WCPtrSList<cv_dir_entry near > near,WCNIsvSLink<cv_dir_entry near * near > near >::current() const
+0042b6f0+      near WCPtrSListIter<cv_dir_entry near >::~WCPtrSListIter()
+0042b830+      near WCPtrConstSListIter<cv_dir_entry near >::~WCPtrConstSListIter()
+0042b9a0+      int near WCValListBase<cv_dir_entry near * near,WCIsvSListBase<WCNIsvSLink<cv_dir_entry near * near > near > near,WCNIsvSLink<cv_dir_entry near * near > near >::append( cv_dir_entry near * const near & )
+0042ba30+      WCNIsvSLink<cv_dir_entry near * near > near * near WCValListBase<cv_dir_entry near * near,WCIsvSListBase<WCNIsvSLink<cv_dir_entry near * near > near > near,WCNIsvSLink<cv_dir_entry near * near > near >::WCListNew( cv_dir_entry near * const near & )
+0042b130       void near ODirectory::Insert( __anonymous_enum, short unsigned, long unsigned, long unsigned )
+0042b1b0       void near ODirectory::Put( ExeMaker near & )
+0042b4d0       void near ExeMaker::Write( char const near *, int unsigned )
+Module: Debug\symdis.obj(C:\Projects\JWlink\cvpack\cpp\symdis.cpp)
+0042c740+      near CSProcRef::~CSProcRef()
+0042c860+      long unsigned near CSProcRef::cSum() const
+0042c890+      int unsigned near CSProcRef::DataSegment() const
+0042c8c0+      int unsigned near CSProcRef::MemOffset() const
+0042c8f0+      char const near * near CSProcRef::Name() const
+0042c920+      near CSDataRef::~CSDataRef()
+0042ca40+      long unsigned near CSDataRef::cSum() const
+0042ca70+      int unsigned near CSDataRef::DataSegment() const
+0042caa0+      int unsigned near CSDataRef::MemOffset() const
+0042cad0+      char const near * near CSDataRef::Name() const
+0042cb90+      int near WCValListBase<SymbolStruct near * near,WCIsvSListBase<WCNIsvSLink<SymbolStruct near * near > near > near,WCNIsvSLink<SymbolStruct near * near > near >::isEmpty() const
+0042baf0+      void near SymbolDistributor::Build( char const near *, int unsigned, SstAlignSym near & ) const
+0042c6b0       bool near SymbolDistributor::Distribute( int unsigned, SstAlignSym near & ) const
+0044bdb8       SymbolStruct near * (near * near SymbolDistributor::_symConstructorTable[])( char const near * )
+Module: Debug\typemap.obj(C:\Projects\JWlink\cvpack\cpp\typemap.cpp)
+0042d3b0+      TypeIndexMap::__304un0mappingStruct const near & near WCValVector<TypeIndexMap::__304un0mappingStruct near >::operator []( int ) const
+0042d450+      int near WCBareVectorBase<TypeIndexMap::__304un0mappingStruct near >::base_index_check( int ) const
+0042cbe0       near TypeIndexMap::TypeIndexMap( int unsigned, short unsigned )
+0042cda0       void near TypeIndexMap::Insert( short unsigned, short unsigned )
+0042d040       short unsigned near TypeIndexMap::Lookup( short unsigned ) const
+0042d1e0       void near TypeIndexMap::Reset( int unsigned )
+Module: Debug\typearay.obj(C:\Projects\JWlink\cvpack\cpp\typearay.cpp)
+0042e230+      near GlobalTypeContainer::~GlobalTypeContainer()
+0042e260+      near GlobalListContainer::GlobalListContainer()
+0042e3c0+      near GlobalListContainer::~GlobalListContainer()
+0042e5a0+      WCPtrSList<LFTypeRecord near > near & near GlobalListContainer::Find( LFTypeRecord near * )
+0042e5d0+      void near GlobalListContainer::Insert( LFTypeRecord near * )
+0042e610+      near GlobalHashContainer::GlobalHashContainer()
+0042e6b0+      near GlobalHashContainer::~GlobalHashContainer()
+0042e7f0+      WCPtrSList<LFTypeRecord near > near & near GlobalHashContainer::Find( LFTypeRecord near * )
+0042d4c0+      void near GlobalHashContainer::Insert( LFTypeRecord near * )
+0042d560+      void near GlobalHashContainer::Rehash()
+0042d980+      long unsigned near GlobalHashContainer::HFn( VariantString near & )
+0042da00       near GlobalTypeArray::GlobalTypeArray()
+0042e040       void near GlobalTypeArray::DerivedInsert( LFTypeRecord near * )
+0042e890       near WCPtrSListIter<LFTypeRecord near >::WCPtrSListIter()
+0042e9a0+      near WCValListIterBase<LFTypeRecord near * near,WCPtrSList<LFTypeRecord near > near,WCNIsvSLink<LFTypeRecord near * near > near >::WCValListIterBase()
+0042e0c0       WCPtrSList<LFTypeRecord near > near & near GlobalTypeArray::Find( LFTypeRecord near * )
+0042e170       void near LocalTypeArray::DerivedInsert( LFTypeRecord near * )
+Module: Debug\typercrd.obj(C:\Projects\JWlink\cvpack\cpp\typercrd.cpp)
+0042f7f0+      near LFTypeRecord::~LFTypeRecord()
+0042f8f0+      bool near LFTypeRecord::IsEquivalent( LFTypeRecord near & )
+0042f930+      near LFGlobalTypeRecord::~LFGlobalTypeRecord()
+0042fa20+      near Recorder::Recorder()
+0042fb60+      near Recorder::~Recorder()
+0042fc50+      near MyNodeStack::MyNodeStack()
+0042fda0+      near MyNodeStack::~MyNodeStack()
+0042ec90       bool near LFTypeRecord::operator ==( LFTypeRecord const near & ) const
+0042ecd0+      int unsigned near LFTypeRecord::ConvertIndex( short unsigned )
+0042ed30       near LFTypeRecord::LFTypeRecord( short unsigned, char const near * )
+0042edb0+      near LFTypeRecord::LFTypeRecord( LFTypeRecord near * )
+0042ee10       near LFGlobalTypeRecord::LFGlobalTypeRecord( short unsigned, char const near * )
+0042eeb0       near LFGlobalTypeRecord::LFGlobalTypeRecord( LFTypeRecord near * )
+0042feb0+      near WCPtrListBase<LFGlobalTypeRecord near,WCValSList<LFGlobalTypeRecord near * near > near >::~WCPtrListBase()
+0042ff70+      int near WCValSList<short unsigned near >::base_equivalent( short unsigned const near &, short unsigned const near & ) const
+0042ffc0+      near WCValSList<short unsigned near >::~WCValSList()
+004300b0+      int near WCValSList<LFGlobalTypeRecord near * near >::base_equivalent( LFGlobalTypeRecord near * const near &, LFGlobalTypeRecord near * const near & ) const
+00430100+      near WCValSList<LFGlobalTypeRecord near * near >::~WCValSList()
+004301f0+      int near WCPtrSList<LFGlobalTypeRecord near >::base_equivalent( LFGlobalTypeRecord near * const near &, LFGlobalTypeRecord near * const near & ) const
+00430230+      near WCPtrSList<LFGlobalTypeRecord near >::WCPtrSList()
+004303b0+      near WCPtrSList<LFGlobalTypeRecord near >::~WCPtrSList()
+00430500+      near WCValListIterBase<LFGlobalTypeRecord near * near,WCPtrSList<LFGlobalTypeRecord near > near,WCNIsvSLink<LFGlobalTypeRecord near * near > near >::~WCValListIterBase()
+004305b0+      LFGlobalTypeRecord near * near WCValListIterBase<LFGlobalTypeRecord near * near,WCPtrSList<LFGlobalTypeRecord near > near,WCNIsvSLink<LFGlobalTypeRecord near * near > near >::current() const
+00430600+      near WCPtrSListIter<LFGlobalTypeRecord near >::~WCPtrSListIter()
+00430740+      near WCStack<short unsigned near,WCValSList<short unsigned near > near >::WCStack()
+004308a0+      near WCStack<short unsigned near,WCValSList<short unsigned near > near >::~WCStack()
+004309d0+      short unsigned near WCValListBase<short unsigned near,WCIsvSListBase<WCNIsvSLink<short unsigned near > near > near,WCNIsvSLink<short unsigned near > near >::get( int )
+00430a50+      near WCPtrListBase<LFGlobalTypeRecord near,WCValSList<LFGlobalTypeRecord near * near > near >::WCPtrListBase( void near * (near *)( ), void (near *)())
+00430be0+      near WCValSList<short unsigned near >::WCValSList()
+00430d30+      near WCValSList<LFGlobalTypeRecord near * near >::WCValSList( void near * (near *)( ), void (near *)())
+00430e80+      void near WCIsvSListBase<WCNIsvSLink<short unsigned near > near >::clearAndDestroy()
+00430eb0+      int near WCIsvSListBase<WCNIsvSLink<LFGlobalTypeRecord near * near > near >::entries() const
+00430ee0+      near WCValListBase<short unsigned near,WCIsvSListBase<WCNIsvSLink<short unsigned near > near > near,WCNIsvSLink<short unsigned near > near >::WCValListBase( void near * (near *)( ), void (near *)())
+00431010+      near WCValListBase<LFGlobalTypeRecord near * near,WCIsvSListBase<WCNIsvSLink<LFGlobalTypeRecord near * near > near > near,WCNIsvSLink<LFGlobalTypeRecord near * near > near >::WCValListBase( void near * (near *)( ), void (near *)())
+00431140+      near WCIsvSListBase<WCNIsvSLink<short unsigned near > near >::WCIsvSListBase()
+00431220+      near WCIsvSListBase<WCNIsvSLink<LFGlobalTypeRecord near * near > near >::WCIsvSListBase()
+0042ef40+      bool near LFGlobalTypeRecord::IsEquivalent( LFTypeRecord near & )
+0042f3a0+      void near Recorder::RewindAndUndo()
+0042f460+      void near MyNodeStack::MarkLoop( LFGlobalTypeRecord near * )
+0044bef4       LFLeafStruct near * (near * near LFTypeRecord::_typeConstructorTable[])( char const near *, int unsigned )
+0045e1b8       MyNodeStack near LFGlobalTypeRecord::_nodeStack
+0045e1d0       Recorder near LFGlobalTypeRecord::_recorder
+Module: Debug\common.obj(C:\Projects\JWlink\cvpack\cpp\common.cpp)
+00431300       int unsigned near ToTypeIndex( int unsigned )
+00431330       int unsigned near ToTableIndex( short unsigned )
+00431360       int unsigned near PrefixStrLen( char const near * )
+004313a0       void near Warning( char const near * )
+Module: \watcom\lib386\nt\plbx3r.lib(FSHAND)
+004313eb       ___wcpp_4_fs_handler_
+Module: \watcom\lib386\nt\plbx3r.lib(stablcl.cpp)
+00431400       __wcpp_4_lcl_register__
+Module: \watcom\lib386\nt\plbx3r.lib(dtorarst.cpp)
+00431410       __wcpp_4_dtor_array_store__
+Module: \watcom\lib386\nt\plbx3r.lib(opdelarr.cpp)
+00431440       void near operator delete []( void near * )
+Module: \watcom\lib386\nt\plbx3r.lib(opdel.cpp)
+00431450       void near operator delete( void near * )
+Module: \watcom\lib386\nt\plbx3r.lib(ifsdestr.cpp)
+00431460       near std::ifstream::~ifstream()
+Module: \watcom\lib386\nt\plbx3r.lib(ofsdestr.cpp)
+004315b0       near std::ofstream::~ofstream()
+Module: \watcom\lib386\nt\plbx3r.lib(stabthrw.cpp)
+00431ec0+      near std::exception::exception()
+00431f10+      near std::exception::exception( std::exception const near & )
+00431f60+      near std::exception::exception( char const near * )
+00431fb0+      near std::exception::~exception()
+00432040+      char const near * near std::exception::what() const
+00432080+      near std::bad_exception::bad_exception()
+004320e0+      near std::bad_exception::bad_exception( std::bad_exception const near & )
+00432130+      near std::bad_exception::~bad_exception()
+00431d80*      __wcpp_4_rethrow__
+00431dc4       __wcpp_4_catch_done__
+00431e2c       __wcpp_4_throw__
+00431e74*      __wcpp_4_throw_zero__
+Module: \watcom\lib386\nt\plbx3r.lib(opnewarr.cpp)
+00432210       void near * near operator new []( int unsigned )
+Module: \watcom\lib386\nt\plbx3r.lib(osttellp.cpp)
+00432220       long near std::ostream::tellp()
+Module: \watcom\lib386\nt\plbx3r.lib(ostspsto.cpp)
+00432260       std::ostream near & near std::ostream::seekp( long, int )
+Module: \watcom\lib386\nt\plbx3r.lib(ioicerr.cpp)
+0045e228       std::ostream near std::cerr
+00432344+      near cerr_initfini::cerr_initfini()
+00432358+      near cerr_initfini::~cerr_initfini()
+Module: \watcom\lib386\nt\plbx3r.lib(ostincch.cpp)
+00432380       std::ostream near & near std::ostream::operator <<( char const near * )
+Module: \watcom\lib386\nt\plbx3r.lib(ostflush.cpp)
+00432400       std::ostream near & near std::ostream::flush()
+Module: \watcom\lib386\nt\plbx3r.lib(opnew.cpp)
+00432440       void near * near operator new( int unsigned )
+Module: \watcom\lib386\nt\plbx3r.lib(fsbclose.cpp)
+00432490       void near std::fstreambase::close()
+Module: \watcom\lib386\nt\plbx3r.lib(stabdtor.cpp)
+00432780       __wcpp_4_destruct_internal__
+004327a0       __wcpp_4_destruct_all__
+004327a4*      __wcpp_4_destruct__
+Module: \watcom\lib386\nt\plbx3r.lib(setnwhdl.cpp)
+004327d0       void (near * near set_new_handler( void (near *)()))()
+Module: \watcom\lib386\nt\clib3r.lib(setjmp)
+004327e0       _setjmp_
+00432819       longjmp_
+Module: \watcom\lib386\nt\clib3r.lib(stricmp.c)
+004328b0       stricmp_
+Module: \watcom\lib386\nt\plbx3r.lib(manendl.cpp)
+004328f0       std::ostream near & near std::endl( std::ostream near & )
+Module: \watcom\lib386\nt\plbx3r.lib(ioicout.cpp)
+0045e2a8       std::ostream near std::cout
+00432964+      near cout_initfini::cout_initfini()
+0043296c+      near cout_initfini::~cout_initfini()
+Module: \watcom\lib386\nt\plbx3r.lib(ostinomn.cpp)
+00432980       std::ostream near & near std::ostream::operator <<( std::ostream near & (near *)())
+Module: \watcom\lib386\nt\plbx3r.lib(flfoprot.cpp)
+0044a7e8       int const near std::filebuf::openprot
+Module: \watcom\lib386\nt\plbx3r.lib(ifsconnm.cpp)
+00432990       near std::ifstream::ifstream( char const near *, int, int )
+Module: \watcom\lib386\nt\clib3r.lib(tmpnm.c)
+00432ae0       tmpnam_
+Module: \watcom\lib386\nt\plbx3r.lib(ofsconnm.cpp)
+00432bb0       near std::ofstream::ofstream( char const near *, int, int )
+Module: \watcom\lib386\nt\clib3r.lib(remove.c)
+00432c80       remove_
+Module: \watcom\lib386\nt\clib3r.lib(errno.c)
+00432c90       __get_errno_ptr_
+00432ca0*      __get_doserrno_ptr_
+Module: \watcom\lib386\nt\clib3r.lib(strerror.c)
+00432fd0       strerror_
+00432ff0*      _strerror_
+004330c0*      _doserror_
+0044c224+      __sys_errlist
+0044c2c8+      __sys_nerr
+Module: \watcom\lib386\nt\clib3r.lib(renamwnt.c)
+004330f0       rename_
+Module: \watcom\lib386\nt\clib3r.lib(exit.c)
+00433108+      __null_int23_exit_
+00433109       exit_
+00433159*      _exit_
+0044c2cc+      ___int23_exit
+0044c2d0+      ___FPE_handler_exit
+Module: \watcom\lib386\nt\plbx3r.lib(opnewp.cpp)
+00433170       void near * near operator new( int unsigned, void near * )
+Module: \watcom\lib386\nt\plbx3r.lib(wcexcept.cpp)
+00433180       void near WCExcept::base_throw_empty_container() const
+004331a8       void near WCExcept::base_throw_index_range() const
+004331d0       void near WCExcept::base_throw_not_empty()
+00433208*      void near WCExcept::base_throw_not_unique() const
+00433230       void near WCExcept::base_throw_out_of_memory() const
+00433258       void near WCExcept::base_throw_resize_required() const
+00433280*      void near WCExcept::base_throw_zero_buckets() const
+004332a8       void near WCIterExcept::base_throw_iter_range() const
+004332d0       void near WCIterExcept::base_throw_undef_item() const
+00433320+      near WCIterExcept::failure::failure( WCIterExcept::failure const near & )
+00433330+      near WCIterExcept::failure::~failure()
+00433340+      near WCExcept::failure::failure( WCExcept::failure const near & )
+00433350+      near WCExcept::failure::~failure()
+00433360       near __WATCOM_exception::__WATCOM_exception( __WATCOM_exception const near & )
+00433370       near __WATCOM_exception::~__WATCOM_exception()
+004332f8       void near WCIterExcept::base_throw_undef_iter() const
+Module: \watcom\lib386\nt\clib3r.lib(memset.c)
+00433380       memset_
+Module: \watcom\lib386\nt\plbx3r.lib(wclist.cpp)
+004333a0+      WCSLink near * near WCIsvListBase::base_next( WCSLink const near *, int ) const
+004333bc       void near WCIsvListBase::base_insert( WCSLink near * )
+004333e0+      int near WCIsvListBase::base_index_check( int ) const
+00433418+      WCSLink near * near WCIsvListBase::base_bfind( int ) const
+00433430       WCSLink near * near WCIsvListBase::base_sfind( int ) const
+00433440+      WCDLink near * near WCIsvListBase::base_dfind( int ) const
+0043348c       WCSLink near * near WCIsvListBase::base_sget( int )
+004334c4*      WCDLink near * near WCIsvListBase::base_dget( int )
+0043350c*      int near WCIsvListBase::base_index( WCSLink const near * ) const
+00433554+      void near WCIsvListBase::base_clear()
+00433564       void near WCIsvListBase::base_destroy()
+004335a8       near WCIsvListBase::~WCIsvListBase()
+0043360c       WCSLink near * near WCListIterBase::base_advance( int )
+004336ac*      WCDLink near * near WCListIterBase::base_retreat( int )
+00433750*      WCSLink near * near WCListIterBase::base_tail_hit( WCSLink near * )
+0043376c*      void near WCListIterBase::base_tail_unhit( WCSLink near * )
+Module: \watcom\lib386\nt\plbx3r.lib(pure_err.cpp)
+00433780       __wcpp_4_pure_error__
+Module: \watcom\lib386\nt\plbx3r.lib(undefed.cpp)
+004337b0       __wcpp_4_undefed_cdtor__
+Module: \watcom\lib386\nt\plbx3r.lib(undefmbd.cpp)
+0045e3f4       ____wcpp_4_data_undefined_member_data_
+Module: \watcom\lib386\nt\clib3r.lib(cstrtwnt)
+004337d0       _cstart_
+004337d0*      mainCRTStartup
+Module: \watcom\lib386\nt\clib3r.lib(argcv.c)
+0045e3f8       __argc
+0045e3fc       __argv
+0045e400       ___argv
+0045e404       ___argc
+Module: \watcom\lib386\nt\plbx3r.lib(moddtorr.cpp)
+0044dafa       ___wcpp_4_data_module_dtor_ref_
+Module: \watcom\lib386\nt\plbx3r.lib(fsroot.cpp)
+0044dad0       ___wcpp_4_data_init_fs_root_
+Module: \watcom\lib386\nt\plbx3r.lib(cppdata.cpp)
+0045e408       __wint_thread_data
+0045e42c       __compiled_under_NT
+Module: \watcom\lib386\nt\plbx3r.lib(istsgstp.cpp)
+00433840       std::istream near & near std::istream::seekg( long )
+Module: \watcom\lib386\nt\plbx3r.lib(istread.cpp)
+004338a0       std::istream near & near std::istream::read( char near *, int )
+Module: \watcom\lib386\nt\clib3r.lib(printf.c)
+00433940       printf_
+Module: \watcom\lib386\nt\clib3r.lib(qsort.c)
+004339c0       qsort_
+Module: \watcom\lib386\nt\plbx3r.lib(istsgsto.cpp)
+00434070       std::istream near & near std::istream::seekg( long, int )
+Module: \watcom\lib386\nt\plbx3r.lib(isttellg.cpp)
+004340c0       long near std::istream::tellg()
+Module: \watcom\lib386\nt\plbx3r.lib(iosclear.cpp)
+004340f0       int near std::ios::clear( int )
+Module: \watcom\lib386\nt\plbx3r.lib(ifsconfd.cpp)
+00434110       near std::ifstream::ifstream( int )
+Module: \watcom\lib386\nt\clib3r.lib(strncmp.c)
+004341e0       strncmp_
+Module: \watcom\lib386\nt\plbx3r.lib(ostinulo.cpp)
+00434210       std::ostream near & near std::ostream::operator <<( long unsigned )
+Module: \watcom\lib386\nt\plbx3r.lib(ctorarst.cpp)
+00434670+      near _RTDTOR::_RTDTOR()
+00434340+      near _CTAS::~_CTAS()
+00434680+      near _CTAS::_CTAS()
+004344e4*      __wcpp_4_ctor_array_storage_1m__
+00434530*      __wcpp_4_ctor_array_storage_1s__
+0043457c*      __wcpp_4_ctor_array_storage_2s__
+004345c8*      __wcpp_4_ctor_array_storage_gm__
+0043461c       __wcpp_4_ctor_array_storage_gs__
+Module: \watcom\lib386\nt\clib3r.lib(lrotl.c)
+00434690       _lrotl_
+Module: \watcom\lib386\nt\plbx3r.lib(ostwrite.cpp)
+004346a0       std::ostream near & near std::ostream::write( char const near *, int )
+Module: \watcom\lib386\nt\plbx3r.lib(fsregist.cpp)
+00434780+      char unsigned near * near findHandler( char unsigned near * )
+00434798+      __wcpp_4_dispatch_dummy__
+004347bc       __wcpp_4_fs_lookup__
+0043488c       ___wcpp_4_fs_handler_rtn_
+Module: \watcom\lib386\nt\plbx3r.lib(stabmod.cpp)
+00434960       __wcpp_4_module_dtor__
+0043498c       __wcpp_4_mod_register__
+Module: \watcom\lib386\nt\plbx3r.lib(stabadt.cpp)
+004349a0+      void near * near dtor_the_array( _RTARCTOR near * )
+004349e4       near _RTARCTOR::~_RTARCTOR()
+004349fc       __wcpp_4_dtor_array__
+Module: \watcom\lib386\nt\clib3r.lib(nfree.c)
+00434a70       _nfree_
+00434a70       free_
+0045e430       ___MiniHeapFreeRover
+Module: \watcom\lib386\nt\plbx3r.lib(istdestr.cpp)
+00434b80       near std::istream::~istream()
+Module: \watcom\lib386\nt\plbx3r.lib(fsbdestr.cpp)
+00434c60       near std::fstreambase::~fstreambase()
+Module: \watcom\lib386\nt\plbx3r.lib(iosdestr.cpp)
+00434d60       near std::ios::~ios()
+Module: \watcom\lib386\nt\plbx3r.lib(ostdestr.cpp)
+00434df0       near std::ostream::~ostream()
+Module: \watcom\lib386\nt\plbx3r.lib(exc_pr.cpp)
+00434ed0       near _EXC_PR::_EXC_PR( _RTCTL near *, RW_DTREG near *, EXCSTATE )
+00434efc       near _EXC_PR::~_EXC_PR()
+00434f0c       near _EXC_PR_FREE::_EXC_PR_FREE( _RTCTL near *, RW_DTREG near *, EXCSTATE, ACTIVE_EXC near * )
+00434f20       near _EXC_PR_FREE::~_EXC_PR_FREE()
+00434f58       near _EXC_PR_DTOR::_EXC_PR_DTOR( _RTCTL near *, RW_DTREG near *, EXCSTATE, ACTIVE_EXC near * )
+00434f68       near _EXC_PR_FNEXC::_EXC_PR_FNEXC( _RTCTL near *, RW_DTREG near *, RW_DTREG near *, ACTIVE_EXC near * )
+00434f88       near _EXC_PR_FNEXC::~_EXC_PR_FNEXC()
+00434f90       near _EXC_PR_DTOR::~_EXC_PR_DTOR()
+Module: \watcom\lib386\nt\plbx3r.lib(vfun_err.cpp)
+00434fc0       __wcpp_4_undef_vfun__
+Module: \watcom\lib386\nt\plbx3r.lib(unexpect.cpp)
+00434ff0       void near std::unexpected()
+Module: \watcom\lib386\nt\plbx3r.lib(callterm.cpp)
+00435090       __wcpp_4_corrupted_stack__
+004350a4       __wcpp_4_call_terminate__
+Module: \watcom\lib386\nt\plbx3r.lib(tsequiv.cpp)
+004350d0       __wcpp_4_ts_refed__
+004350e8+      __wcpp_4_ts_pnted__
+0043511c       __wcpp_4_ts_equiv__
+Module: \watcom\lib386\nt\plbx3r.lib(pgmthrd.cpp)
+00435200       __wcpp_4_pgm_thread__
+Module: \watcom\lib386\nt\plbx3r.lib(stabinit.cpp)
+00435230       __wcpp_4_exc_setup__
+Module: \watcom\lib386\nt\clib3r.lib(stackwnt.c)
+004352d0       stackavail_
+Module: \watcom\lib386\nt\plbx3r.lib(fatalerr.cpp)
+004352e0       __wcpp_4_fatal_runtime_error__
+Module: \watcom\lib386\nt\clib3r.lib(stk)
+00435309*      __CHK
+00435319*      __STK
+00435338       __STKOVERFLOW_
+00435348       __GRO
+00435368*      __alloca_probe
+Module: \watcom\lib386\nt\plbx3r.lib(allocexc.cpp)
+004353a4       __wcpp_4_alloc_exc__
+004355f8       __wcpp_4_free_exc__
+00435630       __wcpp_4_find_active__
+0043564c       __wcpp_4_dtor_free_exc__
+Module: \watcom\lib386\nt\plbx3r.lib(stabtrav.cpp)
+00435710       __wcpp_4_stab_entry__
+00435728*      __wcpp_4_stab_trav_comp__
+0043580c       __wcpp_4_stab_trav_init__
+00435830       __wcpp_4_stab_trav_next__
+00435888       __wcpp_4_stab_trav_move__
+Module: \watcom\lib386\nt\plbx3r.lib(ostopfx.cpp)
+004358a0       int near std::ostream::do_opfx()
+Module: \watcom\lib386\nt\plbx3r.lib(iossetst.cpp)
+00435940+      near std::ios::failure::failure( std::ios::failure const near & )
+00435950+      near std::ios::failure::~failure()
+00435910       void near std::ios::setstate( int )
+Module: \watcom\lib386\nt\clib3r.lib(iobaddr.c)
+00435960       __get_std_stream_
+00435960*      __get_std_file_
+Module: \watcom\lib386\nt\plbx3r.lib(sdfconfp.cpp)
+00435980       near stdiobuf::stdiobuf( __iobuf near * )
+Module: \watcom\lib386\nt\plbx3r.lib(ostconsf.cpp)
+00435990       near std::ostream::ostream( std::streambuf near * )
+Module: \watcom\lib386\nt\plbx3r.lib(sdfdestr.cpp)
+00435a30       near stdiobuf::~stdiobuf()
+Module: \watcom\lib386\nt\plbx3r.lib(iouwrtit.cpp)
+00435b10       int near __WATCOM_ios::writeitem( std::ostream near &, char const near *, int, int )
+Module: \watcom\lib386\nt\clib3r.lib(nmalloc.c)
+00435e60       _nmalloc_
+00435e60       malloc_
+0044c3a4       ___nheapbeg
+0044c3a8       ___MiniHeapRover
+0044c3ac       ___LargestSizeB4MiniHeapRover
+Module: \watcom\lib386\nt\plbx3r.lib(flfclose.cpp)
+00435f60       std::filebuf near * near std::filebuf::close()
+Module: \watcom\lib386\nt\clib3r.lib(ljmphdl.c)
+0044c3b0       ___longjmp_handler
+Module: \watcom\lib386\nt\plbx3r.lib(ostput.cpp)
+00435fb0       std::ostream near & near std::ostream::put( char )
+Module: \watcom\lib386\nt\plbx3r.lib(fsbconnm.cpp)
+00436050       near std::fstreambase::fstreambase( char const near *, int, int )
+Module: \watcom\lib386\nt\plbx3r.lib(istconde.cpp)
+00436140       near std::istream::istream()
+Module: \watcom\lib386\nt\plbx3r.lib(iosconde.cpp)
+00436190       near std::ios::ios()
+Module: \watcom\lib386\nt\clib3r.lib(gtpidwnt.c)
+004361a0       getpid_
+Module: \watcom\lib386\nt\clib3r.lib(mainwnt.c)
+0044c3b4*      ___TlsIndex
+0044c3b8+      ___FirstThreadData
+0044c3bc       ___GetThreadPtr
+0044c3c0       __AccessFileH
+0044c3c4       __ReleaseFileH
+0044c3c8       __AccessIOB
+0044c3cc       __ReleaseIOB
+0044c3d0       __AccessNHeap
+0044c3d4*      __AccessFHeap
+0044c3d8       __ReleaseNHeap
+004361c0*      __threadid_
+004361e0+      __sig_null_rtn_
+004361f0+      __NTInit_
+004363d0+      __NTFini_
+00436430       __NTMainInit_
+00436490       __exit_
+0044c3dc*      __ReleaseFHeap
+0044c3e0*      __AccessTDList
+0044c3e4*      __ReleaseTDList
+0044c3e8       __AccessFList
+0044c3ec       __ReleaseFList
+0044c3f0+      __ThreadExitRtn
+0044c3f4       ___sig_init_rtn
+0044c3f8       ___sig_fini_rtn
+0044c3fc       ___process_fini
+0045e43c       ___Is_DLL
+Module: \watcom\lib386\nt\clib3r.lib(accsswnt.c)
+004364e0       access_
+Module: \watcom\lib386\nt\clib3r.lib(seterrno.c)
+00436504       __set_errno_
+00436512*      __set_EDOM_
+00436520*      __set_ERANGE_
+0043652e*      __set_EINVAL_
+00436541       __set_doserrno_
+Module: \watcom\lib386\nt\plbx3r.lib(ostconde.cpp)
+00436550       near std::ostream::ostream()
+Module: \watcom\lib386\nt\clib3r.lib(unlnkwnt.c)
+00436590       unlink_
+Module: \watcom\lib386\nt\clib3r.lib(strncpy.c)
+004365b0       strncpy_
+Module: \watcom\lib386\nt\clib3r.lib(dosret.c)
+004365f0*      _dosretax_
+00436600*      _dosret0_
+00436610       __set_errno_dos_
+00436640*      __set_errno_dos_reterr_
+00436650       __set_errno_nt_
+00436660*      __set_errno_nt_reterr_
+Module: \watcom\lib386\nt\clib3r.lib(initrtns.c)
+00436690       __InitRtns
+004366e0       __FiniRtns
+Module: \watcom\lib386\nt\clib3r.lib(__stos)
+00436740       __STOSB
+00436777*      __STOSD
+Module: \watcom\lib386\nt\plbx3r.lib(prwdata.cpp)
+0045ea58       __wint_pure_error_flag
+0045ea5a       __wint_undef_vfun_flag
+0045ea5c       __wint_module_init
+Module: \watcom\lib386\nt\clib3r.lib(main2wnt.c)
+004367f0       __NTMain
+Module: \watcom\lib386\nt\clib3r.lib(segdefns)
+00401003       ___begtext
+00441000*      __nullarea
+0044daac       __Start_XI
+0044daf4       __End_XI
+0044daf4       __Start_YI
+0044db18       __End_YI
+Module: \watcom\lib386\nt\clib3r.lib(initargv.c)
+00436850       __Init_Argv_
+004368a0+      _getargv_
+00436a40       __Fini_Argv_
+Module: \watcom\lib386\nt\plbx3r.lib(istipfx.cpp)
+00436a50       int near std::istream::ipfx( int )
+Module: \watcom\lib386\nt\plbx3r.lib(stfdsgtn.cpp)
+00436a90       int near std::streambuf::do_sgetn( char near *, int )
+Module: \watcom\lib386\nt\plbx3r.lib(istdipfx.cpp)
+00436b10       int near std::istream::do_ipfx( int )
+Module: \watcom\lib386\nt\plbx3r.lib(istdread.cpp)
+00436ba0       std::istream near & near std::istream::do_read( char near *, int )
+Module: \watcom\lib386\nt\clib3r.lib(iob.c)
+0044c504       ___iob
+0044c70c       __fmode
+0045ea64       ___OpenStreams
+0045ea68       ___ClosedStreams
+Module: \watcom\lib386\nt\clib3r.lib(fprtf.c)
+00436c70       __fprtf_
+Module: \watcom\lib386\nt\plbx3r.lib(fsbconfd.cpp)
+00436d30       near std::fstreambase::fstreambase( int )
+Module: \watcom\lib386\nt\plbx3r.lib(ioufgtba.cpp)
+00436e10       int near __FlagsToBase( long )
+Module: \watcom\lib386\nt\plbx3r.lib(ostadpre.cpp)
+00436e40       void near __AddPrefix( char, char near *, int near &, int, long )
+Module: \watcom\lib386\nt\clib3r.lib(ltoa.c)
+00436ea0       ultoa_
+00436ef0*      ltoa_
+Module: \watcom\lib386\nt\clib3r.lib(strupr.c)
+00436f20       strupr_
+Module: \watcom\lib386\nt\plbx3r.lib(tssize.cpp)
+00436f64       __wcpp_4_ts_size__
+Module: \watcom\lib386\nt\plbx3r.lib(stabactv.cpp)
+00436fa0       __wcpp_4_ctor_varray__
+Module: \watcom\lib386\nt\plbx3r.lib(stabact.cpp)
+00437040       __wcpp_4_ctor_array__
+Module: \watcom\lib386\nt\plbx3r.lib(stfdspun.cpp)
+004370e0       int near std::streambuf::do_sputn( char const near *, int )
+Module: \watcom\lib386\nt\plbx3r.lib(stabdisp.cpp)
+0043737c       __wcpp_4_dispatchable__
+Module: \watcom\lib386\nt\clib3r.lib(mem.c)
+004373d0       __MemAllocator
+00437480       __MemFree
+Module: \watcom\lib386\nt\plbx3r.lib(flfdestr.cpp)
+004375c0       near std::filebuf::~filebuf()
+Module: \watcom\lib386\nt\plbx3r.lib(ioufrxal.cpp)
+00437690       void near __WATCOM_ios::free_xalloc_storage( std::ios near * )
+Module: \watcom\lib386\nt\plbx3r.lib(termnate.cpp)
+004376b0       void near std::terminate()
+Module: \watcom\lib386\nt\clib3r.lib(_strcmp)
+004376f0       strcmp_
+Module: \watcom\lib386\nt\clib3r.lib(enterdb.c)
+00437830       __EnterWVIDEO_
+0044c724+      ___WD_Present
+Module: \watcom\lib386\nt\clib3r.lib(xmsgwnt.c)
+00437860       __exit_with_msg_
+004378c0       __fatal_runtime_error_
+Module: \watcom\lib386\nt\plbx3r.lib(areaexc.cpp)
+0044c728       ___EXC_AREA
+Module: \watcom\lib386\nt\plbx3r.lib(bittest.cpp)
+004378e0       __wcpp_4_bit_test__
+00437900       __wcpp_4_bit_off__
+Module: \watcom\lib386\nt\clib3r.lib(flush.c)
+00437920       __flush_
+Module: \watcom\lib386\nt\plbx3r.lib(iosfail.cpp)
+00437a20       near std::ios::failure::failure( int )
+Module: \watcom\lib386\nt\plbx3r.lib(stfpbfai.cpp)
+00437a30       int near std::streambuf::pbackfail( int )
+Module: \watcom\lib386\nt\plbx3r.lib(sdfoverf.cpp)
+00437a40       int near stdiobuf::overflow( int )
+Module: \watcom\lib386\nt\plbx3r.lib(sdfundrf.cpp)
+00437ba0       int near stdiobuf::underflow()
+Module: \watcom\lib386\nt\plbx3r.lib(stfsbuf.cpp)
+00437cc0       std::streambuf near * near std::streambuf::setbuf( char near *, int )
+Module: \watcom\lib386\nt\plbx3r.lib(stfseekp.cpp)
+00437d10       long near std::streambuf::seekpos( long, int )
+Module: \watcom\lib386\nt\plbx3r.lib(sdfsync.cpp)
+00437d20       int near stdiobuf::sync()
+Module: \watcom\lib386\nt\plbx3r.lib(stfdoall.cpp)
+00437d50       int near std::streambuf::doallocate()
+Module: \watcom\lib386\nt\plbx3r.lib(stfconde.cpp)
+00437d90       near std::streambuf::streambuf()
+Module: \watcom\lib386\nt\plbx3r.lib(iosinit.cpp)
+00437de0       void near std::ios::init( std::streambuf near * )
+Module: \watcom\lib386\nt\plbx3r.lib(stfdestr.cpp)
+00437e30       near std::streambuf::~streambuf()
+Module: \watcom\lib386\nt\clib3r.lib(nmemneed.c)
+00437e50       __nmemneed_
+Module: \watcom\lib386\nt\clib3r.lib(grownear.c)
+00437fc0       __ExpandDGROUP_
+Module: \watcom\lib386\nt\clib3r.lib(close.c)
+00437fe0       close_
+Module: \watcom\lib386\nt\plbx3r.lib(flfconde.cpp)
+00438000       near std::filebuf::filebuf()
+Module: \watcom\lib386\nt\plbx3r.lib(flfopen.cpp)
+00438020       std::filebuf near * near std::filebuf::open( char const near *, int, int )
+Module: \watcom\lib386\nt\clib3r.lib(hdlman.c)
+0044d740+      ___NHandles
+0044d744+      ___OSHandles
+0044d748+      ___FakeHandles
+004380c0+      __growPOSIXHandles_
+00438160       __allocPOSIXHandle_
+00438220       __freePOSIXHandle_
+00438240       __getOSHandle_
+00438250       __setOSHandle_
+004382a0+      __NTGetFakeHandle_
+00438310       __initPOSIXHandles_
+004383f0*      __set_handles_
+00438400*      _grow_handles_
+Module: \watcom\lib386\nt\clib3r.lib(crwdata)
+0044d798       __osmajor
+0044d799       __osminor
+0044d79a       __osbuild
+0044d79c       __osver
+0044d7a0       __winmajor
+0044d7a4       __winminor
+0044d7a8       __winver
+0044d764       __LpDllName
+0044d768       __LpwCmdLine
+0044d76c       __LpwPgmName
+0044d770       __LpwDllName
+0044d75c       __LpCmdLine
+0044d760       __LpPgmName
+0044d754*      __dynend
+0044d758       __curbrk
+0044d774*      __STACKLOW
+0044d778       __STACKTOP
+0044d77c       __ASTACKSIZ
+0044d780       __ASTACKPTR
+0044d784       __cbyte
+0044d788*      __cbyte2
+0044d78c*      __child
+0044d792       __Envptr
+0044d796*      __Envseg
+0044d790*      __no87
+0044d7ac       ___FPE_handler
+Module: \watcom\lib386\nt\clib3r.lib(environ.c)
+0045ea6c       ___env_mask
+0045ea70       _environ
+0045ea74       __wenviron
+Module: \watcom\lib386\nt\clib3r.lib(getmodfn.c)
+00438440       __lib_GetModuleFileNameW_
+Module: \watcom\lib386\nt\clib3r.lib(strdup.c)
+004384e0       __clib_strdup_
+Module: \watcom\lib386\nt\clib3r.lib(istable.c)
+00438520       __IsTable
+Module: \watcom\lib386\nt\clib3r.lib(ustrdup.c)
+00438621       __clib_wcsdup_
+Module: \watcom\lib386\nt\clib3r.lib(excptwnt.c)
+00438cb0+      ___ReportException@4
+00439100       __DefaultExceptionHandler_
+00439140+      ___ExceptionFilter
+00439350       __NewExceptionFilter_
+00439380       __DoneExceptionFilter_
+0044d7b0       ___oscode_check_func
+0044d7b4       ___raise_func
+0045ea78*      _sw
+0045ea7c+      ___ExceptionHandled
+0045ea7d+      ___ReportInvoked
+Module: \watcom\lib386\nt\clib3r.lib(stklmwnt.c)
+004393c0       __init_stack_limits_
+Module: \watcom\lib386\nt\clib3r.lib(fgtattr.c)
+00439430       __fixed_GetFileAttributesA_
+Module: \watcom\lib386\nt\clib3r.lib(mthrdini.c)
+004394d0       __InitThreadData_
+0044d7cc       ___ThreadDataSize
+Module: \watcom\lib386\nt\clib3r.lib(cmain386.c)
+00439500       __CMain
+Module: \watcom\lib386\nt\clib3r.lib(dosseg)
+00001234       __DOSseg__
+Module: \watcom\lib386\nt\clib3r.lib(histsplt.c)
+0045ea80       ___historical_splitparms
+Module: \watcom\lib386\nt\clib3r.lib(___argc.c)
+0045ea84       ____Argc
+0045ea88       ____Argv
+Module: \watcom\lib386\nt\plbx3r.lib(manws.cpp)
+00439540       std::istream near & near std::ws( std::istream near & )
+Module: \watcom\lib386\nt\clib3r.lib(initfile.c)
+004395a0       __InitFiles_
+Module: \watcom\lib386\nt\clib3r.lib(ioexit.c)
+004396a0*      fcloseall_
+004396b0       __full_io_exit_
+Module: \watcom\lib386\nt\clib3r.lib(fputc.c)
+004396c0       fputc_
+Module: \watcom\lib386\nt\clib3r.lib(ioalloc.c)
+004397a0       __ioalloc_
+Module: \watcom\lib386\nt\clib3r.lib(prtf.c)
+00439840       __prtf_
+Module: \watcom\lib386\nt\plbx3r.lib(flfattac.cpp)
+0043a510       std::filebuf near * near std::filebuf::attach( int )
+Module: \watcom\lib386\nt\clib3r.lib(alphabet.c)
+00441404       ___Alphabet
+Module: \watcom\lib386\nt\plbx3r.lib(flfpbfai.cpp)
+0043a550       int near std::filebuf::pbackfail( int )
+Module: \watcom\lib386\nt\plbx3r.lib(flfoverf.cpp)
+0043a610       int near std::filebuf::overflow( int )
+Module: \watcom\lib386\nt\plbx3r.lib(flfundrf.cpp)
+0043a830       int near std::filebuf::underflow()
+Module: \watcom\lib386\nt\plbx3r.lib(flfsetbf.cpp)
+0043a940       std::streambuf near * near std::filebuf::setbuf( char near *, int )
+Module: \watcom\lib386\nt\plbx3r.lib(flfseeko.cpp)
+0043a9a0       long near std::filebuf::seekoff( long, int, int )
+Module: \watcom\lib386\nt\plbx3r.lib(flfsync.cpp)
+0043a9f0       int near std::filebuf::sync()
+Module: \watcom\lib386\nt\clib3r.lib(liballoc.c)
+0043aa90       _plib_malloc_
+0043aaa0       _plib_free_
+Module: \watcom\lib386\nt\clib3r.lib(__lseek.c)
+0043aab0       __lseek_
+Module: \watcom\lib386\nt\clib3r.lib(fsync.c)
+0043aaf0       fsync_
+Module: \watcom\lib386\nt\clib3r.lib(qwrit.c)
+0043ab40       __qwrite_
+Module: \watcom\lib386\nt\clib3r.lib(fwrite.c)
+0043ac20       fwrite_
+Module: \watcom\lib386\nt\clib3r.lib(memmove.c)
+0043ae30       memmove_
+Module: \watcom\lib386\nt\clib3r.lib(fgetc.c)
+0043ae90+      __fill_buffer_
+0043af90       fgetc_
+Module: \watcom\lib386\nt\plbx3r.lib(stfsetb.cpp)
+0043b050       void near std::streambuf::setb( char near *, char near *, int )
+Module: \watcom\lib386\nt\clib3r.lib(amblksiz.c)
+0044d7d0       __amblksiz
+Module: \watcom\lib386\nt\clib3r.lib(heapen.c)
+0043b0b0*      _heapenable_
+0044d7d4       ___heap_enabled
+Module: \watcom\lib386\nt\clib3r.lib(nheapmin.c)
+0043b0e0       _nheapshrink_
+0043b0e0*      _nheapmin_
+0043b0e0*      _heapmin_
+0043b0e0*      _heapshrink_
+Module: \watcom\lib386\nt\clib3r.lib(iomode.c)
+0043b1d0       __GetIOMode_
+0043b1f0       __SetIOMode_nogrow_
+0044d7d8       ___NFiles
+0044d7dc       ___init_mode
+0044d82c       ___io_mode
+Module: \watcom\lib386\nt\clib3r.lib(_clsewnt.c)
+0043b210       __close_
+Module: \watcom\lib386\nt\clib3r.lib(plusopen.c)
+0043b270       __plusplus_open_
+Module: \watcom\lib386\nt\clib3r.lib(nrealloc.c)
+0043b340*      _nrealloc_
+0043b340       realloc_
+Module: \watcom\lib386\nt\clib3r.lib(stiomode.c)
+0043b3c0       __grow_iomode_
+0043b490+      __shrink_iomode_
+0043b4d0       __SetIOMode_
+Module: \watcom\lib386\nt\clib3r.lib(setenvp.c)
+0043b540       __setenvp_
+0043b600       __freeenvp_
+Module: \watcom\lib386\nt\clib3r.lib(ustrlen.c)
+0043b64d       wcslen_
+Module: \watcom\lib386\nt\clib3r.lib(memcpy.c)
+0043b660       memcpy_
+Module: \watcom\lib386\nt\clib3r.lib(conutwnt.c)
+0043b690       __NTRealKey_
+0043b740       __NTConsoleInput_
+0043b750       __NTConsoleOutput_
+Module: \watcom\lib386\nt\clib3r.lib(fclex387.c)
+0043b760       _ClearFPE_
+Module: \watcom\lib386\nt\clib3r.lib(signlwnt.c)
+0044d838+      __SignalTable
+0043b770+      __SetSignalFunc_
+0043b7c0+      __GetSignalFunc_
+0043b7f0+      __GetSignalOSCode_
+0043b820+      __CheckSignalExCode_
+0043b960+      __sigabort_
+0043b970       __sigfpe_handler_
+0043b9c0*      signal_
+0043ba50+      raise_
+0043bac0+      __SigInit_
+0043bb10+      __SigFini_
+0043bb50+      __sig_init_
+Module: \watcom\lib386\nt\clib3r.lib(cinit.c)
+0043bb70       __CommonInit_
+Module: \watcom\lib386\nt\plbx3r.lib(istpeek.cpp)
+0043bb80       int near std::istream::peek()
+Module: \watcom\lib386\nt\clib3r.lib(isspace.c)
+0043bbe0       isspace_
+Module: \watcom\lib386\nt\plbx3r.lib(istget.cpp)
+0043bbf0       int near std::istream::get()
+Module: \watcom\lib386\nt\clib3r.lib(fclose.c)
+0043bc70+      __doclose_
+0043bd10       __shutdown_stream_
+0043bd30*      fclose_
+0045ea94+      ___RmTmpFileFn
+Module: \watcom\lib386\nt\clib3r.lib(freefp.c)
+0043bd80       __freefp_
+0043bdd0       __purgefp_
+Module: \watcom\lib386\nt\clib3r.lib(chktty.c)
+0043be00       __chktty_
+Module: \watcom\lib386\nt\clib3r.lib(wctomb.c)
+0043be40       wctomb_
+Module: \watcom\lib386\nt\clib3r.lib(itoa.c)
+0043be80+      utoa_
+0043bed0       itoa_
+Module: \watcom\lib386\nt\clib3r.lib(noefgfmt.c)
+0044d8a4       ___EFG_printf
+0044d8a8*      ___EFG_scanf
+Module: \watcom\lib386\nt\clib3r.lib(lltoa.c)
+0043bf50       ulltoa_
+0043bfc0*      lltoa_
+Module: \watcom\lib386\nt\clib3r.lib(mbisdbcs.c)
+0045ea98       ___IsDBCS
+Module: \watcom\lib386\nt\clib3r.lib(mbislead.c)
+0043bff0*      _ismbblead_
+0045ea9c       ___MBCSIsTable
+Module: \watcom\lib386\nt\clib3r.lib(plusfsta.c)
+0043c010       __plusplus_fstat_
+Module: \watcom\lib386\nt\clib3r.lib(lseek.c)
+0043c050       lseek_
+Module: \watcom\lib386\nt\clib3r.lib(write.c)
+0043c2f0       write_
+Module: \watcom\lib386\nt\clib3r.lib(tell.c)
+0043c550       tell_
+Module: \watcom\lib386\nt\clib3r.lib(read.c)
+0043c570       read_
+Module: \watcom\lib386\nt\clib3r.lib(flushall.c)
+0043c700       __flushall_
+0043c740*      flushall_
+Module: \watcom\lib386\nt\clib3r.lib(gtchewnt.c)
+0043c750       getche_
+Module: \watcom\lib386\nt\clib3r.lib(qread.c)
+0043c780       __qread_
+Module: \watcom\lib386\nt\clib3r.lib(statwnt.c)
+0043c8f1       stat_
+Module: \watcom\lib386\nt\clib3r.lib(openwnt.c)
+0043cd30*      open_
+0043cd50       sopen_
+Module: \watcom\lib386\nt\clib3r.lib(nmsize.c)
+0043cd80       _nmsize_
+0043cd80*      _msize_
+Module: \watcom\lib386\nt\clib3r.lib(nexpand.c)
+0043cd90       _nexpand_
+0043cd90*      _expand_
+0043cdd0+      __HeapManager_expand_
+Module: \watcom\lib386\nt\clib3r.lib(iomodtty.c)
+0043cf90       __ChkTTYIOMode_
+0043cfd0*      __IOMode_
+Module: \watcom\lib386\nt\clib3r.lib(dofilstr.c)
+0043d010       __ParsePosixHandleStr_
+Module: \watcom\lib386\nt\clib3r.lib(clearenv.c)
+0043d130       clearenv_
+Module: \watcom\lib386\nt\clib3r.lib(abort.c)
+0043d1d5*      abort_
+0043d1e7       __terminate_
+0044d8ac       ___abort
+Module: \watcom\lib386\nt\clib3r.lib(isattwnt.c)
+0043d200       isatty_
+Module: \watcom\lib386\nt\clib3r.lib(mbinit.c)
+0043d256       __mbinit_
+0044d8b0       ___MBCodePage
+Module: \watcom\lib386\nt\clib3r.lib(getchwnt.c)
+0043d450       getch_
+Module: \watcom\lib386\nt\clib3r.lib(putchwnt.c)
+0043d4c0       putch_
+Module: \watcom\lib386\nt\clib3r.lib(mbspbrk.c)
+0043d510       _mbspbrk_
+Module: \watcom\lib386\nt\clib3r.lib(gtcwdwnt.c)
+0043d560       getcwd_
+Module: \watcom\lib386\nt\clib3r.lib(fullpath.c)
+0043d600+      _sys_fullpath_
+0043d680       _fullpath_
+Module: \watcom\lib386\nt\clib3r.lib(mbsinc.c)
+0043d6f0       _mbsinc_
+Module: \watcom\lib386\nt\clib3r.lib(tolower.c)
+0043d720       tolower_
+Module: \watcom\lib386\nt\clib3r.lib(ntdirinf.c)
+0043d730       __MakeDOSDT_
+0043d760*      __FromDOSDT_
+0043d790*      __GetNTDirInfo_
+0043d7d0*      __NTFindNextFileWithAttr_
+Module: \watcom\lib386\nt\clib3r.lib(d2ttime.c)
+0043d830       _d2ttime_
+Module: \watcom\lib386\nt\clib3r.lib(ntfio.c)
+0043d8b0*      __GetNTCreateAttr_
+0043d8f0       __GetNTAccessAttr_
+0043d920       __GetNTShareAttr_
+Module: \watcom\lib386\nt\clib3r.lib(umaskval.c)
+0044d8b8       ___umaskval
+Module: \watcom\lib386\nt\clib3r.lib(getenv.c)
+0043d980       getenv_
+Module: \watcom\lib386\nt\clib3r.lib(strtol.c)
+0043dc30*      strtoul_
+0043dc40       strtol_
+Module: \watcom\lib386\nt\clib3r.lib(putenv.c)
+0043dc50       putenv_
+0043dee0       __putenv_
+Module: \watcom\lib386\nt\clib3r.lib(mbterm.c)
+0043e050       _mbterm_
+Module: \watcom\lib386\nt\clib3r.lib(mbsnextc.c)
+0043e090       _mbsnextc_
+Module: \watcom\lib386\nt\clib3r.lib(mbschr.c)
+0043e0d0       _mbschr_
+Module: \watcom\lib386\nt\clib3r.lib(mktime.c)
+0043e130       mktime_
+Module: \watcom\lib386\nt\clib3r.lib(mbcupper.c)
+0043e1c0       _mbctoupper_
+Module: \watcom\lib386\nt\clib3r.lib(mbslen.c)
+0043e1f0       _mbslen_
+Module: \watcom\lib386\nt\clib3r.lib(mbstowcs.c)
+0043e220       mbstowcs_
+Module: \watcom\lib386\nt\clib3r.lib(uputenv.c)
+0043e2a0*      _wputenv_
+0043e4c0       __wputenv_
+Module: \watcom\lib386\nt\clib3r.lib(toupper.c)
+0043e5c0       toupper_
+Module: \watcom\lib386\nt\clib3r.lib(mbconv.c)
+0043e5d0       _mbvtop_
+Module: \watcom\lib386\nt\clib3r.lib(mbclen.c)
+0043e5f0       _mbclen_
+Module: \watcom\lib386\nt\clib3r.lib(mbccmp.c)
+0043e620       _mbccmp_
+Module: \watcom\lib386\nt\clib3r.lib(locmktim.c)
+0043e660       __local_mktime_
+Module: \watcom\lib386\nt\clib3r.lib(gmtime.c)
+0043e7e0       __brktime_
+0043e8e0+      _gmtime_
+0043e900*      gmtime_
+Module: \watcom\lib386\nt\clib3r.lib(tzset.c)
+0044d948       ___start_dst
+0044d96c       ___end_dst
+0044da94*      _tzname
+0044da9c       _timezone
+0044daa0       _daylight
+0044daa4       ___dst_adjust
+0043e970*      __DontCacheOSTZ_
+0043e980*      __CacheOSTZ_
+0043ee60+      __parse_tz_
+0043f250       tzset_
+Module: \watcom\lib386\nt\clib3r.lib(timeutil.c)
+0043f3c0       __isindst_
+Module: \watcom\lib386\nt\clib3r.lib(mbtowc.c)
+0043f6f0       mbtowc_
+Module: \watcom\lib386\nt\clib3r.lib(ustrchr.c)
+0043f780       wcschr_
+Module: \watcom\lib386\nt\clib3r.lib(setenvar.c)
+0043f7a0       __lib_SetEnvironmentVariableW_
+Module: \watcom\lib386\nt\clib3r.lib(crtwenv.c)
+0043f890       __create_wide_environment_
+Module: \watcom\lib386\nt\clib3r.lib(wcstombs.c)
+0043f900       wcstombs_
+Module: \watcom\lib386\nt\clib3r.lib(utoupper.c)
+0043f99f       towupper_
+Module: \watcom\lib386\nt\clib3r.lib(leapyear.c)
+0043f9b0       __leapyear_
+0044142c       ___diyr
+00441446       ___dilyr
+Module: \watcom\lib386\nt\plbx3r.lib(stfseeko.cpp)
+0043f9f0       long near std::streambuf::seekoff( long, int, int )
+Module: \watcom\lib386\nt\plbx3r.lib(stfsync.cpp)
+0043fa00       int near std::streambuf::sync()
+
+
+                        +----------------------+
+                        |   Imported Symbols   |
+                        +----------------------+
+
+Symbol                              Module
+======                              ======
+
+_RtlUnwind@16                       KERNEL32.DLL
+_RaiseException@16                  KERNEL32.DLL
+_FormatMessageA@28                  KERNEL32.DLL
+_MoveFileA@8                        KERNEL32.DLL
+_GetCurrentProcessId@0              KERNEL32.DLL
+_GetEnvironmentStringsA@0           KERNEL32.DLL
+_GetVersion@0                       KERNEL32.DLL
+_GetModuleFileNameA@12              KERNEL32.DLL
+_GetCommandLineA@0                  KERNEL32.DLL
+_GetCommandLineW@0                  KERNEL32.DLL
+_FreeEnvironmentStringsA@4          KERNEL32.DLL
+_GetModuleHandleA@4                 KERNEL32.DLL
+_ExitProcess@4                      KERNEL32.DLL
+_DeleteFileA@4                      KERNEL32.DLL
+_GetLastError@0                     KERNEL32.DLL
+_GetStdHandle@4                     KERNEL32.DLL
+_WriteFile@20                       KERNEL32.DLL
+_VirtualAlloc@16                    KERNEL32.DLL
+_SetStdHandle@8                     KERNEL32.DLL
+_CreateEventA@16                    KERNEL32.DLL
+_CloseHandle@4                      KERNEL32.DLL
+_GetModuleFileNameW@12              KERNEL32.DLL
+_MultiByteToWideChar@24             KERNEL32.DLL
+_LoadLibraryA@4                     KERNEL32.DLL
+_GetProcAddress@8                   KERNEL32.DLL
+_SetUnhandledExceptionFilter@4      KERNEL32.DLL
+_UnhandledExceptionFilter@4         KERNEL32.DLL
+_VirtualQuery@12                    KERNEL32.DLL
+_GetFileAttributesA@4               KERNEL32.DLL
+_FindFirstFileA@8                   KERNEL32.DLL
+_FindClose@4                        KERNEL32.DLL
+_GetCurrentThreadId@0               KERNEL32.DLL
+_SetFilePointer@16                  KERNEL32.DLL
+_FlushFileBuffers@4                 KERNEL32.DLL
+_VirtualFree@12                     KERNEL32.DLL
+_CreateFileA@28                     KERNEL32.DLL
+_SetConsoleCtrlHandler@8            KERNEL32.DLL
+_WideCharToMultiByte@32             KERNEL32.DLL
+_GetFileType@4                      KERNEL32.DLL
+_ReadFile@20                        KERNEL32.DLL
+_GetDriveTypeA@4                    KERNEL32.DLL
+_GetACP@0                           KERNEL32.DLL
+_GetOEMCP@0                         KERNEL32.DLL
+_GetCPInfo@8                        KERNEL32.DLL
+_ReadConsoleInputA@16               KERNEL32.DLL
+_GetConsoleMode@8                   KERNEL32.DLL
+_SetConsoleMode@8                   KERNEL32.DLL
+_WriteConsoleA@20                   KERNEL32.DLL
+_GetCurrentDirectoryA@8             KERNEL32.DLL
+_GetFullPathNameA@16                KERNEL32.DLL
+_FileTimeToLocalFileTime@8          KERNEL32.DLL
+_FileTimeToDosDateTime@12           KERNEL32.DLL
+_DosDateTimeToFileTime@12           KERNEL32.DLL
+_LocalFileTimeToFileTime@8          KERNEL32.DLL
+_FindNextFileA@8                    KERNEL32.DLL
+_SetEnvironmentVariableA@8          KERNEL32.DLL
+_CharUpperA@4                       USER32.DLL
+_GetTimeZoneInformation@4           KERNEL32.DLL
+_SetEnvironmentVariableW@8          KERNEL32.DLL
+
+
+                        +--------------------+
+                        |   Libraries Used   |
+                        +--------------------+
+
+\watcom\lib386\nt\kernel32.lib
+\watcom\lib386\nt\user32.lib
+\watcom\lib386\nt\clib3r.lib
+\watcom\lib386\nt\plbx3r.lib
+
+
+                        +-----------------------+
+                        |   Linker Statistics   |
+                        +-----------------------+
+
+Stack size:  00020000 (131072.)
+Memory size:  0007cdd0 (511440.)
+Entry point address: 004337d0
+Link time: 00:00.10
