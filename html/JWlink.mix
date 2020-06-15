@@ -1,0 +1,1258 @@
+.ixchap JWlink
+.ixline 'OMF'
+.ixline 'Intel OMF'
+.ixline 'Microsoft OMF'
+.ixline 'Phar Lap OMF-386'
+.ixline 'COFF'
+.ixline 'ELF'
+.ixline 'OMF library'
+.ixline 'AR-format'
+.ixline 'executable formats'
+.ixline 'host operating system'
+.ixline 'host'
+.ixline 'host operating system'
+.ixline 'operating system' 'host'
+
+.ixchap Linking Executable Files for Various Systems
+.ixline 'JWlink' 'command line format'
+.ixline 'JWlink command line' 'invoking JWlink'
+.ixline 'command line format' 'JWlink'
+.ixline 'invoking JWlink'
+.ixsect Using the SYSTEM Directive
+.ixline 'SYSTEM directive'
+.ixline 'default directive file'
+.ixline 'jwlink.lnk' 'default directive file'
+.ixline 'environment variables' 'PATH'
+.ixline 'PATH environment variable'
+.ixline 'wlsystem.lnk' 'directive file'
+.ixline 'environment variables' 'JWLINK'
+.ixline 'JWLINK environment variable'
+.ixline 'environment variables' 'JWLINK'
+.ixline 'JWLINK environment variable'
+.ixsect Linking 16-bit Executable Files
+.ixline '16-bit executables'
+.beglevel
+.ixsect Linking DOS 16-bit Executable Files
+.ixline 'DOS 16-bit executables'
+.ixsect Linking DOS 16-bit .COM Executable Files
+.ixline 'DOS 16-bit .COM'
+.ixsect Linking OS/2 16-bit Executable Files
+.ixline 'OS/2 16-bit executables'
+.ixsect Linking OS/2 16-bit Dynamic Link Libraries
+.ixline 'OS/2 16-bit DLLs'
+.ixsect Linking Windows 3.x 16-bit Executable Files
+.ixline 'Windows 3.x 16-bit executables'
+.ixsect Linking Windows 3.x 16-bit Dynamic Link Libraries
+.ixline 'Windows 3.x 16-bit DLLs'
+.endlevel
+.ixsect Linking 32-bit Executable Files
+.ixline '32-bit executables'
+.beglevel
+.ixsect Linking DOS-extended 32-bit CauseWay Executable Files
+.ixline 'DOS-extended 32-bit CauseWay executables'
+.ixsect Linking DOS-extended 32-bit CauseWay Dynamic Link Libraries
+.ixline 'DOS-extended 32-bit CauseWay DLL'
+.ixsect Linking Netware 32-bit Novell NetWare Loadable Modules
+.ixline 'Netware 32-bit Netware Loadable Modules'
+.ixsect Linking OS/2 32-bit Executable Files
+.ixline 'OS/2 32-bit executables'
+.ixsect Linking OS/2 32-bit Dynamic Link Libraries
+.ixline 'OS/2 32-bit DLLs'
+.ixsect Linking OS/2 32-bit Presentation Manager Executable Files
+.ixline 'OS/2 32-bit PM executables'
+.ixsect Linking Windows 3.x or 9x 32-bit Virtual Device Driver
+.ixline 'Windows 32-bit VxD'
+.ixsect Linking Win32/Win64 Character-Mode Executable Files
+.ixline 'Windows 32-bit and 64-bit character-mode executables'
+.ixsect Linking Win32/Win64 GUI Executable Files
+.ixline 'Windows 32-bit and 64-bit GUI executables'
+.ixsect Linking Win32/Win64 Dynamic Link Libraries
+.ixline 'Windows 32-bit and 64-bit DLLs'
+.endlevel
+
+.ixchap Linker Directives and Options
+.ixline 'general directives/options'
+.ixline 'directives'
+.ixline 'default directive file'
+.ixline 'jwlink.lnk' 'default directive file'
+.ixline 'environment variables' 'PATH'
+.ixline 'PATH environment variable'
+.ixline 'environment variables' 'JWLINK'
+.ixline 'JWLINK environment variable'
+.ixline 'environment variables' 'JWLINK_LNK'
+.ixline 'JWLINK_LNK environment variable'
+.ixline 'using environment variables in directives'
+.ixline 'environment variables' 'LIBDIR'
+.ixline 'LIBDIR environment variable'
+.ixline 'notation'
+.ixline 'JWlink notation'
+.ixline 'linking notation'
+.ixline 'apostrophes'
+.ixline 'special characters'
+.ixline 'punctuation characters'
+.ixline 'space character'
+.ixline 'blanks in file names'
+.ixsect ALIAS Directive
+.ixline 'ALIAS directive'
+.ixline 'directives' 'ALIAS'
+.ixsect ALIGNMENT Option
+.ixline 'ALIGNMENT option'
+.ixline 'options' 'ALIGNMENT'
+.ixsect ANONYMOUSEXPORT Directive
+.ixline 'ANONYMOUSEXPORT directive'
+.ixline 'directives' 'ANONYMOUSEXPORT'
+.ixsect AREA Option
+.ixline 'AREA option'
+.ixline 'options' 'AREA'
+.ixsect ARTIFICIAL Option
+.ixline 'ARTIFICIAL option'
+.ixline 'options' 'ARTIFICIAL'
+.ixsect AUTOSECTION Directive
+.ixline 'AUTOSECTION directive'
+.ixline 'directives' 'AUTOSECTION'
+.ixsect AUTOUNLOAD Option
+.ixline 'AUTOUNLOAD option'
+.ixline 'options' 'AUTOUNLOAD'
+.ixsect BEGIN Directive
+.ixline 'BEGIN directive'
+.ixline 'directives' 'BEGIN'
+.ixsect CACHE Option
+.ixline 'CACHE option'
+.ixline 'options' 'CACHE'
+.ixsect CASEEXACT Option
+.ixline 'CASEEXACT option'
+.ixline 'options' 'CASEEXACT'
+.ixline 'default directive file' 'jwlink.lnk'
+.ixline 'jwlink.lnk' 'default directive file'
+.ixline 'default directive file'
+.ixline 'jwlink.lnk' 'default directive file'
+.ixline 'environment variables' 'PATH'
+.ixline 'PATH environment variable'
+.ixline 'wlsystem.lnk' 'directive file'
+.ixline 'environment variables' 'JWLINK'
+.ixline 'JWLINK environment variable'
+.ixline 'environment variables' 'JWLINK_LNK'
+.ixline 'JWLINK_LNK environment variable'
+.ixsect CHECK Option
+.ixline 'CHECK option'
+.ixline 'options' 'CHECK'
+.ixsect CHECKSUM Option
+.ixline 'CHECKSUM option'
+.ixline 'options' 'CHECKSUM'
+.ixsect hash Directive
+.ixline '# directive'
+.ixline 'directives' '#'
+.ixline 'directives' 'comment'
+.ixline 'comment (#) directive'
+.ixsect COMMIT Directive
+.ixline 'COMMIT directive'
+.ixline 'directives' 'COMMIT'
+.ixsect COPYRIGHT Option
+.ixline 'COPYRIGHT option'
+.ixline 'options' 'COPYRIGHT'
+.ixsect CUSTOM Option
+.ixline 'CUSTOM option'
+.ixline 'options' 'CUSTOM'
+.ixsect CVPACK Option
+.ixline 'CVPACK option'
+.ixline 'options' 'CVPACK'
+.ixline 'CodeView'
+.ixline 'CVPACK'
+.ixline 'Debugging Information Compactor'
+.ixline 'Compactor'
+.ixline 'CV4'
+.ixsect DEBUG Directive
+.ixline 'DEBUG directive'
+.ixline 'directives' 'DEBUG'
+.ixline 'DEBUG options' 'DWARF'
+.ixline 'DEBUG options' 'Watcom'
+.ixline 'DEBUG options' 'CODEVIEW'
+.ixline 'CVPACK'
+.ixline 'Debugging Information Compactor'
+.ixline 'DEBUG options' 'NOVELL'
+.ixline 'debugging information' 'global symbol'
+.ixline 'debugging information' 'line numbering'
+.ixline 'debugging information' 'local symbol'
+.ixline 'debugging information' 'typing'
+.ixline 'debugging information' 'NetWare global symbol'
+.ixline 'DEBUG options' 'LINES'
+.ixline 'DEBUG options' 'LOCALS'
+.ixline 'DEBUG options' 'TYPES'
+.ixline 'DEBUG options' 'ALL'
+.ixline 'DEBUG options' 'ONLYEXPORTS'
+.ixline 'DEBUG options' 'ONLYEXPORTS'
+.ixline 'DEBUG options' 'REFERENCED'
+.beglevel
+.ixsect Line Numbering Information - DEBUG WATCOM LINES
+.ixline 'debugging information' 'line numbering'
+.ixsect Local Symbol Information - DEBUG WATCOM LOCALS
+.ixline 'debugging information' 'local symbol'
+.ixsect Typing Information - DEBUG WATCOM TYPES
+.ixline 'debugging information' 'typing'
+.ixsect All Debugging Information - DEBUG WATCOM ALL
+.ixline 'debugging information' 'all'
+.ixsect Global Symbol Information
+.ixline 'debugging information' 'global symbol'
+.ixsect Global Symbols for the NetWare Debugger - DEBUG NOVELL
+.ixline 'debugging information' 'for NetWare debugger'
+.ixline 'NetWare debugger'
+.ixline 'WSTRIP'
+.ixsect ONLYEXPORTS Debugging Option
+.ixline 'DEBUG options' 'ONLYEXPORTS'
+.ixsect Using DEBUG Directives
+.ixsect Removing Debugging Information from an Executable File
+.ixline 'debugging information' 'strip from "EXE" file'
+.ixline 'WSTRIP command'
+.ixline 'WSTRIP'
+.ixline 'WSTRIP'
+.endlevel
+.ixsect DESCRIPTION Option
+.ixline 'DESCRIPTION option'
+.ixline 'options' 'DESCRIPTION'
+.ixsect DISABLE Directive
+.ixline 'DISABLE directive'
+.ixline 'directives' 'DISABLE'
+.ixline 'fatal errors'
+.ixline 'errors'
+.ixline 'warnings'
+.ixsect DISTRIBUTE Option
+.ixline 'DISTRIBUTE option'
+.ixline 'options' 'DISTRIBUTE'
+.ixsect DOSSEG Option
+.ixline 'DOSSEG option'
+.ixline 'options' 'DOSSEG'
+.ixline 'memory layout'
+.ixline 'segment ordering'
+.ixline '_edata linker symbol'
+.ixline '_end linker symbol'
+.ixline 'linker symbols' '_edata'
+.ixline 'linker symbols' '_end'
+.ixsect DYNAMIC Option
+.ixline 'DYNAMIC option'
+.ixline 'options' 'DYNAMIC'
+.ixsect ELIMINATE Option
+.ixline 'ELIMINATE option'
+.ixline 'options' 'ELIMINATE'
+.ixline 'dead code elimination'
+.ixline 'Open Watcom C/C++ options' 'zm'
+.ixline 'zm compiler option (Open Watcom C/C++)'
+.ixsect END Directive
+.ixline 'END directive'
+.ixline 'directives' 'END'
+.ixsect ENDLINK Directive
+.ixline 'ENDLINK directive'
+.ixline 'directives' 'ENDLINK'
+.ixsect EXIT Option
+.ixline 'EXIT option'
+.ixline 'options' 'EXIT'
+.ixsect EXPORT Directive
+.ixline 'EXPORT directive'
+.ixline 'directives' 'EXPORT'
+.beglevel
+.ixsect EXPORT - OS/2, Win16, Win32 only
+.ixline 'window function'
+.ixline '__export'
+.ixsect EXPORT - ELF only
+.ixsect EXPORT - Netware only
+.endlevel
+.ixsect FARCALLS Option
+.ixline 'FARCALLS option'
+.ixline 'options' 'FARCALLS'
+.ixline 'default directive file' 'jwlink.lnk'
+.ixline 'jwlink.lnk' 'default directive file'
+.ixline 'default directive file'
+.ixline 'jwlink.lnk' 'default directive file'
+.ixline 'environment variables' 'PATH'
+.ixline 'PATH environment variable'
+.ixline 'wlsystem.lnk' 'directive file'
+.ixline 'environment variables' 'JWLINK'
+.ixline 'JWLINK environment variable'
+.ixline 'environment variables' 'JWLINK_LNK'
+.ixline 'JWLINK_LNK environment variable'
+.ixsect FILE Directive
+.ixline 'FILE directive'
+.ixline 'directives' 'FILE'
+.ixsect FILLCHAR Option
+.ixline 'FILLCHAR option'
+.ixline 'options' 'FILLCHAR'
+.ixsect FIXEDLIB Directive
+.ixline 'FIXEDLIB directive'
+.ixline 'directives' 'FIXEDLIB'
+.ixsect FORCEVECTOR Directive
+.ixline 'FORCEVECTOR directive'
+.ixline 'directives' 'FORCEVECTOR'
+.ixsect FORMAT Directive
+.ixline 'FORMAT directive'
+.ixline 'directives' 'FORMAT'
+.ixline 'VxD format executable'
+.ixline 'PE format executable'
+.ixline 'Phar Lap TNT'
+.ixline 'TNT DOS extender'
+.ixline 'PL format executable'
+.ixline 'PE format executable'
+.ixsect FUZZYEXPORT Option
+.ixline 'FUZZYEXPORT option'
+.ixline 'options' 'FUZZYEXPORT'
+.ixsect HEAPSIZE Option
+.ixline 'HEAPSIZE option'
+.ixline 'options' 'HEAPSIZE'
+.ixsect HELP Option
+.ixline 'HELP option'
+.ixline 'options' 'HELP'
+.ixsect HSHIFT Option
+.ixline 'HSHIFT option'
+.ixline 'options' 'HSHIFT'
+.ixsect IMPFILE Option
+.ixline 'IMPFILE option'
+.ixline 'options' 'IMPFILE'
+.ixline 'import library'
+.ixline 'import library command file'
+.ixline 'library file'
+.ixsect IMPLIB Option
+.ixline 'IMPLIB option'
+.ixline 'options' 'IMPLIB'
+.ixline 'import library'
+.ixline 'library file'
+.ixsect IMPORT Directive
+.ixline 'IMPORT directive'
+.ixline 'directives' 'IMPORT'
+.beglevel
+.ixsect IMPORT - OS/2, Win16, Win32 only
+.ixline 'apostrophes'
+.ixsect IMPORT - ELF only
+.ixsect IMPORT - Netware only
+.endlevel
+.ixsect @ Directive
+.ixline 'directives' 'include'
+.ixline 'include directive'
+.ixline 'window function'
+.ixsect INCREMENTAL Option
+.ixline 'INCREMENTAL option'
+.ixline 'options' 'INCREMENTAL'
+.ixline 'incremental linking'
+.ixsect INTERNALRELOCS Option
+.ixline 'INTERNALRELOCS option'
+.ixline 'options' 'INTERNALRELOCS'
+.ixline 'internal relocation'
+.ixline 'relocation' 'internal'
+.ixsect KNOWEAS Option
+.ixline 'KNOWEAS option'
+.ixline 'options' 'KNOWEAS'
+.ixsect LANGUAGE Directive
+.ixline 'LANGUAGE directive'
+.ixline 'directives' 'LANGUAGE'
+.ixline 'LANGUAGE options' 'JAPANESE'
+.ixline 'DBCS' 'Japanese'
+.ixline 'LANGUAGE options' 'CHINESE'
+.ixline 'DBCS' 'Chinese'
+.ixline 'LANGUAGE options' 'KOREAN'
+.ixline 'DBCS' 'Korean'
+.ixsect LARGEADDRESSAWARE Option
+.ixline 'LARGEADDRESSAWARE option'
+.ixline 'options' 'LARGEADDRESSAWARE'
+.ixsect LIBFILE Directive
+.ixline 'LIBFILE directive'
+.ixline 'directives' 'LIBFILE'
+.ixsect LIBPATH Directive
+.ixline 'LIBPATH directive'
+.ixline 'directives' 'LIBPATH'
+.ixsect LIBRARY Directive
+.ixline 'LIBRARY directive'
+.ixline 'directives' 'LIBRARY'
+.beglevel
+.ixsect Searching for Libraries Specified in Environment Variables
+.ixline 'LIB environment variable'
+.ixline 'environment variables' 'LIB'
+.ixsect Converting Libraries Created using Phar Lap 386|LIB
+.endlevel
+.ixsect LINEARRELOCS Option
+.ixline 'LINEARRELOCS option'
+.ixline 'options' 'LINEARRELOCS'
+.ixsect LINKVERSION Option
+.ixline 'LINKVERSION option'
+.ixline 'options' 'LINKVERSION'
+.ixsect LONGLIVED Option
+.ixline 'LONGLIVED option'
+.ixline 'options' 'LONGLIVED'
+.ixsect MANGLEDNAMES Option
+.ixline 'MANGLEDNAMES option'
+.ixline 'options' 'MANGLEDNAMES'
+.ixline 'mangled names in C++'
+.ixsect MANYAUTODATA Option
+.ixline 'MANYAUTODATA option'
+.ixline 'options' 'MANYAUTODATA'
+.ixsect MAP Option
+.ixline 'MAP option'
+.ixline 'options' 'MAP'
+.ixline 'map file'
+.ixsect MAXDATA Option
+.ixline 'MAXDATA option'
+.ixline 'options' 'MAXDATA'
+.ixsect MAXERRORS Option
+.ixline 'MAXERRORS option'
+.ixline 'options' 'MAXERRORS'
+.ixsect MESSAGES Option
+.ixline 'MESSAGES option'
+.ixline 'options' 'MESSAGES'
+.ixsect MINDATA Option
+.ixline 'MINDATA option'
+.ixline 'options' 'MINDATA'
+.ixsect MIXED1632 Option
+.ixline 'MIXED1632 option'
+.ixline 'options' 'MIXED1632'
+.ixsect MODNAME Option
+.ixline 'MODNAME option'
+.ixline 'options' 'MODNAME'
+.ixsect MODFILE Directive
+.ixline 'MODFILE directive'
+.ixline 'directives' 'MODFILE'
+.ixsect MODTRACE Directive
+.ixline 'MODTRACE directive'
+.ixline 'directives' 'MODTRACE'
+.ixsect MODULE Directive
+.ixline 'MODULE directive'
+.ixline 'directives' 'MODULE'
+.ixsect MULTILOAD Option
+.ixline 'MULTILOAD option'
+.ixline 'options' 'MULTILOAD'
+.ixsect NAME Directive
+.ixline 'NAME directive'
+.ixline 'directives' 'NAME'
+.ixsect NAMELEN Option
+.ixline 'NAMELEN option'
+.ixline 'options' 'NAMELEN'
+.ixsect NEWFILES Option
+.ixline 'NEWFILES option'
+.ixline 'options' 'NEWFILES'
+.ixsect NEWSEGMENT Directive
+.ixline 'NEWSEGMENT directive'
+.ixline 'directives' 'NEWSEGMENT'
+.ixsect NLMFLAGS Option
+.ixline 'NLMFLAGS option'
+.ixline 'options' 'NLMFLAGS'
+.ixsect NOAUTODATA Option
+.ixline 'NOAUTODATA option'
+.ixline 'options' 'NOAUTODATA'
+.ixsect NODEFAULTLIBS Option
+.ixline 'NODEFAULTLIBS option'
+.ixline 'options' 'NODEFAULTLIBS'
+.ixline 'environment variables' 'LIB'
+.ixline 'LIB environment variable'
+.ixsect NOEXTENSION Option
+.ixline 'NOEXTENSION option'
+.ixline 'options' 'NOEXTENSION'
+.ixsect NOINDIRECT Option
+.ixline 'NOINDIRECT option'
+.ixline 'options' 'NOINDIRECT'
+.ixsect NOLARGEADDRESSAWARE Option
+.ixline 'NOLARGEADDRESSAWARE option'
+.ixline 'options' 'NOLARGEADDRESSAWARE'
+.ixsect NORELOCS Option
+.ixline 'NORELOCS option'
+.ixline 'options' 'NORELOCS'
+.ixsect NOSTDCALL Option
+.ixline 'NOSTDCALL option'
+.ixline 'options' 'NOSTDCALL'
+.ixline '__stdcall'
+.ixline '__stdcall'
+.ixline '__stdcall'
+.ixline '__stdcall'
+.ixsect NOSTUB Option
+.ixline 'NOSTUB option'
+.ixline 'options' 'NOSTUB'
+.ixsect NOVECTOR Directive
+.ixline 'NOVECTOR directive'
+.ixline 'directives' 'NOVECTOR'
+.ixsect OBJALIGN Option
+.ixline 'OBJALIGN option'
+.ixline 'options' 'OBJALIGN'
+.ixsect OLDLIBRARY Option
+.ixline 'OLDLIBRARY option'
+.ixline 'options' 'OLDLIBRARY'
+.ixsect OFFSET Option
+.ixline 'OFFSET option'
+.ixline 'options' 'OFFSET'
+.beglevel
+.ixsect OFFSET - RAW only
+.ixsect OFFSET - OS/2, Win32, ELF only
+.ixsect OFFSET - PharLap only
+.ixsect OFFSET - QNX only
+.endlevel
+.ixsect ONEAUTODATA Option
+.ixline 'ONEAUTODATA option'
+.ixline 'options' 'ONEAUTODATA'
+.ixsect OPTION Directive
+.ixline 'OPTION directive'
+.ixline 'directives' 'OPTION'
+.ixsect OPTLIB Directive
+.ixline 'OPTLIB directive'
+.ixline 'directives' 'OPTLIB'
+.beglevel
+.ixsect Searching for Optional Libraries Specified in Environment Variables
+.ixline 'LIB environment variable'
+.ixline 'environment variables' 'LIB'
+.endlevel
+.ixsect ORDER Directive
+.ixline 'ORDER directive'
+.ixline 'directives' 'ORDER'
+.ixsect OSDOMAIN Option
+.ixline 'OSDOMAIN option'
+.ixline 'options' 'OSDOMAIN'
+.ixsect OSNAME Option
+.ixline 'OSNAME option'
+.ixline 'options' 'OSNAME'
+.ixsect OSVERSION Option
+.ixline 'OSVERSION option'
+.ixline 'options' 'OSVERSION'
+.ixsect OUTPUT Directive
+.ixline 'OUTPUT directive'
+.ixline 'directives' 'OUTPUT'
+.ixsect OVERLAY Directive
+.ixline 'OVERLAY directive'
+.ixline 'directives' 'OVERLAY'
+.ixline 'overlay classes'
+.ixline 'class name'
+.ixline 'overlaying segments in "FAR_DATA" class'
+.ixline 'overlaying data'
+.ixsect PACKCODE Option
+.ixline 'PACKCODE option'
+.ixline 'options' 'PACKCODE'
+.ixsect PACKDATA Option
+.ixline 'PACKDATA option'
+.ixline 'options' 'PACKDATA'
+.ixsect PATH Directive
+.ixline 'PATH directive'
+.ixline 'directives' 'PATH'
+.ixsect PRIVILEGE Option
+.ixline 'PRIVILEGE option'
+.ixline 'options' 'PRIVILEGE'
+.ixsect PROTMODE Option
+.ixline 'PROTMODE option'
+.ixline 'options' 'PROTMODE'
+.ixsect PSEUDOPREEMPTION Option
+.ixline 'PSEUDOPREEMPTION option'
+.ixline 'options' 'PSEUDOPREEMPTION'
+.ixsect QUIET Option
+.ixline 'QUIET option'
+.ixline 'options' 'QUIET'
+.ixsect REDEFSOK Option
+.ixline 'REDEFSOK option'
+.ixline 'options' 'REDEFSOK'
+.ixline 'NOREDEFSOK option'
+.ixline 'options' 'NOREDEFSOK'
+.ixsect REENTRANT Option
+.ixline 'REENTRANT option'
+.ixline 'options' 'REENTRANT'
+.ixsect REFERENCE Directive
+.ixline 'REFERENCE directive'
+.ixline 'directives' 'REFERENCE'
+.ixline 'dead code elimination'
+.ixsect RESOURCE Directive
+.ixline 'RESOURCE directive'
+.ixline 'directives' 'RESOURCE'
+.ixsect RESOURCE Option
+.ixline 'RESOURCE option'
+.ixline 'options' 'RESOURCE'
+.beglevel
+.ixsect RESOURCE - OS/2, Win16, Win32 only
+.ixline 'resource file'
+.ixsect RESOURCE - QNX only
+.ixline 'usemsg'
+.endlevel
+.ixsect RUNTIME Directive
+.ixline 'RUNTIME directive'
+.ixline 'directives' 'RUNTIME'
+.beglevel
+.ixsect RUNTIME - Win32 only
+.ixline 'RUNTIME options' 'version'
+.ixline 'runtime version option'
+.ixline 'RUNTIME options' 'NATIVE'
+.ixline 'NATIVE runtime option'
+.ixline 'RUNTIME options' 'WINDOWS'
+.ixline 'WINDOWS runtime option'
+.ixline 'RUNTIME options' 'CONSOLE'
+.ixline 'CONSOLE runtime option'
+.ixline 'RUNTIME options' 'POSIX'
+.ixline 'POSIX runtime option'
+.ixline 'RUNTIME options' 'OS2'
+.ixline 'OS/2 runtime option'
+.ixline 'RUNTIME options' 'DOSSTYLE'
+.ixline 'DOSSTYLE runtime option'
+.ixsect RUNTIME - PharLap only
+.ixline 'RUNTIME options' 'MINREAL'
+.ixline 'MINREAL runtime option'
+.ixline 'RUNTIME options' 'MAXREAL'
+.ixline 'MAXREAL runtime option'
+.ixline 'RUNTIME options' 'CALLBUFS'
+.ixline 'CALLBUFS runtime option'
+.ixline 'RUNTIME options' 'MINIBUF'
+.ixline 'MINIBUF runtime option'
+.ixline 'RUNTIME options' 'MAXIBUF'
+.ixline 'MAXIBUF runtime option'
+.ixline 'RUNTIME options' 'NISTACK'
+.ixline 'NISTACK runtime option'
+.ixline 'RUNTIME options' 'ISTKSIZE'
+.ixline 'ISTKSIZE runtime option'
+.ixline 'RUNTIME options' 'REALBREAK'
+.ixline 'REALBREAK runtime option'
+.ixline 'RUNTIME options' 'PRIVILEGED'
+.ixline 'PRIVILEGED runtime option'
+.ixline 'ring 0'
+.ixline 'privilege' 'ring 0'
+.ixline 'RUNTIME options' 'UNPRIVILEGED'
+.ixline 'UNPRIVILEGED runtime option'
+.ixline 'ring 3'
+.ixline 'privilege' 'ring 3'
+.ixsect RUNTIME - ELF only
+.ixline 'RUNTIME options' 'version'
+.ixline 'runtime version option'
+.ixline 'RUNTIME options' 'SVR4'
+.ixline 'SVR runtime option'
+.ixline 'RUNTIME options' 'LINUX'
+.ixline 'LINUX runtime option'
+.ixline 'RUNTIME options' 'FREEBSD'
+.ixline 'FREEBSD runtime option'
+.ixline 'RUNTIME options' 'NETBSD'
+.ixline 'NETBSD runtime option'
+.ixline 'RUNTIME options' 'SOLARIS'
+.ixline 'SOLARIS runtime option'
+.ixline 'RUNTIME options' 'ABIVER'
+.ixline 'ABIVER runtime option'
+.endlevel
+.ixsect RWRELOCCHECK Option
+.ixline 'RWRELOCCHECK option'
+.ixline 'options' 'RWRELOCCHECK'
+.ixsect SCREENNAME Option
+.ixline 'SCREENNAME option'
+.ixline 'options' 'SCREENNAME'
+.ixsect SECTION Directive
+.ixline 'SECTION directive'
+.ixline 'directives' 'SECTION'
+.ixsect SEGMENT Directive
+.ixline 'SEGMENT directive'
+.ixline 'directives' 'SEGMENT'
+.ixsect SHARELIB Option
+.ixline 'SHARELIB option'
+.ixline 'options' 'SHARELIB'
+.ixsect SHOWDEAD Option
+.ixline 'SHOWDEAD option'
+.ixline 'options' 'SHOWDEAD'
+.ixline 'dead code elimination'
+.ixline 'virtual functions'
+.ixsect SMALL Option
+.ixline 'SMALL option'
+.ixline 'options' 'SMALL'
+.ixsect SORT Directive
+.ixline 'SORT directive'
+.ixline 'directives' 'SORT'
+.ixline 'mangled names in C++'
+.ixsect STACK Option
+.ixline 'STACK option'
+.ixline 'options' 'STACK'
+.ixsect STANDARD Option
+.ixline 'STANDARD option'
+.ixline 'options' 'STANDARD'
+.ixsect START Option
+.ixline 'START option'
+.ixline 'options' 'START'
+.ixsect STARTLINK Directive
+.ixline 'STARTLINK directive'
+.ixline 'directives' 'STARTLINK'
+.ixsect STATICS Option
+.ixline 'STATICS option'
+.ixline 'options' 'STATICS'
+.ixsect STUB Option
+.ixline 'STUB option'
+.ixline 'options' 'STUB'
+.ixline 'environment variables' 'PATH'
+.ixline 'PATH environment variable'
+.ixsect SYMFILE Option
+.ixline 'SYMFILE option'
+.ixline 'options' 'SYMFILE'
+.ixline 'symbol file'
+.ixsect SYMTRACE Directive
+.ixline 'SYMTRACE directive'
+.ixline 'directives' 'SYMTRACE'
+.ixsect SYNCHRONIZE Option
+.ixline 'SYNCHRONIZE option'
+.ixline 'options' 'SYNCHRONIZE'
+.ixsect SYSTEM Directive
+.ixline 'SYSTEM directive'
+.ixline 'directives' 'SYSTEM'
+.ixline 'system name'
+.ixline 'default directive file'
+.ixline 'jwlink.lnk' 'default directive file'
+.ixline 'default directive file'
+.ixline 'jwlink.lnk' 'default directive file'
+.ixline 'environment variables' 'PATH'
+.ixline 'PATH environment variable'
+.ixline 'wlsystem.lnk' 'directive file'
+.ixline 'environment variables' 'JWLINK'
+.ixline 'JWLINK environment variable'
+.ixline 'environment variables' 'JWLINK_LNK'
+.ixline 'JWLINK_LNK environment variable'
+.beglevel
+.ixsect Special System Names
+.endlevel
+.ixsect THREADNAME Option
+.ixline 'THREADNAME option'
+.ixline 'options' 'THREADNAME'
+.ixsect TOGGLERELOCS Option
+.ixline 'TOGGLERELOCS option'
+.ixline 'options' 'TOGGLERELOCS'
+.ixline 'internal relocation'
+.ixline 'relocation' 'internal'
+.ixsect UNDEFSOK Option
+.ixline 'UNDEFSOK option'
+.ixline 'options' 'UNDEFSOK'
+.ixline 'NOUNDEFSOK option'
+.ixline 'options' 'NOUNDEFSOK'
+.ixsect VECTOR Directive
+.ixline 'VECTOR directive'
+.ixline 'directives' 'VECTOR'
+.ixsect VERBOSE Option
+.ixline 'VERBOSE option'
+.ixline 'options' 'VERBOSE'
+.ixsect VERSION Option
+.ixline 'VERSION option'
+.ixline 'options' 'VERSION'
+.ixsect VFREMOVAL Option
+.ixline 'VFREMOVAL option'
+.ixline 'options' 'VFREMOVAL'
+.ixline 'virtual functions'
+.ixsect XDCDATA Option
+.ixline 'XDCDATA option'
+.ixline 'options' 'XDCDATA'
+.helppref 
+
+.ixchap DOS Executable File Format
+.ixline 'DOS applications' 'creating'
+.ixline 'applications' 'creating for DOS'
+.ixline 'JWLINK' 'command line format'
+.ixline 'JWLINK command line' 'invoking JWLINK'
+.ixline 'command line format' 'JWLINK'
+.ixline 'invoking JWlink'
+.ixsect Memory Layout
+.ixline 'memory layout'
+.ixline 'segment ordering'
+.ixsect JWlink Memory Requirements
+.ixline 'memory requirements'
+.ixline 'tmp environment variable'
+.ixline 'environment variables' 'tmp'
+.ixsect Using Overlays
+.ixline 'overlays'
+.ixline 'root'
+.ixline 'overlay area'
+.ixline 'overlays'
+.beglevel
+.ixsect Defining Overlay Structures
+.ixline 'parallel overlays'
+.ixline 'overlays parallel'
+.beglevel
+.ixsect The Dynamic Overlay Manager
+.endlevel
+.ixsect Nested Overlay Structures
+.ixline 'overlay' 'ancestor of'
+.ixline 'overlay' 'descendant of'
+.ixsect Rules About Overlays
+.ixline 'overlay loader'
+.ixline '__OVLTAB__ linker symbol'
+.ixline '__OVLSTARTVEC__ linker symbol'
+.ixline '__OVLENDVEC__ linker symbol'
+.ixline '__LOVLLDR__ linker symbol'
+.ixline '__NOVLLDR__ linker symbol'
+.ixline '__SOVLLDR__ linker symbol'
+.ixline '__LOVLINIT__ linker symbol'
+.ixline '__NOVLINIT__ linker symbol'
+.ixline '__SOVLINIT__ linker symbol'
+.ixline 'linker symbols' '__OVLTAB__'
+.ixline 'linker symbols' '__OVLSTARTVEC__'
+.ixline 'linker symbols' '__OVLENDVEC__'
+.ixline 'linker symbols' '__LOVLLDR__'
+.ixline 'linker symbols' '__NOVLLDR__'
+.ixline 'linker symbols' '__SOVLLDR__'
+.ixline 'linker symbols' '__LOVLINIT__'
+.ixline 'linker symbols' '__NOVLINIT__'
+.ixline 'linker symbols' '__SOVLINIT__'
+.ixsect Increasing the Dynamic Overlay Area
+.ixline 'dynamic overlay manager' 'increasing dynamic overlay area at run-time'
+.ixline 'overlays' 'increasing dynamic overlay area at run-time'
+.ixsect How Overlay Files are Opened
+.endlevel
+.ixsect Converting Microsoft Response Files to Directive Files
+.ixline 'response files' 'conversion'
+.ixline 'MS2WLINK command'
+.helppref 
+
+.ixchap The RAW File Format
+.ixline 'JWLINK' 'command line format'
+.ixline 'JWLINK command line' 'invoking JWLINK'
+.ixline 'command line format' 'JWLINK'
+.ixline 'invoking JWlink'
+.ixsect Memory Layout
+.ixline 'memory layout'
+.ixline 'segment ordering'
+.ixsect JWlink Memory Requirements
+.ixline 'memory requirements'
+.ixline 'tmp environment variable'
+.ixline 'environment variables' 'tmp'
+.ixsect Converting Microsoft Response Files to Directive Files
+.ixline 'response files' 'conversion'
+.ixline 'MS2WLINK command'
+.helppref 
+
+.ixchap ELF Executable File Format
+.ixline 'ELF applications' 'creating'
+.ixline 'applications' 'creating for ELF'
+.ixline 'JWLINK' 'command line format'
+.ixline 'JWLINK command line' 'invoking JWLINK'
+.ixline 'command line format' 'JWLINK'
+.ixline 'invoking JWlink'
+.ixsect Memory Layout
+.ixline 'memory layout'
+.ixline 'segment ordering'
+.helppref 
+
+.ixchap The NetWare O/S Executable File Format
+.ixline 'NetWare applications' 'creating'
+.ixline 'applications' 'creating for NetWare'
+.ixline 'JWLINK' 'command line format'
+.ixline 'JWLINK command line' 'invoking JWLINK'
+.ixline 'command line format' 'JWLINK'
+.ixline 'invoking JWlink'
+.ixsect NetWare Loadable Modules
+.ixsect Memory Layout
+.ixline 'memory layout'
+.ixline 'segment ordering'
+.helppref 
+
+.ixchap OS/2 Executable and DLL File Formats
+.ixline 'OS/2 16-bit applications' 'creating'
+.ixline 'applications' 'creating for 16-bit OS/2'
+.ixline 'Phar Lap 286|Dos-Extender applications' 'creating'
+.ixline 'applications' 'creating for Phar Lap 286|Dos-Extender'
+.ixline 'OS/2 32-bit applications' 'creating'
+.ixline 'applications' 'creating for 32-bit OS/2'
+.ixline 'CauseWay applications' 'creating'
+.ixline 'applications' 'creating for CauseWay'
+.ixline 'DOS/4G applications' 'creating'
+.ixline 'applications' 'creating for DOS/4G'
+.ixline 'FlashTek applications' 'creating'
+.ixline 'applications' 'creating for FlashTek'
+.ixline 'JWLINK' 'command line format'
+.ixline 'JWLINK command line' 'invoking JWLINK'
+.ixline 'command line format' 'JWLINK'
+.ixline 'invoking JWlink'
+.ixsect Dynamic Link Libraries
+.ixline 'OS/2 program modules'
+.ixline 'OS/2 Dynamic Link Libraries'
+.ixline 'import definitions'
+.beglevel
+.ixsect Creating a Dynamic Link Library
+.ixsect Using a Dynamic Link Library in OS/2
+.ixline 'import library'
+.endlevel
+.ixsect Memory Layout
+.ixline 'memory layout'
+.ixline 'segment ordering'
+.ixsect Converting Microsoft Response Files to Directive Files
+.ixline 'response files' 'conversion'
+.ixline 'MS2WLINK command'
+.helppref 
+
+.ixchap The Phar Lap Executable File Format
+.ixline 'Phar Lap 386|Dos-Extender applications' 'creating'
+.ixline 'applications' 'creating for Phar Lap 386|Dos-Extender'
+.ixline 'JWLINK' 'command line format'
+.ixline 'JWLINK command line' 'invoking JWLINK'
+.ixline 'command line format' 'JWLINK'
+.ixline 'invoking JWlink'
+.ixsect 32-bit Protected-Mode Applications
+.ixline '386|DOS-Extender'
+.ixline 'running in 32-bit protected mode'
+.ixsect Memory Usage
+.ixsect Memory Layout
+.ixline 'memory layout'
+.ixline 'segment ordering'
+.ixline 'USE16 segments'
+.ixsect JWlink Memory Requirements
+.ixline 'memory requirements'
+.ixline 'tmp environment variable'
+.ixline 'environment variables' 'tmp'
+.helppref 
+
+.ixchap The QNX Executable File Format
+.ixline 'QNX applications' 'creating'
+.ixline 'applications' 'creating for QNX'
+.ixline 'JWLINK' 'command line format'
+.ixline 'JWLINK command line' 'invoking JWLINK'
+.ixline 'command line format' 'JWLINK'
+.ixline 'invoking JWlink'
+.ixsect Memory Layout
+.ixline 'memory layout'
+.ixline 'segment ordering'
+.helppref 
+
+.ixchap Win16 Executable and DLL File Formats
+.ixline 'Win16 applications' 'creating'
+.ixline 'Windows 3.x applications' 'creating'
+.ixline 'applications' 'creating for Windows 3.x'
+.ixline 'JWLINK' 'command line format'
+.ixline 'JWLINK command line' 'invoking JWLINK'
+.ixline 'command line format' 'JWLINK'
+.ixline 'invoking JWlink'
+.ixsect Fixed and Moveable Segments
+.ixsect Discardable Segments
+.ixsect Dynamic Link Libraries
+.ixline 'Win16 program modules'
+.ixline 'Win16 Dynamic Link Libraries'
+.ixline 'import definitions'
+.beglevel
+.ixsect Creating a Dynamic Link Library
+.ixsect Using a Dynamic Link Library in Win16
+.ixline 'import library'
+.endlevel
+.ixsect Memory Layout
+.ixline 'memory layout'
+.ixline 'segment ordering'
+.ixsect Converting Microsoft Response Files to Directive Files
+.ixline 'response files' 'conversion'
+.ixline 'MS2WLINK command'
+.helppref 
+
+.ixchap Windows Virtual Device Driver File Format
+.ixline 'JWLINK' 'command line format'
+.ixline 'JWLINK command line' 'invoking JWLINK'
+.ixline 'command line format' 'JWLINK'
+.ixline 'invoking JWlink'
+.ixsect Memory Layout
+.ixline 'memory layout'
+.ixline 'segment ordering'
+.helppref 
+
+.ixchap Win32/Win64 Executable and DLL File Formats
+.ixline 'JWLINK' 'command line format'
+.ixline 'JWLINK command line' 'invoking JWLINK'
+.ixline 'command line format' 'JWLINK'
+.ixline 'invoking JWlink'
+.ixsect Dynamic Link Libraries
+.ixline 'Win32 program modules'
+.ixline 'Win32 Dynamic Link Libraries'
+.ixline 'import definitions'
+.beglevel
+.ixsect Creating a Dynamic Link Library
+.ixsect Using a Dynamic Link Library in Win32/Win64
+.ixline 'import library'
+.endlevel
+.ixsect Memory Layout
+.ixline 'memory layout'
+.ixline 'segment ordering'
+.helppref 
+
+.ixchap JWlink Diagnostic Messages
+.ixline 'fatal errors'
+.ixline 'errors'
+.ixline 'warnings'
+.ixsect 2002 ** internal ** - %s
+.ixline `** internal ** - %s`
+.ixsect 2008 cannot open %s1 : %s2
+.ixline `cannot open %s1 : %s2`
+.ixsect 3009 dynamic memory exhausted
+.ixline `dynamic memory exhausted`
+.ixsect 2010,3010 I/O error processing %s1 : %s2
+.ixline `I/O error processing %s1 : %s2`
+.ixline `3010 I/O error processing %s1 : %s2`
+.ixsect 2011 invalid object file attribute
+.ixline `invalid object file attribute`
+.ixsect 2012 invalid library file attribute
+.ixline `invalid library file attribute`
+.ixsect 3013 break key detected
+.ixline `break key detected`
+.ixsect 1014 stack segment not found
+.ixline `stack segment not found`
+.ixsect 2015 bad relocation type specified
+.ixline `bad relocation type specified`
+.ixsect 2016 %a: absolute target invalid for self-relative relocation
+.ixline `%a: absolute target invalid for self-relative relocation`
+.ixsect 2017 bad location specified for self-relative relocation at %a
+.ixline `bad location specified for self-relative relocation at %a`
+.ixsect 2018 relocation offset at %a is out of range
+.ixline `relocation offset at %a is out of range`
+.ixsect 1019 segment relocation at %a
+.ixline `segment relocation at %a`
+.ixsect 2020 size of group %s exceeds 64k by %l bytes
+.ixline `size of group %s exceeds 64k by %l bytes`
+.ixsect 2021 size of segment %s exceeds 64k by %l bytes
+.ixline `size of segment %s exceeds 64k by %l bytes`
+.ixsect 2022 cannot have a starting address with an imported symbol
+.ixline `cannot have a starting address with an imported symbol`
+.ixsect 1023 no starting address found, using %a
+.ixline `no starting address found, using %a`
+.ixsect 2024 missing overlay loader
+.ixline `missing overlay loader`
+.ixsect 2025 short vector %d is out of range
+.ixline `short vector %d is out of range`
+.ixsect 2026 redefinition of reserved symbol %s
+.ixline `redefinition of reserved symbol %s`
+.ixsect 1027 redefinition of %S ignored
+.ixline `redefinition of %S ignored`
+.ixsect 1028,2028 %S is an undefined reference
+.ixline `%S is an undefined reference`
+.ixline `2028 %S is an undefined reference`
+.ixsect 2029 premature end of file encountered
+.ixline `premature end of file encountered`
+.ixsect 2030 multiple starting addresses found
+.ixline `multiple starting addresses found`
+.ixsect 2031 segment %s is in group %s and group %s
+.ixline `segment %s is in group %s and group %s`
+.ixsect 1032 record (type 0x%x) not processed
+.ixline `record (type 0x%x) not processed`
+.ixsect 2033,3033 directive error near '%s'
+.ixline `directive error near '%s'`
+.ixline `3033 directive error near '%s'`
+.ixsect 2034 %a cannot have an offset with an imported symbol
+.ixline `%a cannot have an offset with an imported symbol`
+.ixsect 1038 DEBUG directive appears after object files
+.ixline `DEBUG directive appears after object files`
+.ixsect 2039 ALIGNMENT value too small
+.ixline `ALIGNMENT value too small`
+.ixsect 2040 ordinal in IMPORT directive not valid
+.ixline `ordinal in IMPORT directive not valid`
+.ixsect 2041 ordinal in EXPORT directive not valid
+.ixline `ordinal in EXPORT directive not valid`
+.ixsect 2042 too many IOPL words in EXPORT directive
+.ixline `too many IOPL words in EXPORT directive`
+.ixsect 1043 duplicate exported ordinal
+.ixline `duplicate exported ordinal`
+.ixsect 1044,2044 exported symbol %s not found
+.ixline `exported symbol %s not found`
+.ixline `2044 exported symbol %s not found`
+.ixsect 1045 segment attribute defined more than once
+.ixline `segment attribute defined more than once`
+.ixsect 1046 segment name %s not found
+.ixline `segment name %s not found`
+.ixsect 1047 class name %s not found
+.ixline `class name %s not found`
+.ixsect 1048 inconsistent attributes for automatic data segment
+.ixline `inconsistent attributes for automatic data segment`
+.ixsect 2049 invalid STUB file
+.ixline `invalid STUB file`
+.ixsect 1050 invalid DLL specified in OLDLIBRARY option
+.ixline `invalid DLL specified in OLDLIBRARY option`
+.ixsect 2051 STUB file name same as executable file name
+.ixline `STUB file name same as executable file name`
+.ixsect 2052 relocation at %a not in the same segment
+.ixline `relocation at %a not in the same segment`
+.ixsect 2053 %a: cannot reach a DLL with a relative relocation
+.ixline `%a: cannot reach a DLL with a relative relocation`
+.ixsect 1054 debugging information incompatible: using line numbers only
+.ixline `debugging information incompatible: using line numbers only`
+.ixsect 2055 %a: frame must be the same as the target in protected mode
+.ixline `%a: frame must be the same as the target in protected mode`
+.ixsect 2056 cannot find library member %s(%s)
+.ixline `cannot find library member %s(%s)`
+.ixsect 3057 executable format has been established
+.ixline `executable format has been established`
+.ixsect 1058 %s option not valid for %s executable
+.ixline `%s option not valid for %s executable`
+.ixsect 1059,2059 value for %s too large
+.ixline `value for %s too large`
+.ixline `2059 value for %s too large`
+.ixsect 1060 value for %s incorrect
+.ixline `value for %s incorrect`
+.ixsect 1061 multiple values specified for REALBREAK
+.ixline `multiple values specified for REALBREAK`
+.ixsect 1062 export and import records not valid for %f
+.ixline `export and import records not valid for %f`
+.ixsect 2063 invalid relocation for flat memory model at %a
+.ixline `invalid relocation for flat memory model at %a`
+.ixsect 2064 cannot combine 32-bit segments (%s1) with 16-bit segments (%s2)
+.ixline `cannot combine 32-bit segments (%s1) with 16-bit segments (%s2)`
+.ixsect 2065 REALBREAK symbol %s not found
+.ixline `REALBREAK symbol %s not found`
+.ixsect 2066 invalid relative relocation type for an import at %a
+.ixline `invalid relative relocation type for an import at %a`
+.ixsect 2067 %a: cannot relocate between code and data in Novell formats
+.ixline `%a: cannot relocate between code and data in Novell formats`
+.ixsect 2068 absolute segment fixup not valid in protected mode
+.ixline `absolute segment fixup not valid in protected mode`
+.ixsect 1069 unload CHECK procedure not found
+.ixline `unload CHECK procedure not found`
+.ixsect 2070 START procedure not found
+.ixline `START procedure not found`
+.ixsect 2071 EXIT procedure not found
+.ixline `EXIT procedure not found`
+.ixsect 1072 SECTION directive not allowed in root
+.ixline `SECTION directive not allowed in root`
+.ixsect 2073 bad Novell file format specified
+.ixline `bad Novell file format specified`
+.ixsect 2074 circular alias found for %s
+.ixline `circular alias found for %s`
+.ixsect 2075 expecting an END directive
+.ixline `expecting an END directive`
+.ixsect 1076 %s option multiply specified
+.ixline `%s option multiply specified`
+.ixsect 1080 file %s is a %d-bit object file
+.ixline `file %s is a %d-bit object file`
+.ixsect 2082 invalid record type 0x%x
+.ixline `invalid record type 0x%x`
+.ixsect 2083 cannot reference address %a from frame %x
+.ixline `cannot reference address %a from frame %x`
+.ixsect 2084 target offset exceeds 64K at %a
+.ixline `target offset exceeds 64K at %a`
+.ixsect 2086 invalid starting address for .COM file
+.ixline `invalid starting address for .COM file`
+.ixsect 1087 stack segment ignored in .COM file
+.ixline `stack segment ignored in .COM file`
+.ixsect 3088 virtual memory exhausted
+.ixline `virtual memory exhausted`
+.ixsect 2089 program too large for a .COM file
+.ixline `program too large for a .COM file`
+.ixsect 1090 redefinition of %s by %s ignored
+.ixline `redefinition of %s by %s ignored`
+.ixsect 2091 group %s is in more than one overlay
+.ixline `group %s is in more than one overlay`
+.ixsect 2092 NEWSEGMENT directive appears before object files
+.ixline `NEWSEGMENT directive appears before object files`
+.ixsect 2093 cannot open %s
+.ixline `cannot open %s`
+.ixsect 2094 i/o error processing %s
+.ixline `i/o error processing %s`
+.ixsect 3097 too many library modules
+.ixline `too many library modules`
+.ixsect 1098 Offset option must be a multiple of %dK
+.ixline `Offset option must be a multiple of %dK`
+.ixsect 2099 symbol name too long: %s
+.ixline `symbol name too long: %s`
+.ixsect 1101 invalid incremental information file
+.ixline `invalid incremental information file`
+.ixsect 1102 object file %s not found for tracing
+.ixline `object file %s not found for tracing`
+.ixsect 1103 library module %s(%s) not found for tracing
+.ixline `library module %s(%s) not found for tracing`
+.ixsect 1105 cannot reserve %l bytes of extra overlay space
+.ixline `cannot reserve %l bytes of extra overlay space`
+.ixsect 1107 undefined system name: %s
+.ixline `undefined system name: %s`
+.ixsect 1108 system %s defined more than once
+.ixline `system %s defined more than once`
+.ixsect 1109 OFFSET option is less than the stack size
+.ixline `OFFSET option is less than the stack size`
+.ixsect 1110 library members not allowed in libfile
+.ixline `library members not allowed in libfile`
+.ixsect 1111 error in default system block
+.ixline `error in default system block`
+.ixsect 3114 environment name specified incorrectly
+.ixline `environment name specified incorrectly`
+.ixsect 1115 environment name %s not found
+.ixline `environment name %s not found`
+.ixsect 1116 overlay area must be at least %l bytes
+.ixline `overlay area must be at least %l bytes`
+.ixsect 1117 segment number too high for a movable entry point
+.ixline `segment number too high for a movable entry point`
+.ixsect 1118 heap size too large
+.ixline `heap size too large`
+.ixsect 2119 jwlib import statement incorrect
+.ixline `jwlib import statement incorrect`
+.ixsect 2120 application too large to run under DOS
+.ixline `application too large to run under DOS`
+.ixsect 1121 '%s' has already been exported
+.ixline `'%s' has already been exported`
+.ixsect 3122 no FILE directives found
+.ixline `no FILE directives found`
+.ixsect 3123 overlays are not supported in this version of the linker
+.ixline `overlays are not supported in this version of the linker`
+.ixsect 1124 lazy reference for %S has different default resolutions
+.ixline `lazy reference for %S has different default resolutions`
+.ixsect 1125 multiple aliases found for %S
+.ixline `multiple aliases found for %S`
+.ixsect 1126 %s has been modified: doing full relink
+.ixline `%s has been modified: doing full relink`
+.ixsect 2127 cannot export symbol %S
+.ixline `cannot export symbol %S`
+.ixsect 3128 directive error near beginning of input
+.ixline `directive error near beginning of input`
+.ixsect 3129 address information too large
+.ixline `address information too large`
+.ixsect 1130 %s is an invalid shared nlm file
+.ixline `%s is an invalid shared nlm file`
+.ixsect 3131 cannot open spill file: file already exists
+.ixline `cannot open spill file: file already exists`
+.ixsect 2132 curly brace delimited list incorrect
+.ixline `curly brace delimited list incorrect`
+.ixsect 1133 no realbreak specified for 16-bit code
+.ixline `no realbreak specified for 16-bit code`
+.ixsect 1134 %s is an invalid message file
+.ixline `%s is an invalid message file`
+.ixsect 3135 need exactly 1 overlay area with dynamic overlay manager
+.ixline `need exactly 1 overlay area with dynamic overlay manager`
+.ixsect 1136 segment relocation to a read/write data segment found at %a(%S)
+.ixline `segment relocation to a read/write data segment found at %a(%S)`
+.ixsect 3137 too many errors encountered
+.ixline `too many errors encountered`
+.ixsect 3138 invalid filename '%s'
+.ixline `invalid filename '%s'`
+.ixsect 3139 cannot have both 16-bit and 32-bit object files
+.ixline `cannot have both 16-bit and 32-bit object files`
+.ixsect 1140 invalid message number
+.ixline `invalid message number`
+.ixsect 1141 virtual function table record for %s mismatched
+.ixline `virtual function table record for %s mismatched`
+.ixsect 1143 not enough memory to sort map file symbols
+.ixline `not enough memory to sort map file symbols`
+.ixsect 1145 %S is both pure virtual and non-pure virtual
+.ixline `%S is both pure virtual and non-pure virtual`
+.ixsect 2146 %s is an invalid object file
+.ixline `%s is an invalid object file`
+.ixsect 3147 Ambiguous format specified
+.ixline `Ambiguous format specified`
+.ixsect 1148 Invalid segment type specified
+.ixline `Invalid segment type specified`
+.ixsect 1149 Only one debugging format can be specified
+.ixline `Only one debugging format can be specified`
+.ixsect 1150 file %s has code for a different processor
+.ixline `file %s has code for a different processor`
+.ixsect 2151 big endian code not supported
+.ixline `big endian code not supported`
+.ixsect 2152 no dictionary found
+.ixline `no dictionary found`
+.ixsect 2154 cannot execute %s1 : %s2
+.ixline `cannot execute %s1 : %s2`
+.ixsect 2155 relocation at %a to an improperly aligned target
+.ixline `relocation at %a to an improperly aligned target`
+.ixsect 2156 OPTION INCREMENTAL must be one of the first directives specified
+.ixline `OPTION INCREMENTAL must be one of the first directives specified`
+.ixsect 3157 no code or data present
+.ixline `no code or data present`
+.ixsect 1158 problem adding resource information
+.ixline `problem adding resource information`
+.ixsect 3159 incremental linking only supports DWARF debugging information
+.ixline `incremental linking only supports DWARF debugging information`
+.ixsect 3160 incremental linking does not support dead code elimination
+.ixline `incremental linking does not support dead code elimination`
+.ixsect 1162 relocations on iterated data not supported
+.ixline `relocations on iterated data not supported`
+.ixsect 1163 module has not been compiled with the "zv" option
+.ixline `module has not been compiled with the "zv" option`
+.ixsect 3164 incremental linking does not support virtual function removal
+.ixline `incremental linking does not support virtual function removal`
+.ixsect 1165 resource file %s too big
+.ixline `resource file %s too big`
+.ixsect 2166 both %s1 and %s2 marked as starting symbols
+.ixline `both %s1 and %s2 marked as starting symbols`
+.ixsect 1167 NLM internal name (%s) truncated
+.ixline `NLM internal name (%s) truncated`
+.ixsect 3168 exactly one export must exist for VxD format
+.ixline `exactly one export must exist for VxD format`
+.ixsect 2169 location counter already beyond fixed segment address %a
+.ixline `location counter already beyond fixed segment address %a`
+.ixsect 1170 directive %s can only occur once
+.ixline `directive %s can only occur once`
+.ixsect 1171 locally defined symbol %s imported
+.ixline `locally defined symbol %s imported`
+.ixsect 1172 stack size is less than %d bytes
+.ixline `stack size is less than %d bytes`
+.ixsect 2173 32-bit relocation to '%s' requires option NOLARGEaddressaware
+.ixline `32-bit relocation to '%s' requires option NOLARGEaddressaware`
+.ixsect 1174 unknown directive '-%s' ignored
+.ixline `unknown directive '-%s' ignored`
