@@ -4,8 +4,8 @@
 proj_name = JWlib
 
 WATCOM=\watcom
-# set to 0 if the DOS version is NOT to be built!
-DOS=1
+# set to 1 if the DOS version is to be built!
+DOS=0
 
 HXDIR=\hx
 
@@ -17,27 +17,27 @@ debug=0
 wlib_autodepends = .AUTODEPEND
 !endif
 
-!if $(DOS)
-dos_target = $(OUTD)/jwlibd.exe
-!endif
-
 !if $(debug)
 extra_c_flags += -D__DEBUG__
-OUTD=Debug
+OUTD=..\build\jwlibWD
 cflags = -od -d2 -w3
 !else
-OUTD=Release
+OUTD=..\build\jwlibWR
 cflags = -ox -s -DNDEBUG
+!endif
+
+!if $(DOS)
+dos_target = $(OUTD)\jwlibd.exe
 !endif
 
 
 wlib_trmem = 0
 
-orl_dir      = ../orl
+orl_dir      = ../build/osi386R
 watcom_dir   = ../watcom
 lib_misc_dir = ../lib_misc
 
-orl_lib  = $(orl_dir)/osi386/orl.lib
+orl_lib  = $(orl_dir)/orl.lib
 
 ##########
 # objects
@@ -71,7 +71,7 @@ extra_c_flags += -DIDE_PGM
 .c: c;$(lib_misc_dir)/c
 .h: h;$(watcom_dir)/h
 
-inc_dirs = -Ih -I"$(orl_dir)/h" -I"$(lib_misc_dir)/h" -I"$(watcom_dir)/H" -I$(WATCOM)\H
+inc_dirs = -Ih -I"../orl/h" -I"$(lib_misc_dir)/h" -I"$(watcom_dir)/H" -I$(WATCOM)\H
 
 .c{$(OUTD)}.obj: $($(proj_name)_autodepends)
 	$(WATCOM)\binnt\wcc386 -q -zc -bc -bt=nt $(cflags) $(extra_c_flags) $(inc_dirs) -fo$@ $[@
@@ -102,3 +102,9 @@ lib { $(xlibs) }
 op stub=$(HXDIR)\Bin\loadpex.bin
 op q, map=$^*, noredefs, stack=0x20000, heapsize=0x100000 com stack=0x1000
 <<
+
+clean: .SYMBOLIC
+	@if exist $(OUTD)\$(proj_name).exe erase $(OUTD)\$(proj_name).exe
+	@if exist $(OUTD)\$(proj_name).map erase $(OUTD)\$(proj_name).map
+	@if exist $(OUTD)\*.obj erase $(OUTD)\*.obj
+

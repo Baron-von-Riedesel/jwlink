@@ -49,11 +49,11 @@ depends_exe = $(comp_objs_exe) $(external_dependencies)
 # cflags
 
 !if $(DEBUG)
-OUTD=OWLinuxD
+OUTD=..\build\jwlibLD
 extra_c_flags += -D__DEBUG__
 cflags = -od -d2 -w3
 !else
-OUTD=OWLinuxR
+OUTD=..\build\jwlibLR
 cflags = -ox -s -DNDEBUG
 !endif
 
