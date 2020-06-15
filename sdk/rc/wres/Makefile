@@ -20,9 +20,9 @@ DEBUG=0
 !endif
 
 !if $(DEBUG)
-OUTD=flat386d
+OUTD=..\..\..\build\flat386D
 !else
-OUTD=flat386
+OUTD=..\..\..\build\flat386R
 !endif
 
 #
@@ -111,5 +111,5 @@ $(OUTD)\wres.lib : $(objs) $(__MAKEFILES__) .PRECIOUS
 #!else
     %create $^&.lbc
     @for %i in ($(objs)) do @%append $^&.lbc +%i
-    wlib -n $(OUTD)\wres.lib @$^&.lbc
+    jwlib -n $(OUTD)\wres.lib @$^&.lbc
 #!endif
