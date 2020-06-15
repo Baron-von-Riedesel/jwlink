@@ -18,10 +18,10 @@ DEBUG=0
 
 !if $(DEBUG)
 cflags = -od -d2 -w3 -D_INT_DEBUG
-OUTD= osi386D
+OUTD= ..\build\osi386D
 !else
 cflags = -ox -s -DNDEBUG
-OUTD= osi386
+OUTD= ..\build\osi386R
 !endif
 
 #
@@ -68,4 +68,4 @@ $(OUTD):
 $(OUTD)/orl.lib : $(orl_objs)
 	@%create $^&.lbc
 	@for %i in ($(orl_objs)) do @%append $^&.lbc +%i
-	wlib -n $(OUTD)/orl.lib $(libflags) @$^&.lbc
+	jwlib -n $(OUTD)/orl.lib $(libflags) @$^&.lbc

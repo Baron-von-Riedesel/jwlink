@@ -18,10 +18,10 @@ DEBUG=0
 
 !if $(DEBUG)
 wlink_trmem = 0
-OUTD=OWWinD
+OUTD=build\jwlinkWD
 !else
 wlink_trmem = 0
-OUTD=OWWinR
+OUTD=build\jwlinkWR
 !endif
 
 proj_name = jwlink
@@ -96,17 +96,17 @@ lib_misc_dir=lib_misc
 dwarf_dir=dwarf
 watcom_dir=watcom
 
-dwarf_dw_lib= $(dwarf_dir)/dw/osi386/dw.lib
-
 inc_dirs = -IH -I$(watcom_dir)\H -I$(WATCOM)\H 
 
 !if $(DEBUG)
-orl_lib = orl/osi386d/orl.lib
-wres_lib= $(wres_dir)/flat386d/wres.lib
+orl_lib = build/osi386D/orl.lib
+wres_lib= build/flat386D/wres.lib
+dwarf_lib= build/osi386D/dw.lib
 cflags = -od -d2 -w3 -D_INT_DEBUG
 !else
-orl_lib = orl/osi386/orl.lib
-wres_lib= $(wres_dir)/flat386/wres.lib
+orl_lib = build/osi386R/orl.lib
+wres_lib= build/flat386R/wres.lib
+dwarf_lib= build/osi386R/dw.lib
 cflags = -ox -s -DNDEBUG
 !endif
 
@@ -132,7 +132,7 @@ extra_c_flags_posixio    = -I"$(wres_dir)/h"
 extra_c_flags_linkio     = -I"$(wres_dir)/h"
 extra_c_flags_objorl     = -I"orl/h"
 extra_c_flags_orlstubs   = -I"orl/h"
-extra_c_flags_dbgdwarf   = -I"$(dwarf_dir)/dw/h"
+extra_c_flags_dbgdwarf   = -I"$(dwarf_dir)/h"
 !ifeq wlink_trmem 1
 extra_c_flags_debug      = -DTRMEM
 !endif
@@ -151,7 +151,7 @@ extra_c_flags_mem        = $(trmem_cover_cflags)
 
 extra_l_flags =
 
-xlibs = $(wres_lib) $(dwarf_dw_lib) $(orl_lib)
+xlibs = $(wres_lib) $(dwarf_lib) $(orl_lib)
 
 !if $(DEBUG)
 lflagsd = debug dwarf op symfile
@@ -178,7 +178,7 @@ op q, norelocs, map=$^*, noredefs, stack=0x100000, heapsize=0x100000 com stack=0
 <<
 
 $(OUTD)/JWlinkd.exe : $(comp_objs_exe) $(xlibs)
-	wlink $(lflagsd) format windows pe runtime console $(extra_l_flags) @<<
+	jwlink $(lflagsd) format windows pe runtime console $(extra_l_flags) @<<
 libpath $(WATCOM)\lib386\nt libpath $(WATCOM)\lib386
 file { $(common_objs) }
 name $@
@@ -201,8 +201,8 @@ $(orl_lib):
 	@wmake debug=$(DEBUG) watcom=$(WATCOM)
 	@cd ..
 
-$(dwarf_dw_lib):
-	@cd $(dwarf_dir)/dw
+$(dwarf_lib):
+	@cd $(dwarf_dir)
 	@wmake debug=$(DEBUG) watcom=$(WATCOM)
 	@cd ../..
 

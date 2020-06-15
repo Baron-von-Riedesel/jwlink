@@ -12,9 +12,9 @@ DEBUG=0
 !endif
 
 !if $(DEBUG)
-OUTD=OWLinuxD
+OUTD=build\jwlinkLD
 !else
-OUTD=OWLinuxR
+OUTD=build\jwlinkLR
 !endif
 
 wlink_trmem = 0
@@ -99,7 +99,7 @@ lib_misc_dir=lib_misc
 dwarf_dir=dwarf
 watcom_dir=watcom
 
-orl_lib = orl/osi386/orl.lib
+orl_lib = build/osi386/orl.lib
 dwarf_dw_lib= $(dwarf_dir)/dw/osi386/dw.lib
 wres_lib= $(wres_dir)/flat386/wres.lib
 

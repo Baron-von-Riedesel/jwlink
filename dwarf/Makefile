@@ -1,7 +1,7 @@
 
 proj_name = dwarfw
 
-OUTD=osi386
+OUTD=..\build\osi386r
 
 !ifndef WATCOM
 WATCOM=\watcom
@@ -13,7 +13,7 @@ dwarfw_autodepends = .AUTODEPEND
 
 objs = $(OUTD)/dwlngen.obj $(OUTD)/dwutils.obj
 
-watcom_dir=..\..\watcom
+watcom_dir=..\watcom
 
 .c : c
 
@@ -34,5 +34,5 @@ $(OUTD):
 $(OUTD)/dw.lib : $(objs)
         @%create tmp.lbc
         @for %i in ($(objs)) do @%append tmp.lbc +%i
-        wlib -n $(OUTD)/dw.lib @tmp.lbc
+        jwlib -n $(OUTD)/dw.lib @tmp.lbc
 
