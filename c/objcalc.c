@@ -96,8 +96,11 @@ void CheckClassOrder( void )
     SortSegments();
     if( LinkState & SPEC_ORDER_FLAG ) {
        WalkAllSects( SortClasses );
-    } else if( LinkState & DOSSEG_FLAG ) {
+       /* v19b14: no automatic segment sorting for PE/ELF anymore.
+        * dosseg has to be set explicitely. To be improved...
+        */
     //} else if( ( LinkState & DOSSEG_FLAG ) || ( FmtData.type & (MK_PE|MK_ELF) ) ) {
+    } else if( LinkState & DOSSEG_FLAG ) {
        WalkAllSects( ReOrderClasses );
     }
 }

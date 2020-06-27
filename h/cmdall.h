@@ -78,6 +78,7 @@ extern bool     ProcStack( void );
 extern bool     ProcNoDefLibs( void );
 extern bool     ProcQuiet( void );
 extern bool     ProcDosSeg( void );
+extern bool     ProcNoDosSeg( void );
 extern bool     ProcCase( void );
 extern bool     ProcVerbose( void );
 extern bool     ProcUndefsOK( void );

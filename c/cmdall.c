@@ -63,11 +63,20 @@ void ResetCmdAll( void )
 }
 
 bool ProcDosSeg( void )
-/****************************/
+/*********************/
 /* process DOSSEG option */
 {
     LinkState |= DOSSEG_FLAG;
     DEBUG(( DBG_OLD, "dosseg" ));
+    return( TRUE );
+}
+
+bool ProcNoDosSeg( void )
+/***********************/
+/* process DOSSEG option */
+{
+    LinkState &= ~DOSSEG_FLAG;
+    DEBUG(( DBG_OLD, "nodosseg" ));
     return( TRUE );
 }
 

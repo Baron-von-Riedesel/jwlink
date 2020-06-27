@@ -157,6 +157,7 @@ parse_entry     MainOptions[] = {
     "NODefaultlibs",&ProcNoDefLibs,     MK_ALL, CF_NO_DEF_LIBS,
     "Quiet",        &ProcQuiet,         MK_ALL, 0,
     "Dosseg",       &ProcDosSeg,        MK_ALL, 0,
+    "NODOSseg",     &ProcNoDosSeg,      MK_ALL, 0, /* v1.9beta15 added */
     "Caseexact",    &ProcCase,          MK_ALL, 0,
     "Verbose",      &ProcVerbose,       MK_ALL, 0,
     "Undefsok",     &ProcUndefsOK,      MK_ALL, 0,
