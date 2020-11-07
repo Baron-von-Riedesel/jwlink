@@ -174,5 +174,6 @@ pick(    MSG_DUP_DIRECTIVE,            "Directive %s can only occur once" )
 pick(    MSG_IMPORT_LOCAL,             "Locally defined symbol %s is imported" )
 pick(    MSG_NEED_NOLARGEADDRESSAWARE, "32-bit relocation to '%s' requires option NOLARGEaddressaware" )
 pick(    MSG_UNKNOWN_DIRECTIVE_IGNORED,"unknown directive '-%s' ignored" )
+pick(    MSG_TARGET_DISP_IGNORED,      "target displacement %x ignored for segment fixup" ) /* 7.11.2020 */
 
 #define MSG_MAX_ERR_MSG_NUM MSG_UNKNOWN_DIRECTIVE_IGNORED
