@@ -254,6 +254,12 @@ void DoRelocs( struct objbuff *ob )
                     addend = GET_U16_UN(ob->curr);
                     ob->curr += sizeof( unsigned_16 );
                 }
+				/* 7.11.2020: skip target displacement for segment fixups */
+				if ( omftype == LOC_BASE ) {
+					DEBUG((DBG_OLD, "omfreloc.DoRelocs(): warning: segment base reloc with target displacement %h", addend ));
+					LnkMsg( LOC+WRN+MSG_TARGET_DISP_IGNORED, "x", addend );
+					addend = 0;
+				}
             }
             if( ObjFormat & FMT_IS_LIDATA ) {
                 struct objbuff tmp;
