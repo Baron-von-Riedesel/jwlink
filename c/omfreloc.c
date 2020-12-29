@@ -198,6 +198,7 @@ void DoRelocs( struct objbuff *ob )
     frame_spec  fthread;
     frame_spec  tthread;
 
+	DEBUG((DBG_OLD, "DoRelocs() enter" ));
     if( ObjFormat & FMT_IGNORE_FIXUPP )
         return;
     do {
@@ -238,12 +239,19 @@ void DoRelocs( struct objbuff *ob )
                 fthread = FrameThreads[loc & 3];
             } else {
                 GetFrame( loc, &fthread, ob );
+                DEBUG((DBG_OLD, "DoRelocs(typ=%x): GetFrame(%d) returned %h", typ, loc, fthread.u.ptr ));
             }
             loc = typ & 7;
             if( typ & 8 ) {
                 tthread = TargThreads[loc & 3];
             } else {
                 GetTarget( loc, &tthread, ob );
+                DEBUG((DBG_OLD, "DoRelocs(typ=%x): GetTarget(%d) returned type=%h,ptr=%h", typ, loc, tthread.type, tthread.u.ptr ));
+#if 0
+                /* jwlink 2020/12: ignore fixups with target FLAT */
+                if ( tthread.u.ptr == NULL )
+                    continue;
+#endif
             }
             addend = 0;
             if( loc <= TARGET_ABSWD ) {  /*  if( (loc & 4) == 0 )then */
@@ -254,12 +262,12 @@ void DoRelocs( struct objbuff *ob )
                     addend = GET_U16_UN(ob->curr);
                     ob->curr += sizeof( unsigned_16 );
                 }
-				/* 7.11.2020: skip target displacement for segment fixups */
-				if ( omftype == LOC_BASE ) {
-					DEBUG((DBG_OLD, "omfreloc.DoRelocs(): warning: segment base reloc with target displacement %h", addend ));
-					LnkMsg( LOC+WRN+MSG_TARGET_DISP_IGNORED, "x", addend );
-					addend = 0;
-				}
+                /* jwlink: 7.11.2020: skip target displacement for segment fixups */
+                if ( omftype == LOC_BASE ) {
+                    DEBUG((DBG_OLD, "omfreloc.DoRelocs(): warning: segment base reloc with target displacement %h", addend ));
+                    LnkMsg( LOC+WRN+MSG_TARGET_DISP_IGNORED, "x", addend );
+                    addend = 0;
+                }
             }
             if( ObjFormat & FMT_IS_LIDATA ) {
                 struct objbuff tmp;
@@ -270,6 +278,7 @@ void DoRelocs( struct objbuff *ob )
                 StoreFixup( place_to_fix, fixtype, &fthread, &tthread, addend );
         }
     } while( ob->curr < ob->end );
+	DEBUG((DBG_OLD, "DoRelocs() exit" ));
     return;
 }
 

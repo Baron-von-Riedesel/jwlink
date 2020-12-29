@@ -1,6 +1,6 @@
 
 WATCOM=\watcom
-DOS=1
+DOS=0
 
 host_os  = nt
 proj_name = cvpack
@@ -10,11 +10,11 @@ DEBUG=0
 !endif
 
 !if $(DEBUG)
-OUTD=Debug
+OUTD=..\build\cvpackWD
 LOPTD=debug c op cvp
 COPTD=-d2 -D_DEBUG
 !else
-OUTD=Release
+OUTD=..\build\cvpackWR
 LOPTD=
 COPTD=
 !endif
@@ -59,7 +59,7 @@ $(OUTD)\cvpack.exe : $(object_files) $(makefile)
 FILE { $(object_files) }
 libpath $(WATCOM)\lib386 libpath $(WATCOM)\lib386\nt
 lib kernel32, user32
-op map=$*, norelocs, noredefs, stack=0x20000, heapsize=0x100000 com stack=0x1000
+op map=$*, noredefs, stack=0x20000, heapsize=0x100000 com stack=0x1000
 <<
 
 $(OUTD)\cvpackd.exe : $(object_files) $(makefile)

@@ -33,7 +33,7 @@ dos_target = $(OUTD)\jwlibd.exe
 
 wlib_trmem = 0
 
-orl_dir      = ../build/osi386R
+orl_dir      = ../build/osi386WR
 watcom_dir   = ../watcom
 lib_misc_dir = ../lib_misc
 
@@ -87,7 +87,7 @@ f {$(comp_objs_exe)}
 libpath $(WATCOM)\lib386
 libpath $(WATCOM)\lib386\nt
 lib {$(xlibs) kernel32 user32 clib3r }
-op q, norelocs, map=$*, stack=0x100000, heapsize=0x100000 com stack=0x1000
+op q, map=$*, stack=0x100000, heapsize=0x100000 com stack=0x1000
 <<
 
 $(OUTD)/jwlibd.exe : $(depends_exe)

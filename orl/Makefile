@@ -18,10 +18,10 @@ DEBUG=0
 
 !if $(DEBUG)
 cflags = -od -d2 -w3 -D_INT_DEBUG
-OUTD= ..\build\osi386D
+OUTD= ..\build\osi386WD
 !else
 cflags = -ox -s -DNDEBUG
-OUTD= ..\build\osi386R
+OUTD= ..\build\osi386WR
 !endif
 
 #
@@ -58,7 +58,7 @@ orl_objs  = $(OUTD)/orlentry.obj &
 .c: ./c;./elf/c;./coff/c;./omf/c
 .h: ./h;./elf/h;./coff/h;./omf/h
 
-inc_dirs = -Ih -Ielf\h -Icoff\h -Iomf\h -I..\H -I$(watcom_dir)\H -I$(WATCOM)\H
+inc_dirs = -Ih -Ielf\h -Icoff\h -Iomf\h -I..\h -I$(watcom_dir)\h -I$(WATCOM)\H
 
 ALL : $(OUTD) $(OUTD)/orl.lib
 

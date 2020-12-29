@@ -3,12 +3,16 @@
 #
 # This depends on the following projects:
 # orl, dwarf, sdk/rc/wres ( and optionally trmem )
+#
+# Note: the debug version has 2 additional commands
+# - XDBG=n - debug log ( usually n is 2 )
+# - INTDBG - dump symbol table
 
 # the path of the Open Watcom root directory
 WATCOM=\watcom
 
 # set to 0 if the DOS version is NOT to be built!
-DOS=0
+DOS=1
 # set path of HX if DOS=1
 HXDIR=\hx
 
@@ -18,11 +22,13 @@ DEBUG=0
 
 !if $(DEBUG)
 wlink_trmem = 0
-OUTD=build\jwlinkWD
+outd_suffix=D
 !else
 wlink_trmem = 0
-OUTD=build\jwlinkWR
+outd_suffix=R
 !endif
+
+OUTD=build\jwlinkW$(outd_suffix)
 
 proj_name = jwlink
 host_os  = nt
@@ -99,16 +105,17 @@ watcom_dir=watcom
 inc_dirs = -IH -I$(watcom_dir)\H -I$(WATCOM)\H 
 
 !if $(DEBUG)
-orl_lib = build/osi386D/orl.lib
-wres_lib= build/flat386D/wres.lib
-dwarf_lib= build/osi386D/dw.lib
-cflags = -od -d2 -w3 -D_INT_DEBUG
+cflags = -od -d2 -w3 -hc -D_INT_DEBUG
 !else
-orl_lib = build/osi386R/orl.lib
-wres_lib= build/flat386R/wres.lib
-dwarf_lib= build/osi386R/dw.lib
 cflags = -ox -s -DNDEBUG
 !endif
+
+outd_orl_lib   = build\osi386W$(outd_suffix)
+outd_dwarf_lib = build\osi386W$(outd_suffix)
+outd_wres_lib  = build\wresW$(outd_suffix)
+orl_lib  = $(outd_orl_lib)\orl.lib
+dwarf_lib= $(outd_dwarf_lib)\dw.lib
+wres_lib = $(outd_wres_lib)\wres.lib
 
 .c{$(OUTD)}.obj: $($(proj_name)_autodepends)
 	$(WATCOM)\binnt\wcc386 -q -zc -bc -bt=nt $(cflags) $(extra_c_flags_$[&) $(inc_dirs) -fo$@ $[@
@@ -154,7 +161,7 @@ extra_l_flags =
 xlibs = $(wres_lib) $(dwarf_lib) $(orl_lib)
 
 !if $(DEBUG)
-lflagsd = debug dwarf op symfile
+lflagsd = debug c op cvp, symfile
 !else
 lflagsd = 
 !endif
@@ -162,7 +169,7 @@ lflagsd =
 #################
 # explicit rules
 
-ALL: $(OUTD) $(OUTD)/JWlink.exe $(dos_target)
+ALL: $(OUTD) $(OUTD)/JWlink.exe $(dos_target) $(xlibs)
 
 $(OUTD):
 	@if not exist $(OUTD) mkdir $(OUTD)
@@ -204,10 +211,16 @@ $(orl_lib):
 $(dwarf_lib):
 	@cd $(dwarf_dir)
 	@wmake debug=$(DEBUG) watcom=$(WATCOM)
-	@cd ../..
+	@cd ..
 
 clean: .SYMBOLIC
-	@if exist $(OUTD)\$(proj_name).exe erase $(OUTD)\$(proj_name)?.exe
-	@if exist $(OUTD)\$(proj_name).map erase $(OUTD)\$(proj_name)?.map
+	@if exist $(OUTD)\$(proj_name).exe erase $(OUTD)\$(proj_name).exe
+	@if exist $(OUTD)\$(proj_name).map erase $(OUTD)\$(proj_name).map
 	@if exist $(OUTD)\*.obj erase $(OUTD)\*.obj
+	@if exist $(orl_lib)   erase $(orl_lib)
+	@if exist $(dwarf_lib) erase $(dwarf_lib)
+	@if exist $(wres_lib)  erase $(wres_lib)
+	@if exist $(outd_orl_lib)\*.obj   erase $(outd_orl_lib)\*.obj
+	@if exist $(outd_dwarf_lib)\*.obj erase $(outd_dwarf_lib)\*.obj
+	@if exist $(outd_wres_lib)\*.obj  erase $(outd_wres_lib)\*.obj
 

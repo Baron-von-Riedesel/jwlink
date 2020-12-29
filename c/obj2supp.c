@@ -340,7 +340,7 @@ static void BuildReloc( save_fixup *save, frame_spec *targ, frame_spec *frame )
     fix_data    fix;
     targ_addr   faddr;
 
-	DEBUG(( DBG_OLD, "BuildReloc(%h, %h, %h) enter", save, targ, frame ))
+	DEBUG(( DBG_OLD, "BuildReloc(%h, target=%h [type=%d], frame=%h [type=%d]) enter", save, targ, targ->type, frame, frame->type ))
     memset( &fix, 0, sizeof( fix_data ) );        // to get all bitfields 0
     GetFrameAddr( targ, &fix.tgt_addr, NULL, save->off );
     GetFrameAddr( frame, &faddr, &fix.tgt_addr, save->off );
@@ -434,7 +434,7 @@ unsigned IncExecRelocs( void *_save )
 
     if( save->flags & FIX_CHANGE_SEG ) {
         sdata = (segdata *)( save->flags & ~FIX_CHANGE_SEG );
-		DEBUG(( DBG_OLD, "IncExecReloc(): FIX_CHANGE_SEG, off=%h sdata=%h", save->off, sdata ))
+        DEBUG(( DBG_OLD, "IncExecReloc(%h): FIX_CHANGE_SEG, off=%h sdata=%h", _save, save->off, sdata ))
         if( LinkFlags & INC_LINK_FLAG ) {
             save->flags = (unsigned_32) CarveGetIndex( CarveSegData, sdata );
             save->flags |= FIX_CHANGE_SEG;
@@ -454,7 +454,8 @@ unsigned IncExecRelocs( void *_save )
         }
         UpdateFramePtr( &targ );
         UpdateFramePtr( &frame );
-        DEBUG(( DBG_OLD, "IncExecReloc(): off=%h type=%h frame.type=%h", save->off, targ.type, frame.type ))
+        DEBUG(( DBG_OLD, "IncExecReloc(%h): flgs/off/tgt=%h/%h/%h tgt.type/ptr=%d/%h frm.type/ptr=%d/%h",
+            _save, save->flags, save->off, save->target, targ.type, targ.u.ptr, frame.type, frame.u.ptr ))
         if( LastSegData != NULL ) {
             BuildReloc( save, &targ, &frame );
         }
@@ -529,7 +530,7 @@ void StoreFixup( offset off, fix_type type, frame_spec *frame,
     unsigned    size;
     unsigned_8  buff[2 * sizeof( unsigned_32 )];
 
-	DEBUG(( DBG_OLD, "obj2supp.StoreFixup() enter" ));
+	DEBUG(( DBG_OLD, "obj2supp.StoreFixup(off=%h, type=%d, fr.ptr=%h, tgt.ptr=%h, addend=%x) enter", off, type, frame->u.ptr, targ->u.ptr, addend ));
     if( LastSegData != CurrRec.seg ) {
         DbgAssert( CurrRec.seg != NULL );
         LastSegData = CurrRec.seg;
@@ -573,6 +574,7 @@ void StoreFixup( offset off, fix_type type, frame_spec *frame,
     } else {
         PutInfo( CurrRec.seg->data + save.off, buff, size );
     }
+	DEBUG(( DBG_OLD, "obj2supp.StoreFixup() exit" ));
 }
 
 unsigned IncSaveRelocs( void *_save )

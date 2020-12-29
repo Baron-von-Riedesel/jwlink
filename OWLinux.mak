@@ -99,9 +99,9 @@ lib_misc_dir=lib_misc
 dwarf_dir=dwarf
 watcom_dir=watcom
 
-orl_lib = build/osi386/orl.lib
-dwarf_dw_lib= $(dwarf_dir)/dw/osi386/dw.lib
-wres_lib= $(wres_dir)/flat386/wres.lib
+orl_lib     = build/osi386LR/orl.lib
+dwarf_dw_lib= build/osi386LR/dw.lib
+wres_lib    = build/wresLR/wres.lib
 
 inc_dirs = -IH -I$(watcom_dir)\H -I$(WATCOM)\LH -I$(WATCOM)\H 
 
@@ -178,7 +178,7 @@ $(OUTD):
 	@if not exist $(OUTD) mkdir $(OUTD)
 
 $(OUTD)/jwlink. : $(comp_objs_exe) $(xlibs)
-	wlink format elf runtime linux $(lflags) name $@ @<<
+	jwlink format elf runtime linux $(lflags) name $@ @<<
 file { $(common_objs) }
 libpath $(WATCOM)/lib386
 libpath $(WATCOM)/lib386/linux

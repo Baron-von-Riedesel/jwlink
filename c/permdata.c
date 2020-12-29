@@ -958,7 +958,7 @@ void ReadPermData( void )
 void PermSaveFixup( void *fix, unsigned size )
 /***************************************************/
 {
-	DEBUG(( DBG_OLD, "PermSaveFixup(size=%h) enter", size ))
+	DEBUG(( DBG_OLD, "PermSaveFixup(fix=%h, size=%d) enter", fix, size ))
     AddBufferStringTable( &StoredRelocs, fix, size );
 }
 

@@ -1,5 +1,5 @@
 
-OUTD=OWLinuxR
+OUTD=..\build\cvpackLR
 WATCOM=\watcom
 watcom_dir=..\watcom
 

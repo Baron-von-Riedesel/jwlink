@@ -1,11 +1,22 @@
 
 proj_name = dwarfw
 
-OUTD=..\build\osi386r
-
 !ifndef WATCOM
 WATCOM=\watcom
 !endif
+
+!ifndef DEBUG
+DEBUG=0
+!endif
+
+!if $(DEBUG)
+outd_suffix=D
+!else
+outd_suffix=R
+!endif
+
+OUTD=..\build\osi386W$(outd_suffix)
+
 
 !ifndef dwarfw_autodepends
 dwarfw_autodepends = .AUTODEPEND

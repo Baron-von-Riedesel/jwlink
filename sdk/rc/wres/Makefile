@@ -20,9 +20,9 @@ DEBUG=0
 !endif
 
 !if $(DEBUG)
-OUTD=..\..\..\build\flat386D
+OUTD=..\..\..\build\wresWD
 !else
-OUTD=..\..\..\build\flat386R
+OUTD=..\..\..\build\wresWR
 !endif
 
 #
@@ -106,10 +106,6 @@ $(OUTD):
 	@if not exist $(OUTD) mkdir $(OUTD)
 
 $(OUTD)\wres.lib : $(objs) $(__MAKEFILES__) .PRECIOUS
-#!ifdef bootstrap
-#    ar crs $@ $(objs)
-#!else
-    %create $^&.lbc
-    @for %i in ($(objs)) do @%append $^&.lbc +%i
-    jwlib -n $(OUTD)\wres.lib @$^&.lbc
-#!endif
+    %create $(OUTD)\$^&.lbc
+    @for %i in ($(objs)) do @%append $(OUTD)\$^&.lbc +%i
+    jwlib -n $(OUTD)\wres.lib @$(OUTD)\$^&.lbc
