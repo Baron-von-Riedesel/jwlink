@@ -1,0 +1,131 @@
+# generic jwlink.lnk file
+# does not contain OW-specific stuff
+
+# default if no format is defined and 16-bit module is found
+system begin 286
+    format dos
+end
+# default if no format is defined and 32-bit module is found
+system begin 386
+    format windows pe runtime console
+end
+
+# DOS 16-bit
+system begin dos
+    option osname='DOS 16-bit'
+    format dos ^
+end
+system begin com
+    option osname='DOS 16-bit .COM application'
+    format dos com
+end
+system begin hx16
+    option osname='DOS-extended 16-bit HX application'
+    op stub=hdld16.bin, protmode
+    format win dpmi ^
+end
+
+# DOS 32-bit
+system begin causeway
+    option osname='CauseWay'
+    op stub=cwstub.exe
+    format os2 le ^
+end
+system begin cwdlls
+    option osname='CauseWay (stack calling convention)'
+    format os2 le dll ^
+    libfile dllstrts.obj
+end
+system begin cwdllr
+    option osname='CauseWay (register calling convention)'
+    format os2 le dll ^
+    libfile dllstrtr.obj
+end
+system begin pmodew
+    option osname='PMODE/W'
+    op stub=pmodew.exe
+    format os2 le
+end
+system begin hx32
+    option osname='HX (DOS PE)'
+    op stack=0x40000
+# avail. stubs: loadpe.bin, loadpex.bin, dpmild32.bin, hdld32.bin, dpmist32.bin
+    op stub=loadpe.bin
+    format windows pe hx ^
+    runtime console=4.0
+end
+system begin hx32s
+    option osname='HX (DOS PE, static Win32 emulation)'
+    op stack=0x40000
+# avail. stubs: loadpe.bin, loadpex.bin, dpmild32.bin, hdld32.bin, dpmist32.bin
+    op stub=loadpe.bin
+    libfile initw32.obj
+    library dkrnl32s, duser32s, dgdi32s
+    format windows pe hx ^
+    runtime console=4.0
+end
+# hx dlls require application stub dpmild32.bin, hdld32.bin or dpmist32.bin
+system begin hx32_dll
+    option osname='HX dll'
+    format windows pe dll ^
+    runtime console=4.0
+end
+
+# OS/2 16-bit
+system begin os2
+    option osname='OS/2 16-bit'
+    format os2 ^
+end
+system begin os2_pm
+    option osname='OS/2 16-bit Presentation Manager'
+    format os2 pm ^
+end
+system begin os2_dll
+    option osname='OS/2 16-bit dll'
+    format os2 dll ^
+end
+
+# OS/2 32-bit
+system begin os2v2
+    option osname='OS/2 32-bit'
+    format os2 lx ^
+end
+system begin os2v2_pm
+    option osname='OS/2 32-bit Presentation Manager'
+    format os2 lx pm ^
+end
+system begin os2v2_dll
+    option osname='OS/2 32-bit dll'
+    format os2 lx dll ^
+end
+
+# Windows 16-bit
+system begin win16
+    option osname='Windows 16-bit'
+    format windows ^
+end
+system begin win16_dll
+    option osname='Windows 16-bit dll'
+    format windows dll ^
+end
+system begin win_vxd
+    option osname='Windows Virtual Device Driver (VxD)'
+    format windows vxd ^
+end
+
+# Windows 32- and 64-bit
+system begin pe_con
+#    option osname='Win32/64 console application'
+    format windows pe ^
+    runtime console=4.0
+end
+system begin pe_gui
+#    option osname='Win32/64 GUI application'
+    format windows pe ^
+    runtime windows=4.0
+end
+system begin pe_dll
+#    option osname='Win32/64 Dll'
+    format windows pe dll ^
+    runtime windows=4.0
+end

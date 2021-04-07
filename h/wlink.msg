@@ -126,7 +126,7 @@ pick(    MSG_GENERAL_HELP_28,   "obj_spec  ::= obj_file[\"(\"obj_member\")\"] | 
 pick(    MSG_GENERAL_HELP_29,   "dbtype    ::= \"Watcom\" | \"Dwarf\" | \"Codeview\"" )
 pick(    MSG_GENERAL_HELP_30,   "dblist    ::= dboption{\",\"dboption}" )
 pick(    MSG_GENERAL_HELP_31,   "dboption  ::= \"LInes\" | \"Types\" | \"LOcals\" | \"All\"" )
-pick(    MSG_GENERAL_HELP_32,   "option    ::= \"ARTificial\" | \"[NO]CAChe\" | \"[NO]Caseexact\" | \"CVPack\"" )
+pick(    MSG_GENERAL_HELP_32,   "option    ::= \"ARTificial\" | \"[NO]CAChe\" | \"[NO]CASEexact\" | \"CVPack\"" )
 pick(    MSG_GENERAL_HELP_33,   "            | \"Dosseg\" | \"ELiminate\" | \"[NO]FARcalls\"" )
 pick(    MSG_GENERAL_HELP_34,   "            | \"INCremental[=file_name]\" | \"MANGlednames\"" )
 pick(    MSG_GENERAL_HELP_35,   "            | \"Map\"[\"=\"map_file] | \"MAXErrors=\"n | \"NAMELen=\"n" )

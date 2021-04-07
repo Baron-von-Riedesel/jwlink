@@ -1,0 +1,221 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 FINAL//EN">
+<HTML>
+<HEAD>
+</HEAD>
+<BODY>
+
+
+  <H2>1. About JWlink</H2>
+
+  JWlink is a linker for x86 that can create 16-, 32- and 64-bit binaries.
+  It's a modified Open Watcom Wlink. Some features have been added and a
+  few bugs have been fixed. Generally, it has been made more compatible with
+  the MS linker (the cmdline syntax is still quite different).
+<P> 
+  Besides JWlink's source code there are also precompiled binaries available
+  for <A HREF="Download/JWlink/JWlinkbw.zip">Windows</A>, <A HREF="Download/JWlink/JWlinkbd.zip">DOS</A> and <A HREF="Download/JWlink/JWlinkbl.zip">Linux</A>. The packages containing precompiled binaries
+  also include a <A HREF="JWlink/JWlink.htm">Manual</A> (in HtmlHelp format for Windows, else in plain Html).
+
+
+  <H2>2. Installation</H2>
+
+  There's no installation procedure for JWlink. If JWlink is to be used
+  frequently, it might be a good idea to copy the binary to a directory that
+  is included in the PATH environment variable.
+<P> 
+  Besides JWlink there are 2 additional binaries;
+<UL> 
+<LI>    <b>JWlib[.exe]</b>: this tool is launched by JWlink when it has to create an
+     import library. It's an improved version of OW's WLib. 
+</LI>
+<LI>    <b>cvpack[.exe]</b>: this tool is launched by JWlink when the CVPACK option
+     has been set.
+</LI>
+</UL>
+<P> 
+  Note: the names of the DOS versions of those binaries have a 'd' suffix 
+  (JWlibd.exe, cvpackd.exe). This suffix must be removed.
+
+
+  <H2>3. Changes in Detail</H2>
+
+<TABLE CELLSPACING="2">
+<TR><TD>
+<TABLE CELLSPACING="4" CELLPADDING="4">
+<TR><TD>  <i>PE binaries:</i></TD></TR> 
+<TR BGCOLOR="#F0F8F8"><TD> 
+    JWlink is able to produce PE32+ binaries for Win64. This format is<br>
+    automatically enabled when a PE32+ object module is detected.
+</TD></TR><TR BGCOLOR="#F0F8F8"><TD> 
+    new options <font color=#0000A0>LARGEaddressaware</font> (32-bit Windows PE) and <font color=#0000A0>NOLARGEaddressaware</font><br>
+    (64-bit Windows PE32+).
+</TD></TR><TR BGCOLOR="#F0F8F8"><TD> 
+    constant data is put into the readonly section "rdata" ( MS link <br>
+    compatible ) [ OW WLink writes it into read-write section DGROUP ].
+</TD></TR><TR BGCOLOR="#F0F8F8"><TD> 
+    .idata section - which is used to store import information - is merged<br>
+    with ".rdata" ( MS link compatible ). [ OW Wlink creates a separate 
+    section for .idata ].
+</TD></TR><TR BGCOLOR="#F0F8F8"><TD> 
+    .edata section - which is used to store export information - is merged<br>
+    with ".rdata" ( MS link compatible ). [ OW Wlink creates a separate
+    section for .edata ].
+</TD></TR><TR BGCOLOR="#F0F8F8"><TD> 
+    linker "-export" directives in section ".drectve" ( COFF modules only )<br>
+    may contain an "internal name" addition ( MS link compatible ). Example:<br>
+    "-export:MyFunc1=_MyFunc1@4"
+</TD></TR><TR BGCOLOR="#F0F8F8"><TD> 
+    linker "-entry" directive in section ".drectve" ( COFF modules only )<br>
+    doesn't need a leading underscore, it is added internally ( MS link<br>
+    compatible ). This eliminates the need to use JWasm's -zzs option.
+</TD></TR><TR BGCOLOR="#F0F8F8"><TD> 
+    linker "-defaultlib" directive in section ".drectve" ( COFF/ELF modules<br>
+    only ) is able to handle directory names enclosed in double quotes.
+</TD></TR><TR BGCOLOR="#F0F8F8"><TD> 
+    linker will understand directive "-import" read from section<br>
+    ".drectve" ( COFF/ELF modules only ).
+</TD></TR><TR BGCOLOR="#F0F8F8"><TD> 
+    if the linker finds a directive in section ".drectve" that it doesn't<br>
+    understand, it will emit warning "unknown directive '-%s' ignored".
+</TD></TR><TR BGCOLOR="#F0F8F8"><TD> 
+    for dlls, the base relocation table isn't removed if no relocations<br>
+    exist. Instead an empty table is written.
+</TD></TR><TR BGCOLOR="#F0F8F8"><TD> 
+    if an import library is to be written, format COFF is used now as<br>
+    default if a PE binary is linked. To actually write the library,<br>
+    the external tool JWLib is used.
+</TD></TR><TR BGCOLOR="#F0F8F8"><TD> 
+    JWlib.exe: if COFF import libraries are to be created, the "short"<br>
+    format is used now, which reduces the file size significantly.
+</TD></TR><TR BGCOLOR="#F0F8F8"><TD> 
+    default base for dlls is 0x10000000 ( MS link compatible ).
+</TD></TR><TR BGCOLOR="#F0F8F8"><TD> 
+    new SEGMENT attributes EXECUTABLE and WRITABLE to allow to make 
+    data sections executable or code sections writable.
+</TD></TR><TR BGCOLOR="#F0F8F8"><TD> 
+    new option <font color=#0000A0>NXCompat</font>.
+</TD></TR><TR BGCOLOR="#F0F8F8"><TD> 
+    directive ANONYMOUSEXPORT works with PE format.
+</TD></TR><TR BGCOLOR="#F0F8F8"><TD> 
+    new option FUZZYEXPORT to allow undecorated names with EXPORT directive.
+</TD></TR><TR BGCOLOR="#F0F8F8"><TD> 
+    unused entries in the linker-generated transfer table are no longer written.
+</TD></TR> 
+<TR><TD>  <i>ELF binaries:</i></TD></TR> 
+<TR BGCOLOR="#F0F8F0"><TD> 
+    Support for 64-bit ELF binaries has been added. This format is<br>
+    automatically enabled when a 64-bit object module is detected.
+</TD></TR>
+<TR BGCOLOR="#F0F8F0"><TD> 
+    if no start address has been defined, symbol _start will be set as
+    start address automatically.
+</TD></TR>
+<TR BGCOLOR="#F0F8F0"><TD> 
+    It is ensured that file alignment ( option ALIGNMENT ) won't violate
+    segment alignment requirements. Also, default for file alignment is
+    0 ( means no alignment ). Default for object alignment ( option OBJALIGN )
+    is still 0x1000.
+</TD></TR> 
+<TR><TD>  <i>DOS binaries:</i></TD></TR> 
+<TR BGCOLOR="#F8F0F8"><TD> 
+    new option <font color=#0000A0>KNOWEAS</font> for DOS binaries to make the linker create<br>
+    full-sized (size &gt;= 0x40) MZ headers for stubs.
+</TD></TR><TR BGCOLOR="#F8F0F8"><TD> 
+    no minimum stack size for MZ binaries.
+</TD></TR><TR BGCOLOR="#F8F0F8"><TD> 
+    no warning is displayed if a 32bit module is linked into the binary.
+</TD></TR> 
+<TR><TD>  <i>Other:</i></TD></TR> 
+<TR BGCOLOR="#F8F8F0"><TD> 
+    If multiple starting points are defined, JWlink will warn only and
+    use the first that was defined.
+</TD></TR><TR BGCOLOR="#F8F8F0"><TD> 
+    File arguments may be enclosed in double quotes.
+</TD></TR><TR BGCOLOR="#F8F8F0"><TD> 
+    the rudimentary support for Tenberry's 16-bit extender DOS/16M has
+    been removed.
+</TD></TR><TR BGCOLOR="#F8F8F0"><TD> 
+    JWlink is able to handle OMF LIDATA records with relocations.
+</TD></TR><TR BGCOLOR="#F8F8F0"><TD> 
+    The EXPORT directive got a new attribute, NONAME, that makes it work
+    similiar to ANONYMOUSEXPORT.
+</TD></TR>
+</TABLE>
+</TD></TR>
+</TABLE>
+
+
+  <H2>4. How to create the JWlink binaries</H2>
+
+<DL>  You'll need:</DL>
+<DD>  - the JWlink source package
+<DD>  - Open Watcom (v1.8 or newer)
+<DD>  - if the DOS binary is to be build, the HX development package
+</DL>
+<P> 
+<DL>  To create the jwlink binary:
+<DD>  - Win32, DOS: Adjust the path for the Watcom root directory ( variable WATCOM )
+    in file Makefile. If no DOS version of jwlink is to be created, set variable DOS = 0.
+    Then run 'wmake'.
+<DD>  - Linux: Adjust the path for the Watcom root directory ( variable WATCOM )
+    in file OWLinux.mak. Then run 'wmake -f OWLinux.mak'.
+</DL>
+<P> 
+
+  <H2>5. Examples</H2>
+
+  The JWlink commandline options are vast and the syntax, which is inherited
+  from Wlink, is a bit strange. As a start, here are some examples for the
+  most common cases:
+<TABLE CELLSPACING="1">
+<TR><TD>
+<TABLE CELLSPACING="1" CELLPADDING="4">
+<TR BGCOLOR="#E8E8E8"><TD> 
+    - Win32/Win64 <b>console application</b>,<br> one object module (sample.obj):
+</TD><TD> 
+     <font color=#600080>jwlink <b>format windows pe</b> file sample.obj</font>
+</TD></TR><TR BGCOLOR="#E8E8E8"><TD> 
+    - Win32/Win64 <b>GUI application</b>,<br> one object module (sample.obj):
+</TD><TD> 
+     <font color=#600080>jwlink format windows pe <b>runtime windows</b> file sample.obj</font>
+</TD></TR><TR BGCOLOR="#E8E8E8"><TD> 
+    - Win32/Win64 <b>dynamic link library</b>,<br> one object module (sample.obj):
+</TD><TD> 
+     <font color=#600080>jwlink format windows pe <b>dll</b> file sample.obj</font>
+</TD></TR><TR BGCOLOR="#E8E8E8"><TD> 
+    - Win32/Win64 console application with <b>multiple object modules</b>,<br>
+    file1.obj and file2.obj, name of the resulting binary will be sample.exe:
+</TD><TD> 
+     <font color=#600080>jwlink format windows pe dll <b>file file1.obj, file2.obj</b> name sample.exe</font>
+</TD></TR><TR BGCOLOR="#E8E8E8"><TD> 
+    - Win32/Win64 console application with one object module,<br>
+    emit <b>symbolic debugging info</b> and create a map file:
+</TD><TD> 
+     <font color=#600080>jwlink <b>debug c</b> format windows pe file sample.obj <b>op cvp, map</b></font>
+</TD></TR><TR BGCOLOR="#E8E8E8"><TD> 
+    - Win32/Win64 console application <b>without base relocations</b>:
+</TD><TD> 
+     <font color=#600080>jwlink format windows pe file sample.obj <b>op noreloc</b></font>
+</TD></TR><TR BGCOLOR="#E8E8E8"><TD> 
+    - Win32/Win64 dll and set the <b>preferred base address</b>:
+</TD><TD> 
+     <font color=#600080>jwlink format windows pe dll file sample.obj <b>op offset=0x20000000</b></font>
+</TD></TR><TR BGCOLOR="#E8E8E8"><TD> 
+    - Win32/Win64 dll and write an <b>import library</b>:
+</TD><TD> 
+     <font color=#600080>jwlink format windows pe dll file sample.obj <b>op implib=sample.lib</b></font>
+</TD></TR><TR BGCOLOR="#E8E8E8"><TD> 
+    - Win32 console application <b>compiled with MS VC++</b>:
+</TD><TD> 
+     <font color=#600080>jwlink format windows pe file sample.obj <b>op eliminate, start=_mainCRTStartup, noreloc</b></font>
+</TD></TR><TR BGCOLOR="#E8E8E8"><TD> 
+    - 32- or 64-bit ELF application</b>:
+</TD><TD> 
+     <font color=#600080>jwlink <b>format elf</b> file sample.obj op noreloc</font>
+</TD></TR>
+</TABLE>
+</TD></TR>
+</TABLE>
+
+</BODY>
+</HTML>

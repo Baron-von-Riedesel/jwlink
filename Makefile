@@ -185,7 +185,7 @@ op q, norelocs, map=$^*, noredefs, stack=0x100000, heapsize=0x100000 com stack=0
 <<
 
 $(OUTD)/JWlinkd.exe : $(comp_objs_exe) $(xlibs)
-	jwlink $(lflagsd) format windows pe runtime console $(extra_l_flags) @<<
+	jwlink $(lflagsd) format windows pe hx runtime console $(extra_l_flags) @<<
 libpath $(WATCOM)\lib386\nt libpath $(WATCOM)\lib386
 file { $(common_objs) }
 name $@
@@ -195,7 +195,7 @@ Libfile $(WATCOM)\lib386\nt\cstrtwhx.obj
 lib { $(xlibs) }
 op q, map=$^*, noredefs, stack=0x20000, heapsize=0x100000 com stack=0x1000
 <<
-	pestub.exe -x -z -n $@
+	pestub.exe -n $@
 
 
 $(wres_lib):
