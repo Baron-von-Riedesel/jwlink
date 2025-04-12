@@ -153,7 +153,7 @@ pick(    MSG_MULT_DBI_FORMATS,         "only one debugging format can be specifi
 pick(    MSG_MACHTYPE_DIFFERENT,       "file %s has code for a different processor" )
 pick(    MSG_NO_BIG_ENDIAN,            "big endian code not supported" )
 pick(    MSG_NO_DICT_FOUND,            "no dictionary found" )            /* 152 */
-pick(    MSG_INVALID_INDEX_IN_RELOC,   "invalid segment/group/external index in relocation" )
+pick(    MSG_INVALID_INDEX_IN_RELOC,   "invalid segment/group/external index (%d) in relocation" )
 pick(    MSG_CANT_EXECUTE,             "cannot execute %1 : %2" )
 pick(    MSG_REL_NOT_ALIGNED,          "relocation at %a to an improperly aligned target" )
 pick(    MSG_INC_NEAR_START,           "OPTION INCREMENTAL must be one of the first commands specified " )
@@ -176,4 +176,4 @@ pick(    MSG_NEED_NOLARGEADDRESSAWARE, "32-bit relocation to '%s' requires optio
 pick(    MSG_UNKNOWN_DIRECTIVE_IGNORED,"unknown directive '-%s' ignored" )
 pick(    MSG_TARGET_DISP_IGNORED,      "target displacement %x ignored for segment fixup" ) /* 7.11.2020 */
 
-#define MSG_MAX_ERR_MSG_NUM MSG_UNKNOWN_DIRECTIVE_IGNORED
+#define MSG_MAX_ERR_MSG_NUM MSG_TARGET_DISP_IGNORED

@@ -977,6 +977,7 @@ bool ProcNonConforming( void )
 bool ProcMovable( void )
 /*****************************/
 {
+    DEBUG(( DBG_OLD, "ProcMovable(): " ));
     if( FmtData.u.os2.os2_seg_flags->specified & SEG_MOVABLE ) {
         LnkMsg( LOC+LINE+WRN+MSG_SEG_FLAG_MULT_DEFD, NULL );
     }
@@ -988,6 +989,7 @@ bool ProcMovable( void )
 bool ProcFixed( void )
 /*****************************/
 {
+    DEBUG(( DBG_OLD, "ProcFixed(): " ));
     if( FmtData.u.os2.os2_seg_flags->specified & SEG_MOVABLE ) {
         LnkMsg( LOC+LINE+WRN+MSG_SEG_FLAG_MULT_DEFD, NULL );
     }

@@ -33,5 +33,5 @@
 extern void     ProcComdef( bool, struct objbuff * );
 extern void     ProcLinsym( struct objbuff * );
 extern void     ResolveComdats( void );
-extern void     ProcComdat( struct objbuff * );
+extern int      ProcComdat( struct objbuff * );
 extern void     ResetComdef( void );

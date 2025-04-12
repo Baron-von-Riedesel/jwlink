@@ -1,0 +1,17 @@
++..\build\osi386WR/orlentry.obj
++..\build\osi386WR/orlflhnd.obj
++..\build\osi386WR/orlhash.obj
++..\build\osi386WR/omfload.obj
++..\build\osi386WR/omfmunge.obj
++..\build\osi386WR/omfentr.obj
++..\build\osi386WR/omfflhn.obj
++..\build\osi386WR/omfdrctv.obj
++..\build\osi386WR/elfentr.obj
++..\build\osi386WR/elflwlv.obj
++..\build\osi386WR/elfflhn.obj
++..\build\osi386WR/elfload.obj
++..\build\osi386WR/coffentr.obj
++..\build\osi386WR/cofflwlv.obj
++..\build\osi386WR/coffflhn.obj
++..\build\osi386WR/coffload.obj
++..\build\osi386WR/coffimpl.obj

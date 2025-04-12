@@ -118,11 +118,19 @@ void * FindNode( nodearray *list, unsigned index )
 //#ifdef _INT_DEBUG
     if ( index > list->num ) {
 		LnkMsg( ERR+MSG_INVALID_INDEX_IN_RELOC, "d", index+1 );
-        //printf("objnode.FindNode(): index %d exceeds max index %d\n", index+1, list->num );
+        DEBUG(( DBG_OLD, "objnode.FindNode(): index %d exceeds max index %d\n", index, list->num ));
         return( NULL );
     }
 //#endif
     return list->array[ARRAY_NUM(index)] + ELEMENT_NUM(index) * list->elsize;
+}
+
+/* jwlink: get nodes to avaid error if FindNode() fails */
+
+unsigned GetNumNodes( nodearray *list )
+/*************************************/
+{
+    return list->num;
 }
 
 static void AllocNewArray( nodearray *list )

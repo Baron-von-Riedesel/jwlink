@@ -108,6 +108,7 @@ void DBIP1Source( byte *buff, byte *endbuff )
     minor = *buff++;
     len = endbuff - buff;
     if( len <= 0 ) {
+        DEBUG((DBG_OLD, "dbgall.DBIP1Source(): error, len <= 0" ));
         BadObject();
         return;
     }

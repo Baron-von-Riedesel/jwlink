@@ -58,7 +58,9 @@
 #define CDAT_SELECT_MASK        0xF0
 #define CDAT_SELECT_SHIFT       12
 
-#if 0
+#define FULLCOMDAT 1 /* support all comdats, not just the explicit one */
+
+#if FULLCOMDAT
 static char *   CDatClassNames[] = {
         CodeClassName,
         FarDataClassName,
@@ -254,6 +256,7 @@ void ProcLinsym( struct objbuff *ob )
     sym = SymOp( ST_FIND | ST_STATIC, symname->name, sym_len );
     if( sym == NULL ) sym = SymOp( ST_FIND, symname->name, sym_len );
     if( sym == NULL ) {
+        DEBUG((DBG_OLD, "wcomdef.ProcLinSym(): error, sym==NULL" ));
         BadObject();
         return;
     }
@@ -298,7 +301,7 @@ void ResolveComdats( void )
     CDatList = NULL;
 }
 
-#if 0
+#if FULLCOMDAT
 static char * GetNewName( void )
 /******************************/
 /* get a new name for an automatically defined comdat segment */
@@ -308,7 +311,7 @@ static char * GetNewName( void )
     return CDatSegName;
 }
 
-static void AddToLinkerComdat( symbol *sym )
+static void AddToLinkerComdat( symbol *sym, segdata *sdata )
 /******************************************/
 /* this tries to add "size" bytes to an existing comdat segment, and if it
  * can't, it creates a new segment for the data */
@@ -317,11 +320,11 @@ static void AddToLinkerComdat( symbol *sym )
     class_entry *       class;
     offset              seglen;
     section *           sect;
-    segdata *           sdata;
+    //segdata *           sdata;
     byte                alloc;
     byte                align;
 
-    sdata = sym->p.seg;
+    //sdata = sym->p.seg;
     alloc = sdata->alloc;
     align = sdata->align;
     leader = CDatSegments[alloc];
@@ -421,7 +424,7 @@ static bool CheckSameComdat( void *info, void *sym )
 
 #define ST_COMDAT (ST_CREATE | ST_NOALIAS | ST_REFERENCE)
 
-void ProcComdat( struct objbuff *ob )
+int ProcComdat( struct objbuff *ob )
 /****************************/
 /* process a comdat record */
 {
@@ -457,7 +460,7 @@ void ProcComdat( struct objbuff *ob )
         ob->curr += sizeof( unsigned_16 );
     }
     SkipIdx( ob );  /* not interested in the type index */
-    alloc = attr & CDAT_ALLOC_MASK;
+    alloc = attr & CDAT_ALLOC_MASK; /* mask out bits 4-7 */
     if( alloc == 0 ) {  /* if explicit allocation */
         SkipIdx( ob );                              /* get public base */
         segidx = GetIdx( ob );
@@ -467,21 +470,54 @@ void ProcComdat( struct objbuff *ob )
                 align = seg->entry->align;
             }
         } else {
+            DEBUG((DBG_OLD, "wcomdef.ProcComDat(): error; explicit, but segidx==0" ));
             BadObject();        // do not support absolute comdats
-            return;             // NOTE: premature return
+            return 0;             // NOTE: premature return
         }
     } else {    // do not support linker defined comdats
+        /* non-explicit comdats have no base (grp/seg) */
+#if !FULLCOMDAT
+        DEBUG((DBG_OLD, "wcomdef.ProcComDat(): error, [attr & 0xf] != 0" ));
         BadObject();
-        return;
+        return 0;
+#else
+        seg = 0;
+#endif
     }
     piece = AllocCDatPiece();
     symname = FindName( GetIdx( ob ) );
     namelen = strlen( symname->name );
+
+    /* the symbol must have been defined via a CEXTDEF record.
+     * So it might be better to also set the ST_FIND flag?
+     */
+#if 0
     if( flags & CDAT_STATIC ) {
         sym = SymOp( ST_COMDAT | ST_STATIC, symname->name, namelen );
     } else {
         sym = SymOp( ST_COMDAT, symname->name, namelen );
     }
+#else
+    if( flags & CDAT_STATIC ) {
+        sym = SymOp( ST_COMDAT | ST_STATIC | ST_FIND, symname->name, namelen );
+    } else {
+        sym = SymOp( ST_COMDAT | ST_FIND, symname->name, namelen );
+    }
+    if (sym == NULL) {
+        /* the symbol may be in the global queue */
+        if (flags & CDAT_STATIC) {
+            DEBUG((DBG_OLD, "wcomdef.ProcComDat(): symbol not found, searching global table" ));
+            sym = SymOp( ST_COMDAT | ST_FIND, symname->name, namelen );
+        }
+        if ( sym == NULL ) {
+            DEBUG((DBG_OLD, "wcomdef.ProcComDat(): symbol not found" ));
+            BadObject();
+            return 0;
+        }
+        /* todo: move symbol to the static queue! */
+    }
+#endif
+
     if( flags & CDAT_ITERATED ) {
         piece->length = CalcLIDataLength( ob->curr, ob->end );
     } else {
@@ -505,8 +541,10 @@ void ProcComdat( struct objbuff *ob )
         sdata->iscdat = TRUE;
         sdata->isabs = seg == NULL;
         sdata->align = align;
-        sdata->u.leader = seg->entry->u.leader;
-        sdata->iscode = (seg->info & SEG_CODE) != 0;
+        if ( seg ) {
+            sdata->u.leader = seg->entry->u.leader;
+            sdata->iscode = (seg->info & SEG_CODE) != 0;
+        }
         if( ObjFormat & FMT_32BIT_REC ) {
             sdata->is32bit = TRUE;
         }
@@ -531,11 +569,13 @@ void ProcComdat( struct objbuff *ob )
                 seg->entry->u.leader->info |= SEG_LXDATA_SEEN;
                 RingAppend( &sdata->u.leader->pieces, sdata );
                 Ring2Append( &CurrMod->segs, sdata );
-#if 0
+#if FULLCOMDAT
             } else {    /* add it to a linker defined segment */
                 sdata->iscode = alloc & 1;
+                sdata->is32bit = (((alloc & 0xf) == 3) || (( alloc & 0xf) == 4)); /* code32|data32 */
                 sdata->alloc = --alloc;
-                AddToLinkerComdat( sym );
+                sdata->isabs = 0;  /* reset the absolute bit set above */
+                AddToLinkerComdat( sym, sdata );
 #endif
             }
             sym->info |= (attr & CDAT_SELECT_MASK) << CDAT_SELECT_SHIFT;
@@ -551,5 +591,5 @@ void ProcComdat( struct objbuff *ob )
         ObjFormat &= ~(FMT_IGNORE_FIXUPP | FMT_IS_LIDATA);
     }
     SetCurrSeg( info->sdata, dataoff, piece->data );
-    return;
+    return 1;
 }

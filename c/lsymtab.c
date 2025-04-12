@@ -62,6 +62,7 @@
 #define GLOBAL_TABALLOC (1792 * sizeof(symbol *)) // 1st power of 128 > TABSIZE
 
 int             (*CmpRtn)( const void *, const void *, size_t );
+/* this var holds the value of the NAMELEN option */
 unsigned        NameLen;
 symbol          *LastSym;
 
@@ -967,6 +968,11 @@ static symbol *StaticSearchSym( char *symname, unsigned hash, unsigned len )
     return( sym );
 }
 
+/* ST_STATIC = 0x1
+ * ST_CREATE = 0x2
+ * ST_DUPLICATE = 0x40
+ */
+
 static symbol *DoSymOp( sym_flags op, char *symname, unsigned length )
 /********************************************************************/
 {
@@ -991,13 +997,15 @@ static symbol *DoSymOp( sym_flags op, char *symname, unsigned length )
         //sym = StaticSearchSym( symname, hash, searchlen );
         if ( ( op & ( ST_CREATE|ST_STATIC|ST_DUPLICATE ) ) == ( ST_CREATE|ST_STATIC|ST_DUPLICATE) )
             sym = NULL;
-        else
+        else {
             sym = StaticSearchSym( symname, hash, searchlen );
+            DEBUG(( DBG_OLD, "DoSymOp(): StaticSearchSym(hash %d) returned sym = %h", hash, sym ));
+        }
     } else {
         hash = GlobalHashFn( symname, searchlen );
         sym = GlobalSearchSym( symname, hash, searchlen );
     }
-    DEBUG(( DBG_OLD, "SymOp( %d, %s, %d ) - hash %d - handle = %h", op, symname_dbg, length, hash, sym ));
+    DEBUG(( DBG_OLD, "DoSymOp( 0x%h, %s, %d ) - hash %d - sym = %h", op, symname_dbg, length, hash, sym ));
     if( sym != NULL ) {
         //DEBUG(( DBG_OLD, "found symbol %s", symname_dbg ));
         //DEBUG(( DBG_OLD, " - handle = %h", sym ));

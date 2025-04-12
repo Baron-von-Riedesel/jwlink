@@ -267,7 +267,7 @@ static void *GetTransferGlueCode( int lnk_state )
     switch( lnk_state & HAVE_MACHTYPE_MASK ) {
     case HAVE_ALPHA_CODE:   return( &AlphaJump );
     case HAVE_I86_CODE:     return( &I386Jump );
-    case HAVE_PPC_CODE:     return( &PPCJump );
+    case HAVE_PPC_CODE:     return( PPCJump );
     default:                DbgAssert( 0 ); return( NULL );
     }
 }

@@ -646,6 +646,13 @@ static segnode *FindSegNode( orl_sec_handle sechdl )
     if( idx == 0 ) {
         return( NULL );
     } else {
+
+        /* JWLink: don't call FindNode(), which emits an error */
+        if ( idx > GetNumNodes( SegNodes ) + 1 ) {
+            DEBUG(( DBG_OLD, "objorl.FindSegNode(): index %d exceeds # of items\n", idx ));
+            return( NULL );
+        }
+
         return( FindNode( SegNodes, idx ) );
     }
 }
@@ -719,10 +726,11 @@ static orl_return ProcSymbol( orl_symbol_handle symhdl )
     orl_symbol_binding  binding;
 
     sechdl = ORLSymbolGetSecHandle( symhdl );
-    snode = FindSegNode( sechdl );
+    //snode = FindSegNode( sechdl ); /* jwlink: may fail if 2 sections with identical names are in object module (.drectve) */
     type = ORLSymbolGetType( symhdl );
     name = ORLSymbolGetName( symhdl );
-	DEBUG((DBG_OLD, "objorl.ProcSymbol(%s) enter", name ));
+	DEBUG((DBG_OLD, "objorl.ProcSymbol(%s) enter, type=%h", name, type ));
+    snode = FindSegNode( sechdl ); /* jwlink: for debug reasons, search node AFTER name has been retrieved */
     if( type & ORL_SYM_TYPE_FILE ) {
         if( !(CurrMod->modinfo & MOD_GOT_NAME) ) {
             CurrMod->modinfo |= MOD_GOT_NAME;

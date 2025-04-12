@@ -550,6 +550,7 @@ void StoreFixup( offset off, fix_type type, frame_spec *frame,
     if( CurrRec.data != NULL ) {
         memcpy( buff, CurrRec.data + off, size );
     } else {
+        DbgAssert( CurrRec.seg != NULL );
         ReadInfo( CurrRec.seg->data + save.off, buff, size );
     }
     fix.type = type;
@@ -572,6 +573,7 @@ void StoreFixup( offset off, fix_type type, frame_spec *frame,
     if( CurrRec.data != NULL ) {
         memcpy( CurrRec.data + off, buff, size );
     } else {
+        DbgAssert( CurrRec.seg != NULL );
         PutInfo( CurrRec.seg->data + save.off, buff, size );
     }
 	DEBUG(( DBG_OLD, "obj2supp.StoreFixup() exit" ));

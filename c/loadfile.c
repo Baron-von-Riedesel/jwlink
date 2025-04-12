@@ -78,8 +78,10 @@ typedef struct {
     char        *fname;
     char        *buffer;
     unsigned    bufsize;
-    char        *dllname;
-    size_t      dlllen;
+//    char        *dllname;
+//    size_t      dlllen;
+    char        *module_name;
+    size_t      module_name_len;
     unsigned    didone : 1;
 } implibinfo;
 
@@ -681,7 +683,7 @@ static void SetupImpLib( void )
     ImpLib.bufsize = 0;
     ImpLib.handle = NIL_HANDLE;
     ImpLib.buffer = NULL;
-    ImpLib.dllname = NULL;
+    ImpLib.module_name = NULL;
     ImpLib.didone = FALSE;
     if( FmtData.make_implib ) {
         _ChkAlloc( ImpLib.buffer, IMPLIB_BUFSIZE );
@@ -694,22 +696,22 @@ static void SetupImpLib( void )
         /* RemovePath results in the filename only   *
          * it trims both the path, and the extension */
         fname = RemovePath( Root->outfile->fname, &namelen );
+#if 0
         extlen = strlen( fname + namelen );
         if( FmtData.u.os2.res_module_name != NULL ) {
             fnamelen = namelen;
             namelen = strlen( FmtData.u.os2.res_module_name );
         }
-        ImpLib.dlllen = namelen + extlen;
+#endif
+        //ImpLib.module_name_len = namelen + extlen;
+        ImpLib.module_name_len = namelen;
         /* increase length to restore full extension if not OS2    *
          * sometimes the extension of the output name is important */
-        _ChkAlloc( ImpLib.dllname, ImpLib.dlllen + 1 );
-        if ( FmtData.u.os2.res_module_name != NULL ) {
-            strcpy( ImpLib.dllname, FmtData.u.os2.res_module_name );
-            strcat( ImpLib.dllname, fname+fnamelen );
-        } else {
-            memcpy( ImpLib.dllname, fname, ImpLib.dlllen );
-        }
-        DEBUG(( DBG_OLD, "SetupImpLib(): fname=%s Implib.dlllen=%d Implib.dllname=%s", fname, ImpLib.dlllen, ImpLib.dllname ));
+        if( (FmtData.type & (MK_OS2_NE | MK_WIN_NE)) == 0 )
+            ImpLib.module_name_len += strlen( fname + namelen );
+        _ChkAlloc( ImpLib.module_name, ImpLib.module_name_len + 1 );
+        memcpy( ImpLib.module_name, fname, ImpLib.module_name_len );
+        DEBUG(( DBG_OLD, "SetupImpLib(): fname=%s Implib.module_name_len=%d Implib.module_name=%s", fname, ImpLib.module_name_len, ImpLib.module_name ));
     }
 }
 
@@ -733,7 +735,7 @@ void BuildImpLib( void )
     _LnkFree( FmtData.implibname );
     _LnkFree( ImpLib.fname );
     _LnkFree( ImpLib.buffer );
-    _LnkFree( ImpLib.dllname );
+    _LnkFree( ImpLib.module_name );
 }
 
 #if defined( __UNIX__ ) && !defined(__WATCOMC__)
@@ -840,7 +842,7 @@ void AddImpLibEntry( char *intname, char *extname, unsigned ordinal )
     } else {
         otherlen = 10;          // max length of a 32-bit int.
     }
-    buff = alloca( intlen + otherlen + ImpLib.dlllen + 13 );
+    buff = alloca( intlen + otherlen + ImpLib.module_name_len + 13 );
     buff[0] = '+';
     buff[1] = '+';
     buff[2] = '\'';
@@ -850,8 +852,8 @@ void AddImpLibEntry( char *intname, char *extname, unsigned ordinal )
     *currpos++ = '\'';
     *currpos++ = '.';
     *currpos++ = '\'';
-    memcpy( currpos, ImpLib.dllname, ImpLib.dlllen );
-    currpos += ImpLib.dlllen;
+    memcpy( currpos, ImpLib.module_name, ImpLib.module_name_len );
+    currpos += ImpLib.module_name_len;
     *currpos++ = '\'';
     *currpos++ = '.';
     if( ordinal == NOT_IMP_BY_ORDINAL ) {

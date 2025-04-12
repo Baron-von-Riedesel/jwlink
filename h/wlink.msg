@@ -185,7 +185,7 @@ pick(    MSG_OS2_HELP_24,   "            | \"CONTiguous\" | \"DYNamic\"\n" )
  *  To start a new page, leave a line undefined or define an empty line.
  */
 pick(    MSG_WINDOWS_HELP_0,    "\ncommands valid for the Microsoft Win16 executable formats (NE) only:\n" )
-pick(    MSG_WINDOWS_HELP_1,    "form      ::= \"WIndows\" [\"DLl\"[\"INITGlobal\" | \"INITInstance\"]] [MEMory] [FOnt]" )
+pick(    MSG_WINDOWS_HELP_1,    "form      ::= \"WIndows\" [\"DLl\"[\"INITGlobal\" | \"INITInstance\"]] [DPMI] [MEMory] [FOnt]" )
 pick(    MSG_WINDOWS_HELP_2,    "directive ::= \"NEWsegment\"" )
 pick(    MSG_WINDOWS_HELP_3,    "            | \"SEGment\"     segdesc{\",\"segdesc}" )
 pick(    MSG_WINDOWS_HELP_4,    "            | \"IMPort\"      import{\",\"import}" )

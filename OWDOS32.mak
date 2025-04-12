@@ -1,5 +1,5 @@
 
-# Makefile to create JWlink.exe (Win32) and JWLinkd.exe (DOS)
+# Makefile to create JWlinkD.exe
 #
 # This depends on the following projects:
 # orl, dwarf, sdk/rc/wres ( and optionally trmem )
@@ -9,12 +9,9 @@
 # - INTDBG - dump symbol table
 
 # the path of the Open Watcom root directory
-WATCOM=\watcom
+WATCOM=\ow20
 
-# set to 0 if the DOS version is NOT to be built!
 DOS=1
-# set path of HX if DOS=1
-HXDIR=\hx
 
 !ifndef DEBUG
 DEBUG=0
@@ -28,23 +25,14 @@ wlink_trmem = 0
 outd_suffix=R
 !endif
 
-OUTD=build\jwlinkW$(outd_suffix)
+OUTD=build\jwlD32$(outd_suffix)
 
 proj_name = jwlink
-host_os  = nt
-
-!if $(DOS)
-!if !$(DEBUG)
-dos_target = $(OUTD)/JWlinkd.exe
-!endif
-!endif
+host_os  = dos
 
 !ifndef wlink_autodepends
 wlink_autodepends = .AUTODEPEND
 !endif
-
-# get rid of the -zc
-suppress_zc = 1
 
 #!include trmem.mif
 
@@ -118,7 +106,7 @@ dwarf_lib= $(outd_dwarf_lib)\dw.lib
 wres_lib = $(outd_wres_lib)\wres.lib
 
 .c{$(OUTD)}.obj: $($(proj_name)_autodepends)
-	$(WATCOM)\binnt\wcc386 -q -bc -bt=nt $(cflags) $(extra_c_flags_$[&) $(inc_dirs) -fo$@ $[@
+	$(WATCOM)\binnt\wcc386 -q -bc -bt=dos $(cflags) $(extra_c_flags_$[&) $(inc_dirs) -fo$@ $[@
 
 .c: c;$(wrc_dir)/c;$(lib_misc_dir)/c;$(trmem_dir)
 
@@ -130,7 +118,7 @@ extra_c_flags = -I"$(lib_misc_dir)/h"
 !else
 extra_c_flags = -zp4
 !ifeq use_virtmem 1
-extra_c_flags += -DUSE_VIRTMEM
+extra_c_flags += -DUSE_VIRTMEM -D__WATCOM_LFN__
 !endif
 !endif
 
@@ -169,66 +157,32 @@ lflagsd =
 #################
 # explicit rules
 
-ALL: $(OUTD) $(OUTD)/JWlink.exe $(dos_target) $(xlibs)
+ALL: $(OUTD) $(OUTD)/JWlinkD.exe $(xlibs)
 
 $(OUTD):
 	@if not exist $(OUTD) mkdir $(OUTD)
 
-$(OUTD)/JWlink.exe : $(comp_objs_exe) $(xlibs)
-	jwlink $(lflagsd) format windows pe runtime console $(extra_l_flags) @<<
-libpath $(WATCOM)\lib386\nt libpath $(WATCOM)\lib386
+$(OUTD)/JWlinkD.exe : $(comp_objs_exe) $(xlibs)
+	jwlink @<<
+$(lflagsd) format windows pe hx runtime console
+$(extra_l_flags)
 file { $(common_objs) }
 name $@
+libpath $(WATCOM)\lib386\dos
+libpath $(WATCOM)\lib386
+Libfile cstrtdhr.obj
 lib { $(xlibs) }
-lib kernel32.lib, user32.lib
-op q, norelocs, map=$^*, noredefs, stack=0x100000, heapsize=0x100000 com stack=0x1000
+op quiet, stack=0x10000, heapsize=0x1000, map=$^*, stub=loadpero.bin
+disable 171
+op statics
 !ifndef WLINK
 segment CONST readonly
 segment CONST2 readonly
 !endif
 <<
-
-$(OUTD)/JWlinkd.exe : $(comp_objs_exe) $(xlibs)
-	jwlink $(lflagsd) format windows pe hx runtime console $(extra_l_flags) @<<
-libpath $(WATCOM)\lib386\nt libpath $(WATCOM)\lib386
-file { $(common_objs) }
-name $@
-op stub=$(HXDIR)\Bin\loadpex.bin
-Library $(HXDIR)\lib\imphlp.lib, $(HXDIR)\lib\dkrnl32s.lib, $(HXDIR)\lib\duser32s.lib
-Libfile $(WATCOM)\lib386\nt\cstrtwhx.obj
-lib { $(xlibs) }
-op q, map=$^*, noredefs, stack=0x20000, heapsize=0x100000 com stack=0x1000
-!ifndef WLINK
-segment CONST readonly
-segment CONST2 readonly
-!endif
-<<
-	pestub.exe -n $@
-
-
-$(wres_lib):
-	@cd $(wres_dir)
-	@wmake debug=$(DEBUG) watcom=$(WATCOM)
-	@cd ../../..
-
-$(orl_lib):
-	@cd orl
-	@wmake debug=$(DEBUG) watcom=$(WATCOM)
-	@cd ..
-
-$(dwarf_lib):
-	@cd $(dwarf_dir)
-	@wmake debug=$(DEBUG) watcom=$(WATCOM)
-	@cd ..
 
 clean: .SYMBOLIC
 	@if exist $(OUTD)\$(proj_name).exe erase $(OUTD)\$(proj_name).exe
 	@if exist $(OUTD)\$(proj_name).map erase $(OUTD)\$(proj_name).map
 	@if exist $(OUTD)\*.obj erase $(OUTD)\*.obj
-	@if exist $(orl_lib)   erase $(orl_lib)
-	@if exist $(dwarf_lib) erase $(dwarf_lib)
-	@if exist $(wres_lib)  erase $(wres_lib)
-	@if exist $(outd_orl_lib)\*.obj   erase $(outd_orl_lib)\*.obj
-	@if exist $(outd_dwarf_lib)\*.obj erase $(outd_dwarf_lib)\*.obj
-	@if exist $(outd_wres_lib)\*.obj  erase $(outd_wres_lib)\*.obj
 

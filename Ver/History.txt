@@ -1,7 +1,13 @@
 
+   changes v19beta18, 04/2025:
+
+   -  support for COMDAT non-explicite records
+   -  implib: remove extension for NE (OS/2 & Win16)
+
    changes v19beta17, 04/2021:
 
    -  fixed: help message: [NO]Caseexact changed to [NO]CASEexact.
+   -  help display: added DPMI option to FORMAT WINDOWS 
 
    changes v19beta16, 11/2020:
 

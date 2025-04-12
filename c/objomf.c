@@ -190,6 +190,7 @@ static void Pass1Cmd( byte cmd, struct objbuff *ob )
 /******************************/
 /* Process an object record for pass 1 */
 {
+    DEBUG((DBG_OLD, "objomf.Pass1Cmd(cmd=%h)", cmd ));
     switch( cmd ) {
     case CMD_THEADR:
         ProcTHEADR( ob );
@@ -217,13 +218,14 @@ static void Pass1Cmd( byte cmd, struct objbuff *ob )
     case CMD_PUBDEF:
         ProcPubdef( FALSE, ob );
         break;
-    case CMD_STATIC_EXTDEF:
-    case CMD_STATIC_EXTD32:
-    case CMD_EXTDEF:
+    case CMD_STATIC_EXTDEF: /* 0xB4 */
+    case CMD_STATIC_EXTD32: /* 0xB5 */
+    case CMD_EXTDEF:        /* 0x8C */
         CurrMod->modinfo |= MOD_NEED_PASS_2;
         UseSymbols( ( cmd == CMD_EXTDEF ? FALSE : TRUE ), FALSE, ob );
         break;
-    case CMD_CEXTDF:
+    case CMD_CEXTDF: /* 0xBC - COMDAT reference; not necessarily static!!! */
+        DEBUG((DBG_OLD, "objomf.Pass1Cmd(CMD_CEXTDF)" ));
         CurrMod->modinfo |= MOD_NEED_PASS_2;
         UseSymbols( FALSE, TRUE, ob );
         break;
@@ -252,7 +254,9 @@ static void Pass1Cmd( byte cmd, struct objbuff *ob )
         ObjFormat |= FMT_MS_386;
     case CMD_COMDAT:
         CurrMod->modinfo |= MOD_NEED_PASS_2;
-        ProcComdat( ob );
+        if (!ProcComdat( ob )) {
+			DEBUG((DBG_OLD, "objomf.Pass1Cmd(): ProcComdat() failed" ));
+        }
         break;
     case CMD_LEDA32:
         ObjFormat |= FMT_MS_386;
@@ -997,6 +1001,7 @@ static void UseSymbols( bool static_sym, bool iscextdef, struct objbuff *ob )
         if( iscextdef ) {
             lnptr = FindName( GetIdx( ob ) );
             sym = RefISymbol( lnptr->name );
+            DEBUG((DBG_OLD, "objomf.UseSymbols(): cextdef=1, sym = %h", sym ));
         } else {
             sym_len = ( (obj_name *) (ob->curr) )->len;
             sym_name = ( (obj_name *) (ob->curr) )->name;
@@ -1013,6 +1018,7 @@ static void UseSymbols( bool static_sym, bool iscextdef, struct objbuff *ob )
         DefineReference( sym );
         SkipIdx( ob );/*  skip type index */
     }
+    DEBUG(( DBG_OLD, "UseSymbols() exit" ));
 }
 
 void SkipIdx( struct objbuff *ob )

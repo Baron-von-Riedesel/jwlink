@@ -531,6 +531,7 @@ void AddSegment( segdata *sd, class_entry *class )
 
     if( sd->isabs ) {
         info |= SEG_ABSOLUTE;
+        DEBUG((DBG_OLD,"AddSegment: absolute bit set"));
         sd->isdefd = TRUE;
     }
     if( sd->isabs || sd->combine == COMBINE_INVALID ) {
