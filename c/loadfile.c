@@ -677,8 +677,8 @@ static void SetupImpLib( void )
 {
     char        *fname;
     unsigned    namelen;
-    unsigned    fnamelen;
-    unsigned    extlen;
+    //unsigned    fnamelen;
+    //unsigned    extlen;
 
     ImpLib.bufsize = 0;
     ImpLib.handle = NIL_HANDLE;

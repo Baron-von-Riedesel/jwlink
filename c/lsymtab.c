@@ -970,6 +970,7 @@ static symbol *StaticSearchSym( char *symname, unsigned hash, unsigned len )
 
 /* ST_STATIC = 0x1
  * ST_CREATE = 0x2
+ * ST_FIND   = 0x8
  * ST_DUPLICATE = 0x40
  */
 

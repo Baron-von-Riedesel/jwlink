@@ -481,6 +481,7 @@ int ProcComdat( struct objbuff *ob )
         BadObject();
         return 0;
 #else
+        DEBUG((DBG_OLD, "wcomdef.ProcComDat(): comdat without base (grp/seg)" ));
         seg = 0;
 #endif
     }
@@ -488,8 +489,8 @@ int ProcComdat( struct objbuff *ob )
     symname = FindName( GetIdx( ob ) );
     namelen = strlen( symname->name );
 
-    /* the symbol must have been defined via a CEXTDEF record.
-     * So it might be better to also set the ST_FIND flag?
+    /* the symbol should have been defined via a CEXTDEF record.
+     * However, it has turned out that this is NOT true for Open Watcom compilers!
      */
 #if 0
     if( flags & CDAT_STATIC ) {
@@ -506,15 +507,20 @@ int ProcComdat( struct objbuff *ob )
     if (sym == NULL) {
         /* the symbol may be in the global queue */
         if (flags & CDAT_STATIC) {
-            DEBUG((DBG_OLD, "wcomdef.ProcComDat(): symbol not found, searching global table" ));
+            DEBUG((DBG_OLD, "wcomdef.ProcComDat(): symbol not found in local table, searching global table" ));
             sym = SymOp( ST_COMDAT | ST_FIND, symname->name, namelen );
+            /* todo: move symbol to the static queue! */
         }
         if ( sym == NULL ) {
-            DEBUG((DBG_OLD, "wcomdef.ProcComDat(): symbol not found" ));
-            BadObject();
-            return 0;
+            DEBUG((DBG_OLD, "wcomdef.ProcComDat(): symbol not found ( will be created now )" ));
+            //BadObject(); /* was active for beta18 */
+            //return 0;    /* was active for beta18 */
+            if( flags & CDAT_STATIC ) {
+                sym = SymOp( ST_COMDAT | ST_STATIC, symname->name, namelen );
+            } else {
+                sym = SymOp( ST_COMDAT, symname->name, namelen );
+            }
         }
-        /* todo: move symbol to the static queue! */
     }
 #endif
 

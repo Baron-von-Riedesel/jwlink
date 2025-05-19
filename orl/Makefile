@@ -68,4 +68,7 @@ $(OUTD):
 $(OUTD)/orl.lib : $(orl_objs)
 	@%create $^&.lbc
 	@for %i in ($(orl_objs)) do @%append $^&.lbc +%i
-	jwlib -n $(OUTD)/orl.lib $(libflags) @$^&.lbc
+	@$(WATCOM)\binnt\wlib -n $(OUTD)/orl.lib $(libflags) @$^&.lbc
+
+clean:
+	@erase $(OUTD)/orl.lib

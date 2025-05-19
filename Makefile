@@ -28,7 +28,8 @@ wlink_trmem = 0
 outd_suffix=R
 !endif
 
-OUTD=build\jwlinkW$(outd_suffix)
+BOUT=build
+OUTD=$(BOUT)\jwlinkW$(outd_suffix)
 
 proj_name = jwlink
 host_os  = nt
@@ -169,7 +170,10 @@ lflagsd =
 #################
 # explicit rules
 
-ALL: $(OUTD) $(OUTD)/JWlink.exe $(dos_target) $(xlibs)
+ALL: $(BOUT) $(OUTD) $(OUTD)/JWlink.exe $(dos_target) $(xlibs)
+
+$(BOUT):
+	@if not exist $(BOUT) mkdir $(BOUT)
 
 $(OUTD):
 	@if not exist $(OUTD) mkdir $(OUTD)

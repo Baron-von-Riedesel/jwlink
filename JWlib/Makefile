@@ -17,12 +17,13 @@ debug=0
 wlib_autodepends = .AUTODEPEND
 !endif
 
+BOUT=..\build
 !if $(debug)
 extra_c_flags += -D__DEBUG__
-OUTD=..\build\jwlibWD
+OUTD=$(BOUT)\jwlibWD
 cflags = -od -d2 -w3
 !else
-OUTD=..\build\jwlibWR
+OUTD=$(BOUT)\jwlibWR
 cflags = -ox -s -DNDEBUG
 !endif
 
@@ -76,7 +77,10 @@ inc_dirs = -Ih -I"../orl/h" -I"$(lib_misc_dir)/h" -I"$(watcom_dir)/H" -I$(WATCOM
 .c{$(OUTD)}.obj: $($(proj_name)_autodepends)
 	$(WATCOM)\binnt\wcc386 -q -zc -bc -bt=nt $(cflags) $(extra_c_flags) $(inc_dirs) -fo$@ $[@
 
-ALL: $(OUTD) $(OUTD)/jwlib.exe $(dos_target)
+ALL: $(BOUT) $(OUTD) $(OUTD)/jwlib.exe $(dos_target)
+
+$(BOUT):
+	@if not exist $(BOUT) mkdir $(BOUT)
 
 $(OUTD):
 	@if not exist $(OUTD) mkdir $(OUTD)
