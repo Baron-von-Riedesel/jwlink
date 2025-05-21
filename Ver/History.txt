@@ -2,6 +2,8 @@
    changes v19beta19, 06/2025:
 
    -  fixed bug for COMDAT introduced in beta18.
+   -  Makefile: replaced (deprecated) libfile CSTRTWHX.OBJ by InitW3OW.OBJ.
+   -  jwlink.lnk: added "system hxdosr"
 
    changes v19beta18, 04/2025:
 

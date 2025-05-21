@@ -13,7 +13,8 @@ WATCOM=\watcom
 
 # set to 0 if the DOS version is NOT to be built!
 DOS=1
-# set path of HX if DOS=1
+# set path of HX if DOS=1.
+# The HXDEV package must be installed.
 HXDIR=\hx
 
 !ifndef DEBUG
@@ -180,7 +181,7 @@ $(OUTD):
 
 $(OUTD)/JWlink.exe : $(comp_objs_exe) $(xlibs)
 	jwlink $(lflagsd) format windows pe runtime console $(extra_l_flags) @<<
-libpath $(WATCOM)\lib386\nt libpath $(WATCOM)\lib386
+libpath $(WATCOM)\lib386\nt;$(WATCOM)\lib386
 file { $(common_objs) }
 name $@
 lib { $(xlibs) }
@@ -194,13 +195,15 @@ segment CONST2 readonly
 
 $(OUTD)/JWlinkd.exe : $(comp_objs_exe) $(xlibs)
 	jwlink $(lflagsd) format windows pe hx runtime console $(extra_l_flags) @<<
-libpath $(WATCOM)\lib386\nt libpath $(WATCOM)\lib386
+Libpath $(WATCOM)\lib386\nt;$(WATCOM)\lib386
+Libpath $(HXDIR)\Lib
 file { $(common_objs) }
 name $@
-op stub=$(HXDIR)\Bin\loadpex.bin
-Library $(HXDIR)\lib\imphlp.lib, $(HXDIR)\lib\dkrnl32s.lib, $(HXDIR)\lib\duser32s.lib
-Libfile $(WATCOM)\lib386\nt\cstrtwhx.obj
+Library imphlp.lib, dkrnl32s.lib, duser32s.lib
+Libfile $(HXDIR)\Lib\InitW3ow.obj
+disable 1030
 lib { $(xlibs) }
+op stub=$(HXDIR)\Bin\loadpex.bin
 op q, map=$^*, noredefs, stack=0x20000, heapsize=0x100000 com stack=0x1000
 !ifndef WLINK
 segment CONST readonly

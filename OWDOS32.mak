@@ -1,8 +1,7 @@
 
-# Makefile to create JWlinkD.exe
-#
-# This depends on the following projects:
-# orl, dwarf, sdk/rc/wres ( and optionally trmem )
+# Makefile to create JWlinkD.exe.
+# This makefile creates a DOS binary that uses the OW DOS32 runtime.
+# (The DOS variant optionally created by file Makefile uses the Win32 runtime)
 #
 # Note: the debug version has 2 additional commands
 # - XDBG=n - debug log ( usually n is 2 )
@@ -25,7 +24,8 @@ wlink_trmem = 0
 outd_suffix=R
 !endif
 
-OUTD=build\jwlD32$(outd_suffix)
+BOUT=build
+OUTD=$(BOUT)\jwlD32$(outd_suffix)
 
 proj_name = jwlink
 host_os  = dos
@@ -157,7 +157,10 @@ lflagsd =
 #################
 # explicit rules
 
-ALL: $(OUTD) $(OUTD)/JWlinkD.exe $(xlibs)
+ALL: $(BOUT) $(OUTD) $(OUTD)/JWlinkD.exe $(xlibs)
+
+$(BOUT):
+	@if not exist $(BOUT) mkdir $(BOUT)
 
 $(OUTD):
 	@if not exist $(OUTD) mkdir $(OUTD)
