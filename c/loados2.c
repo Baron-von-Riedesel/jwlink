@@ -699,7 +699,7 @@ static void SetGroupFlags( void )
 }
 
 void ChkOS2Exports( void )
-/*******************************/
+/************************/
 // NOTE: there is a continue in this loop!
 {
     symbol          *symptr;

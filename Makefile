@@ -12,7 +12,7 @@
 WATCOM=\watcom
 
 # set to 0 if the DOS version is NOT to be built!
-DOS=1
+DOS=0
 # set path of HX if DOS=1.
 # The HXDEV package must be installed.
 HXDIR=\hx

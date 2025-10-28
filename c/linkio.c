@@ -458,12 +458,16 @@ void TrapBreak( int sig_num )
 void SetBreak( void )
 /**************************/
 {
+#if 0
     BreakCond = TinyGetCtrlBreak();
     TinySetCtrlBreak( 1 );
+#endif
 }
 
 void RestoreBreak( void )
 /******************************/
 {
+#if 0
     TinySetCtrlBreak( BreakCond );
+#endif
 }

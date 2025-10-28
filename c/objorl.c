@@ -779,7 +779,8 @@ static orl_return ProcSymbol( orl_symbol_handle symhdl )
             value = ORLSymbolGetValue( symhdl );
             sym = MakeCommunalSym( sym, value, FALSE, TRUE );
         } else if( type & ORL_SYM_TYPE_UNDEFINED ) {
-			DEBUG((DBG_OLD, "objorl.ProcSymbol(%s): type ORL_SYM_TYPE_UNDEFINED", name ));
+            /* ORL_SYM_TYPE_UNDEFINED flag means: symbol has no associated section */
+			DEBUG((DBG_OLD, "objorl.ProcSymbol(%s): type ORL_SYM_TYPE_UNDEFINED, binding=%h", name, binding ));
             DefineReference( sym );
             isweak = FALSE;
             switch( binding ) {

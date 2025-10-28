@@ -25,7 +25,7 @@ outd_suffix=R
 !endif
 
 BOUT=build
-OUTD=$(BOUT)\jwlD32$(outd_suffix)
+OUTD=$(BOUT)\jwlinkD$(outd_suffix)
 
 proj_name = jwlink
 host_os  = dos
@@ -70,17 +70,7 @@ common_objs += $(OUTD)/virtmem.obj
 common_objs += $(OUTD)/virtpage.obj
 !endif
 
-#
-# target OS dependent files
-#
-wlink_objs_dos   = $(OUTD)/linkio.obj
-wlink_objs_linux = $(OUTD)/posixio.obj
-wlink_objs_osx   = $(OUTD)/posixio.obj
-wlink_objs_bsd   = $(OUTD)/posixio.obj
-wlink_objs_nt    = $(OUTD)/ntio.obj
-wlink_objs_os2   = $(OUTD)/ntio.obj
-
-common_objs += $(wlink_objs_$(host_os))
+common_objs += $(OUTD)/linkio.obj
 
 comp_objs_exe = $(common_objs)
 
@@ -98,9 +88,9 @@ cflags = -od -d2 -w3 -hc -D_INT_DEBUG
 cflags = -ox -s -DNDEBUG
 !endif
 
-outd_orl_lib   = build\osi386W$(outd_suffix)
-outd_dwarf_lib = build\osi386W$(outd_suffix)
-outd_wres_lib  = build\wresW$(outd_suffix)
+outd_orl_lib   = $(BOUT)\osi386D$(outd_suffix)
+outd_dwarf_lib = $(BOUT)\osi386D$(outd_suffix)
+outd_wres_lib  = $(BOUT)\wresD$(outd_suffix)
 orl_lib  = $(outd_orl_lib)\orl.lib
 dwarf_lib= $(outd_dwarf_lib)\dw.lib
 wres_lib = $(outd_wres_lib)\wres.lib
@@ -113,14 +103,8 @@ wres_lib = $(outd_wres_lib)\wres.lib
 ################
 # c flags stuff
 
-!ifeq bootstrap 1
-extra_c_flags = -I"$(lib_misc_dir)/h"
-!else
 extra_c_flags = -zp4
-!ifeq use_virtmem 1
-extra_c_flags += -DUSE_VIRTMEM -D__WATCOM_LFN__
-!endif
-!endif
+extra_c_flags += -D__WATCOM_LFN__
 
 extra_c_flags_ntio       = -I"$(wres_dir)/h"
 extra_c_flags_posixio    = -I"$(wres_dir)/h"
@@ -157,13 +141,16 @@ lflagsd =
 #################
 # explicit rules
 
-ALL: $(BOUT) $(OUTD) $(OUTD)/JWlinkD.exe $(xlibs)
+ALL: $(BOUT) $(OUTD) $(outd_wres_lib) $(OUTD)/JWlinkD.exe $(xlibs)
 
 $(BOUT):
 	@if not exist $(BOUT) mkdir $(BOUT)
 
 $(OUTD):
 	@if not exist $(OUTD) mkdir $(OUTD)
+
+$(outd_wres_lib):
+	@if not exist $(outd_wres_lib) mkdir $(outd_wres_lib)
 
 $(OUTD)/JWlinkD.exe : $(comp_objs_exe) $(xlibs)
 	jwlink @<<
@@ -183,6 +170,21 @@ segment CONST readonly
 segment CONST2 readonly
 !endif
 <<
+
+$(wres_lib):
+	@cd $(wres_dir)
+	@wmake -f OWDOS32.mak debug=$(DEBUG) watcom=$(WATCOM)
+	@cd ../../..
+
+$(orl_lib):
+	@cd orl
+	@wmake -f OWDOS32.mak debug=$(DEBUG) watcom=$(WATCOM)
+	@cd ..
+
+$(dwarf_lib):
+	@cd $(dwarf_dir)
+	@wmake -f OWDOS32.mak debug=$(DEBUG) watcom=$(WATCOM)
+	@cd ..
 
 clean: .SYMBOLIC
 	@if exist $(OUTD)\$(proj_name).exe erase $(OUTD)\$(proj_name).exe

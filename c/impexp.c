@@ -297,12 +297,14 @@ void MSImportKeyword( symbol *sym, length_name *modname,
     if( !(sym->info & SYM_DEFINED) ) {
         sym->info |= SYM_DEFINED | SYM_DCE_REF;
         if( LinkFlags & STRIP_CODE ) {
+            DEBUG(( DBG_OLD, "MSImportKeyword(%s): calling DefStripImpSym", sym->name ));
             DefStripImpSym(sym);
         }
         SET_SYM_TYPE( sym, SYM_IMPORTED );
         dll = AllocDLLInfo();
         sym->p.import = dll;
         if( FmtData.type & MK_PE ) {
+            DEBUG(( DBG_OLD, "MSImportKeyword(%s, info=%h): calling GetIATSym", sym->name, sym->info ));
             dll->iatsym = GetIATSym( sym );
             dll->iatsym->info |= SYM_DEFINED | SYM_DCE_REF;
             SET_SYM_TYPE( dll->iatsym, SYM_IMPORTED );

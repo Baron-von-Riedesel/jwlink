@@ -794,10 +794,12 @@ void SymModEnd( void )
             sym = sym->link;
         }
     }
+    DEBUG((DBG_OLD, "SymModEnd(%s): scan symbols", CurrMod->name ));
     for( ; sym != NULL; sym = sym->link ) {
         sym->info &= ~SYM_IN_CURRENT;
         sym->info |= SYM_OLDHAT;
         if( sym->info & SYM_REFERENCED && sym->info & SYM_DEFINED ) {
+            DEBUG((DBG_OLD, "SymModEnd: SYM_REFERENCED reset for %s", sym->name ));
             sym->info &= ~SYM_REFERENCED;
             sym->info |= SYM_LOCAL_REF;
         }

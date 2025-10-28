@@ -75,6 +75,8 @@
 
 #define STUB_ALIGN 8    /* for PE format */
 
+#define SYM_IS_REFERENCED (SYM_REFERENCED | SYM_LOCAL_REF)
+
 #pragma pack(1)
 
 typedef struct {
@@ -312,6 +314,7 @@ static void GenPETransferTable( void )
     /* for 64-bit, get the address of the xfer segment */
     xferbase = group->linear + GetLeaderDelta( XFerSegData->u.leader ) + FmtData.base;
     base = XFerSegData->u.leader->seg_addr.off + XFerSegData->a.delta;
+    DEBUG(( DBG_OLD, "GenPETransferTable(): base=%h (seg_addr.off=%h + a.delta=%h)", base, XFerSegData->u.leader->seg_addr.off, XFerSegData->a.delta ));
     datalen = GetTransferGlueSize( LinkState );
     data = GetTransferGlueCode( LinkState );
     WALK_IMPORT_SYMBOLS(sym) {
@@ -334,8 +337,10 @@ static void GenPETransferTable( void )
         } else if( LinkState & HAVE_I86_CODE ) {
             offset dest = FindIATSymAbsOff( sym );
             /* jwlink: don't write jmp instruction if not referenced */
-            if (!(sym->info & SYM_REFERENCED ))
+            if (!(sym->info & SYM_IS_REFERENCED )) {
+                DEBUG(( DBG_OLD, "GenPETransferTable, %s: symbol not referenced, so it's skipped", sym->name ));
                 continue;
+            }
             if ( FmtData.u.pe.win64 == 0 ) {
                 I386Jump.dest = dest;
                 DEBUG(( DBG_OLD, "GenPETransferTable, %s: jmp thunk has been used", sym->name ));
@@ -355,6 +360,7 @@ static void GenPETransferTable( void )
             PPCJump[0] &= 0xffff0000;
             PPCJump[0] |= 0x0000ffff & pos;
         }
+        DEBUG(( DBG_OLD, "GenPETransferTable: addr.off=%h - base=%h + datalen=%h <= xfersegdata length=%h?", sym->addr.off, base, datalen, XFerSegData->length ));
         off = sym->addr.off - base;
 		DbgAssert( off + datalen <= XFerSegData->length );
         DEBUG(( DBG_OLD, "GenPETransferTable, %s: copy thunk (size=%d) to ofs=%h [tab size=%h]", sym->name, datalen, off, XFerSegData->length ));
@@ -1809,7 +1815,9 @@ static void SetConstGrp( void *_seg )
     }
 }
 
-/* ChkPEData() is called just before final address calculation */
+/* ChkPEData() is called just before final address calculation
+ * checks for transfer code to be added ( if an import was referenced )
+ */
 
 void ChkPEData( void )
 /***************************/
@@ -1834,18 +1842,22 @@ void ChkPEData( void )
         }
     }
     if( code ) {
+        DEBUG(( DBG_OLD, "ChkPEData(): CODE class found, scanning import symbols" ));
         CurrMod = FakeModule;
         size = 0;
         glue_size = GetTransferGlueSize(LinkState);
         WALK_IMPORT_SYMBOLS(sym) {
-            if ( sym->info & SYM_REFERENCED ) {
+            /* jwlink: SYM_REFERENCED is reset in SymModEnd() */
+            if ( sym->info & SYM_IS_REFERENCED ) { /* SYM_REFERENCED = 0x40 */
                 size += glue_size;
+                DEBUG(( DBG_OLD, "ChkPEData(): import %s has been referenced, transfer seg size=%d", sym->name, size ));
             }
-            DEBUG(( DBG_OLD, "ChkPEData(): import=%s info=%h ts.size=%h", sym->name, sym->info, size ));
+            DEBUG(( DBG_OLD, "ChkPEData(): import=%s info=%h", sym->name, sym->info ));
             RegisterImport( sym->p.import );
             DBIAddGlobal( sym );
         }
         size += NumLocalImports * sizeof( pe_va );
+        DEBUG(( DBG_OLD, "ChkPEData(): XFerSegData size=%h", size ));
         if( size != 0 ) {
             code->flags |= CLASS_TRANSFER;
             sdata = AllocSegData();
@@ -1858,7 +1870,6 @@ void ChkPEData( void )
             AddSegment( sdata, code );
             sdata->data = AllocStg( sdata->length );
             XFerSegData = sdata;
-            DEBUG(( DBG_OLD, "ChkPEData(): XFerSegData size=%h", size ));
         }
     }
     CreateIDataSection();
@@ -1885,19 +1896,24 @@ void AllocPETransferTable( void )
     /*
      *  Moved export check here as otherwise flags don't get propagated
      */
-    DEBUG(( DBG_OLD, "AllocPETransferTable() enter, IDataGroup=%h", IDataGroup ));
+    DEBUG(( DBG_OLD, "AllocPETransferTable() enter, IDataGroup=%h, Root->classlist=%h", IDataGroup, Root->classlist ));
     ChkOS2Exports();
     if( IDataGroup == NULL ) {
         DEBUG(( DBG_OLD, "AllocPETransferTable() exit, IDatGroup==NULL" ));
         return;
     }
     class = Root->classlist;
+    /* scan class list for a "transfer" class;
+     * this type of class was created by the linker and contains
+     * "jmp [_imp__<funcname>]" instructions.
+     */
     for( ; class; class = class->next_class ) {
         if( class->flags & CLASS_TRANSFER ) break;
     }
-    if( class == NULL )
+    if( class == NULL ) {
         XFerSegData = NULL;
-	else {
+		DEBUG(( DBG_OLD, "AllocPETransferTable(): no class with flag CLASS_TRANSFER found" ));
+    } else {
 		lead = RingLast( class->segs );
 		piece = RingLast( lead->pieces );
 		CurrMod = FakeModule;
@@ -1905,6 +1921,7 @@ void AllocPETransferTable( void )
 		seg = group->grp_addr.seg;
 		off = group->grp_addr.off + group->totalsize;
 		// now calc addresses for imported local symbols
+		DEBUG(( DBG_OLD, "AllocPETransferTable(): calculate addresses for imported local symbols" ));
 		for( loc_imp = PELocalImpList; loc_imp != NULL; loc_imp = loc_imp->next ) {
 			off -= sizeof( pe_va );
 			loc_imp->iatsym->addr.off = off;
@@ -1916,7 +1933,7 @@ void AllocPETransferTable( void )
 		}
 		glue_size = GetTransferGlueSize( LinkState );
 		WALK_IMPORT_SYMBOLS( sym ) {
-			if ( sym->info & SYM_REFERENCED ) {
+			if ( sym->info & SYM_IS_REFERENCED ) {
 				off -= glue_size;
 				sym->addr.seg = seg;
 				sym->addr.off = off;

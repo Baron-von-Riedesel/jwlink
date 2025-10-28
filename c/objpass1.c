@@ -820,8 +820,10 @@ void DefineSymbol( symbol *sym, segnode *seg, offset off,
     if( seg != NULL ) {
         frame = 0;
     }
+    DEBUG((DBG_OLD,"DefineSymbol(%s) enter", sym->name ));
     name_len = strlen( sym->name );
     if( sym->addr.seg != UNDEFINED && !IS_SYM_COMMUNAL(sym) ) {
+        DEBUG((DBG_OLD,"DefineSymbol(%s) seg defined, not communal", sym->name ));
         if( seg != NULL && sym->p.seg != NULL ) {
             frame_ok = (sym->p.seg->u.leader == seg->entry->u.leader);
             if( sym->p.seg->u.leader->combine != COMBINE_COMMON ) {
@@ -842,6 +844,7 @@ void DefineSymbol( symbol *sym, segnode *seg, offset off,
             ReportMultiple( sym, sym->name, name_len );
         }
     } else {
+        DEBUG((DBG_OLD,"DefineSymbol(%s) seg undefined", sym->name ));
         sym_type = SYM_REGULAR;
         if( IS_SYM_IMPORTED(sym) ) {
             sym = HashReplace( sym );
@@ -849,7 +852,7 @@ void DefineSymbol( symbol *sym, segnode *seg, offset off,
                 dll_sym_info  *dll_info = sym->p.import;
                 AddPEImportLocalSym( sym, dll_info->iatsym );
                 sym_type |= SYM_REFERENCED;
-                LnkMsg( WRN+MSG_IMPORT_LOCAL, "s", sym->name );
+                LnkMsg( WRN+MSG_IMPORT_LOCAL, "s", sym->name ); /* warning 'locally defined symbol is imported' */
             }
         } else if( IS_SYM_COMMUNAL(sym) ) {
             sym = HashReplace( sym );
@@ -1238,6 +1241,7 @@ void DefineReference( symbol *sym )
 /*****************************************/
 // we have an object file reference for sym
 {
+    DEBUG((DBG_OLD,"DefineReference(%s) enter", sym->name ));
     if( FmtData.type & MK_OVERLAYS ) {
         TryRefVector( sym );
     }
@@ -1313,6 +1317,7 @@ void HandleImport( length_name *intname, length_name *modname,
             sym->mod = CurrMod;
         }
         if( FmtData.type & (MK_OS2 | MK_PE | MK_WIN_VXD) ) {
+            DEBUG(( DBG_OLD, "objpass1.HandleImport: calling MSImportKeyword(%s)", sym->name ));
             MSImportKeyword( sym, modname, extname, ordinal );
         } else {
             SET_SYM_TYPE( sym, SYM_IMPORTED );

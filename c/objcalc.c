@@ -381,7 +381,7 @@ static void SortSegments( void )
     bool                added;
 
 
-    DEBUG(( DBG_OLD, "SortSegments() enter" ));
+    DEBUG(( DBG_OLD, "SortSegments() enter (root->classlist=%h)", Root->classlist ));
     for( currcl = Root->classlist; currcl != NULL; currcl = currcl->next_class ){
         foundgroup = FALSE;
         newlist = NULL;
