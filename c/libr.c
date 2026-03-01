@@ -71,20 +71,20 @@ static  unsigned_16     OMFCompName( const char *, const unsigned_8 *, unsigned_
 static  void **         AllocDict( unsigned_16, unsigned_16 );
 static  void            SetDict( file_list *, unsigned_16 );
 
-#if defined( _M_IX86 ) && defined(__WATCOMC__)
-#if defined( __386__ )
-#define DATA16   0x66
-#else
-#define DATA16
-#endif
-
 /* jwlink: the name compare functions have been made "dynamic"
  * to be able to modify them from external ( fuzzy export linking ).
  */
 static int ARCompName( const void *key, const void *vbase );
 static int ARCompIName( const void *key, const void *vbase );
 int (*CmpARRtn)( const void *, const void * ) = ARCompName;
-int (*CmpOMFRtn)( const void *, const void *, unsigned ) = memcmp;
+int (*CmpOMFRtn)( const void *, const void *, unsigned long ) = memcmp;
+
+#if defined( _M_IX86 ) && defined(__WATCOMC__)
+#if defined( __386__ )
+#define DATA16   0x66
+#else
+#define DATA16
+#endif
 
 unsigned_16 Rotr16( unsigned_16 value, unsigned_16 shift );
 #pragma aux Rotr16 =\
