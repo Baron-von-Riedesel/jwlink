@@ -90,7 +90,9 @@
 
 #ifndef BOOL_DEFINED
 #define BOOL_DEFINED
+#if !defined(__STDC_VERSION__) || __STDC_VERSION__ < 202311L
 typedef int bool;
+#endif
 #endif
 typedef unsigned char   byte;
 typedef unsigned long   virt_mem;

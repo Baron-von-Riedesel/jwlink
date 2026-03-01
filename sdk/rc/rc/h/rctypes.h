@@ -37,13 +37,17 @@
 
 #ifndef BOOL_DEFINED
 #define BOOL_DEFINED
+#if !defined(__STDC_VERSION__) || __STDC_VERSION__ < 202311L
 typedef int bool;
 #endif
+#endif
 
+#if !defined(__STDC_VERSION__) || __STDC_VERSION__ < 202311L
 enum {
     false,
     true
 };
+#endif
 
 typedef enum {
     RS_OK = 0,                  /* this must be 0 because it is sometimes
