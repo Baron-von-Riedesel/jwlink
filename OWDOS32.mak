@@ -7,10 +7,9 @@
 # - XDBG=n - debug log ( usually n is 2 )
 # - INTDBG - dump symbol table
 
-# the path of the Open Watcom root directory
-WATCOM=\ow20
+# the path of the Open Watcom root directory.
 
-DOS=1
+WATCOM=\OW20
 
 !ifndef DEBUG
 DEBUG=0
@@ -70,7 +69,9 @@ common_objs += $(OUTD)/virtmem.obj
 common_objs += $(OUTD)/virtpage.obj
 !endif
 
-common_objs += $(OUTD)/linkio.obj
+#linkio.c doesn't support LFN
+#common_objs += $(OUTD)/linkio.obj
+common_objs += $(OUTD)/ntio.obj
 
 comp_objs_exe = $(common_objs)
 
@@ -83,9 +84,9 @@ watcom_dir=watcom
 inc_dirs = -IH -I$(watcom_dir)\H -I$(WATCOM)\H 
 
 !if $(DEBUG)
-cflags = -od -d2 -w3 -hc -D_INT_DEBUG
+cflags = -od -d2 -w3 -hc -D_INT_DEBUG -D__WATCOM_LFN__
 !else
-cflags = -ox -s -DNDEBUG
+cflags = -ox -s -DNDEBUG -D__WATCOM_LFN__
 !endif
 
 outd_orl_lib   = $(BOUT)\osi386D$(outd_suffix)
@@ -153,14 +154,14 @@ $(outd_wres_lib):
 	@if not exist $(outd_wres_lib) mkdir $(outd_wres_lib)
 
 $(OUTD)/JWlinkD.exe : $(comp_objs_exe) $(xlibs)
-	jwlink @<<
+	@jwlink.exe @<<
 $(lflagsd) format windows pe hx runtime console
 $(extra_l_flags)
 file { $(common_objs) }
 name $@
 libpath $(WATCOM)\lib386\dos
 libpath $(WATCOM)\lib386
-Libfile cstrtdhr.obj
+Libfile cstrtdhr.obj, inirmlfn.obj
 lib { $(xlibs) }
 op quiet, stack=0x10000, heapsize=0x1000, map=$^*, stub=loadpero.bin
 disable 171

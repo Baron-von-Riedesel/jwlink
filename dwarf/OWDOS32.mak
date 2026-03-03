@@ -30,7 +30,7 @@ watcom_dir=..\watcom
 
 inc_dirs = -IH -I$(watcom_dir)\H -I$(WATCOM)\H 
 
-cflags = -ox -s -DNDEBUG
+cflags = -ox -s -DNDEBUG -D__WATCOM_LFN__
 
 extra_c_flags = 
 

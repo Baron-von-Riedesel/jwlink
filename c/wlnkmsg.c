@@ -60,7 +60,11 @@ static const char * const msgtexts[] = {
 #define pick( code, string )  string,
 #include "lnkerror.msg"
 #include "wlink.msg"
+#if defined( __UNIX__ )
+#include "rc.msg"
+#else
 #include "sdk/rc/rc/h/rc.msg"
+#endif
 #undef pick
 
 };

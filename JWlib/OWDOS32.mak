@@ -1,12 +1,10 @@
 
 # Wmake makefile to create jwlibd.exe
+# OW 2.0 is used because of its LFN support
 
 proj_name = JWlib
 
-WATCOM=\watcom
-# set to 1 if the DOS version is to be built!
-
-HXDIR=\hx
+WATCOM=\OW20
 
 !ifndef debug
 debug=0
@@ -18,12 +16,12 @@ wlib_autodepends = .AUTODEPEND
 
 BOUT=..\build
 !if $(debug)
-extra_c_flags += -D__DEBUG__
+extra_c_flags += -D__DEBUG__ -D__WATCOM_LFN__
 OUTD=$(BOUT)\jwlibDD
 cflags = -od -d2 -w3
 !else
 OUTD=$(BOUT)\jwlibDR
-cflags = -ox -s -DNDEBUG
+cflags = -ox -s -DNDEBUG -D__WATCOM_LFN__
 !endif
 
 wlib_trmem = 0
@@ -79,14 +77,14 @@ $(BOUT):
 $(OUTD):
 	@if not exist $(OUTD) mkdir $(OUTD)
 
-$(OUTD)/jwlibd.exe : $(depends_exe)
-	jwlink format win pe hx ru console name $*.exe @<<
+$(OUTD)/$(proj_name)d.exe : $(depends_exe)
+	@jwlink.exe format win pe hx ru console name $*.exe @<<
 f {$(comp_objs_exe)}
 libpath $(WATCOM)\lib386\dos
 libpath $(WATCOM)\lib386
 LibFile cstrtdhr.obj
 lib { $(xlibs) }
-op q,stack=0x10000,heapsize=0x1000,stub=$(HXDIR)\Bin\loadpero.bin,map=$^*, noredefs
+op q, stack=0x10000, heapsize=0x1000, stub=loadpero.bin, map=$^*, noredefs
 disable 171
 !ifndef WLINK
 segment CONST readonly
@@ -95,7 +93,7 @@ segment CONST2 readonly
 <<
 
 clean: .SYMBOLIC
-	@if exist $(OUTD)\$(proj_name).exe erase $(OUTD)\$(proj_name).exe
+	@if exist $(OUTD)\$(proj_name)d.exe erase $(OUTD)\$(proj_name)d.exe
 	@if exist $(OUTD)\$(proj_name).map erase $(OUTD)\$(proj_name).map
 	@if exist $(OUTD)\*.obj erase $(OUTD)\*.obj
 

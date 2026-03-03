@@ -159,7 +159,8 @@ static char FlatStandardAbbrevs[] = {
     COMPUNIT_ABBREV_CODE,
     DW_TAG_compile_unit,
     DW_CHILDREN_yes,
-    DW_AT_stmt_list,    DW_FORM_ref_addr,
+    //DW_AT_stmt_list,    DW_FORM_ref_addr,  /* v19beta20 */
+    DW_AT_stmt_list,    DW_FORM_data4,
     DW_AT_name,         DW_FORM_string,
     0,                  0,
     CU_NOLINE_ABBREV_CODE,
@@ -180,7 +181,8 @@ static char FlatStandardAbbrevs[] = {
     DW_AT_low_pc,       DW_FORM_addr,
     DW_AT_external,     DW_FORM_flag,
     DW_AT_name,         DW_FORM_string,
-    0,                  0
+    0,                  0,
+    0,                  0  /* v19beta20: added */
 };
 #pragma pack()
 
@@ -271,6 +273,7 @@ void DwarfP1ModuleFinished( mod_entry *mod )
     CurrMod = mod;
     if( mod->modinfo & MOD_DBI_SEEN )
         return;
+    DEBUG((DBG_OLD,"DwarfP1ModuleFinished enter" ));
     DBILineWalk( mod->lines, DwarfAddLines );
     Ring2Walk( mod->publist, DBIModGlobal );
     if( FmtData.type & MK_SEGMENTED ) {
@@ -294,12 +297,14 @@ void DwarfStoreAddrInfo( mod_entry *mod )
 /**********************************************/
 {
     if( !( mod->modinfo & MOD_DBI_SEEN ) ) {
+        DEBUG((DBG_OLD,"DwarfStoreAddrInfo(addr=%h, size=%h) enter", mod->d.d->arange.addr, mod->d.d->arange.size ));
         if( mod->d.d->arange.size > 0 ) {
             mod->d.d->arange.addr = SectionTable[SECT_DEBUG_ARANGE].size;
             mod->d.d->arange.size += sizeof( arange_prologue );
             if( FmtData.type & MK_SEGMENTED ) {
                 mod->d.d->arange.size += sizeof( segmented_arange_tuple );
             } else {
+                mod->d.d->arange.size += 4; /* v19beta20: align tuple */
                 mod->d.d->arange.size += sizeof( flat_arange_tuple );
             }
             SectionTable[SECT_DEBUG_ARANGE].size += mod->d.d->arange.size;
@@ -321,6 +326,7 @@ void DwarfAddModule( mod_entry *mod, section *sect )
     int                 zero;
 
     sect = sect;
+    DEBUG((DBG_OLD,"DwarfAddModule(%s) enter", mod->name ));
     if( !( mod->modinfo & MOD_DBI_SEEN ) ) {
         if( mod->d.d->arange.size > 0 ) {
             mod->d.d->arange.addr += SectionTable[SECT_DEBUG_ARANGE].addr;
@@ -338,6 +344,9 @@ void DwarfAddModule( mod_entry *mod, section *sect )
             PutInfo( mod->d.d->arange.addr, (void *)&arange_hdr,
                      sizeof( arange_prologue ) );
             mod->d.d->arange.addr += sizeof( arange_prologue );
+            /* v19beta20 padding (flat only, segmented still todo ) */
+            if( !(FmtData.type & MK_SEGMENTED) )
+                mod->d.d->arange.addr += 4;
         }
         mod->d.d->pubsym.addr += SectionTable[SECT_DEBUG_INFO].addr;
         compuhdr.length = mod->d.d->pubsym.size - sizeof( unsigned_32 );
@@ -412,6 +421,7 @@ void DwarfGenModule( void )
 
     if( CurrMod->modinfo & MOD_DBI_SEEN )
         return;
+    DEBUG((DBG_OLD,"DwarfGenModule enter, curr arange addr=%h size=%h", CurrMod->d.d->arange.addr, CurrMod->d.d->arange.size ));
     if( CurrMod->d.d->arange.size > 0 ) {       // write out terminator arange
         if( FmtData.type & MK_SEGMENTED ) {
             size = sizeof( segmented_arange_tuple );
@@ -460,6 +470,7 @@ void DwarfAddGlobal( symbol *sym )
 /***************************************/
 {
     sym = sym;
+    DEBUG((DBG_OLD,"DwarfAddGlobal(%s) enter", sym->name ));
     CurrMod->d.d->pubsym.size += strlen( sym->name ) + sizeof( symbol_die ) + 1;
     if( FmtData.type & MK_SEGMENTED ) {
         CurrMod->d.d->pubsym.size += sizeof( symbol_seg );
@@ -647,6 +658,7 @@ static void DwarfGenAddrInit( segdata *sdata, void *_tuple )
         tuple->s.segment = sdata->u.leader->seg_addr.seg;
         tuple->s.offset = sdata->u.leader->seg_addr.off + sdata->a.delta;
     } else {
+        DEBUG((DBG_OLD,"DwarfGenAddrInit" ));
         tuple->f.offset = GetNewAddrOffset( sdata, sdata->a.delta );
     }
 }
@@ -670,6 +682,7 @@ static void DwarfGenAddrAdd( segdata *sdata, offset delta, offset size,
                 tuple->s.length = StackSize;
             }
         } else {
+            DEBUG((DBG_OLD,"DwarfGenAddrAdd" ));
             tuple->f.length = size;
             tup_size = sizeof( flat_arange_tuple );
             if( sdata->u.leader->class->flags & CLASS_STACK ) {
@@ -683,6 +696,7 @@ static void DwarfGenAddrAdd( segdata *sdata, offset delta, offset size,
         tuple->s.offset = sdata->u.leader->seg_addr.off + delta;
     } else {
         tuple->f.offset = GetNewAddrOffset( sdata, delta );
+        DEBUG((DBG_OLD,"DwarfGenAddrAdd: offset=%h", tuple->f.offset ));
     }
 }
 
@@ -728,7 +742,9 @@ static void FillHeader( Elf32_Shdr *hdr, char *name, stringtable *strtab,
 static void WriteDwarfSect( unsigned addidx, unsigned_32 size )
 /*************************************************************/
 {
+    DEBUG((DBG_OLD,"WriteDwarfSect(%d, size=%h) enter", addidx, size ));
     if( addidx == SECT_DEBUG_ABBREV ) {
+        DEBUG((DBG_OLD,"WriteDwarfSect(SECT_DEBUG_ABBREV)" ));
         if( FmtData.type & MK_SEGMENTED ) {
             WriteLoad( SegmentedStandardAbbrevs, size );
         } else {
@@ -748,6 +764,7 @@ static unsigned_32 WriteELFSections( unsigned_32 file_off, unsigned_32 curr_off,
     unsigned    addidx;
     unsigned_32 addsize;
 
+    DEBUG((DBG_OLD,"WriteELFSections enter" ));
     if( DBIClass != NULL ) {
         seg = (seg_leader *) RingStep( DBIClass->segs, NULL );
         while( seg != NULL ) {
@@ -779,6 +796,7 @@ static unsigned_32 WriteELFSections( unsigned_32 file_off, unsigned_32 curr_off,
             hdr++;
         }
     }
+    DEBUG((DBG_OLD,"WriteELFSections exit" ));
     return( curr_off );
 }
 
@@ -845,6 +863,7 @@ void DwarfWrite( void )
     stringtable         strtab;
     unsigned long       savepos;
 
+    DEBUG((DBG_OLD,"DwarfWrite enter" ));
     memcpy( elf_header.e_ident, ELF_SIGNATURE, ELF_SIGNATURE_LEN );
     elf_header.e_ident[EI_CLASS] = ELFCLASS32;
 #ifdef __BIG_ENDIAN__
@@ -891,4 +910,5 @@ void DwarfWrite( void )
     SeekLoad( savepos - shdr_size );
     WriteLoad( sect_header, shdr_size );
     _LnkFree( sect_header );
+    DEBUG((DBG_OLD,"DwarfWrite exit" ));
 }

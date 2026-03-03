@@ -1,41 +1,41 @@
 # example linker initialization file.
 system begin dos
-    libpath /watcom/lib286
-    libpath /watcom/lib286/dos
+    libpath %WATCOM%/lib286
+    libpath %WATCOM%/lib286/dos
     format dos ^
 end
 system begin dos4g
     option osname='DOS/4G'
-    libpath /watcom/lib386
-    libpath /watcom/lib386/dos
+    libpath %WATCOM%/lib386
+    libpath %WATCOM%/lib386/dos
     op stub=wstub.exe
     format os2 le
 end
 system begin os2
     option osname='OS/2 16-bit'
     library os2.lib
-    libpath /watcom/lib286
-    libpath /watcom/lib286/os2
+    libpath %WATCOM%/lib286
+    libpath %WATCOM%/lib286/os2
     format os2 ^
 end
 system begin os2_pm
     option osname='OS/2 16-bit Presentation Manager'
     library os2.lib
-    libpath /watcom/lib286
-    libpath /watcom/lib286/os2
+    libpath %WATCOM%/lib286
+    libpath %WATCOM%/lib286/os2
     format os2 pm ^
 end
 system begin os2_dll
     option osname='OS/2 16-bit'
     library os2.lib
-    libpath /watcom/lib286
-    libpath /watcom/lib286/os2
+    libpath %WATCOM%/lib286
+    libpath %WATCOM%/lib286/os2
     format os2 dll ^
 end
 system begin windows
     option osname='Windows 16-bit'
-    libpath /watcom/lib286
-    libpath /watcom/lib286/win
+    libpath %WATCOM%/lib286
+    libpath %WATCOM%/lib286/win
     library windows
     option nocaseexact
     option stack=8k, heapsize=1k
@@ -43,8 +43,8 @@ system begin windows
 end
 system begin windows_dll
     option osname='Windows 16-bit'
-    libpath /watcom/lib286
-    libpath /watcom/lib286/win
+    libpath %WATCOM%/lib286
+    libpath %WATCOM%/lib286/win
     library windows
     option nocaseexact
     option stack=8k, heapsize=1k
@@ -57,33 +57,33 @@ system begin win_vxd
 end
 system begin os2v2
     option osname='OS/2 32-bit'
-    libpath /watcom/lib386
-    libpath /watcom/lib386/os2
+    libpath %WATCOM%/lib386
+    libpath %WATCOM%/lib386/os2
     format os2 lx ^
 end
 system begin os2v2_pm
     option osname='OS/2 32-bit Presentation Manager'
-    libpath /watcom/lib386
-    libpath /watcom/lib386/os2
+    libpath %WATCOM%/lib386
+    libpath %WATCOM%/lib386/os2
     format os2 lx pm ^
 end
 system begin os2v2_dll
     option osname='OS/2 32-bit'
-    libpath /watcom/lib386
-    libpath /watcom/lib386/os2
+    libpath %WATCOM%/lib386
+    libpath %WATCOM%/lib386/os2
     format os2 lx dll ^
 end
 system begin com
     option osname='DOS .COM'
-    libpath /watcom/lib286
-    libpath /watcom/lib286/dos
+    libpath %WATCOM%/lib286
+    libpath %WATCOM%/lib286/dos
     libfile cstart_t.obj
     format dos com
 end
 system begin nt
     option osname='Windows NT character-mode'
-    libpath /watcom/lib386
-    libpath /watcom/lib386/nt
+    libpath %WATCOM%/lib386
+    libpath %WATCOM%/lib386/nt
     library kernel32,user32,gdi32,advapi32,comdlg32,ole32,oleaut32,winspool,shell32,uuid,comctl32
 #    op stack=0x40000 com st=0x1000
     format windows nt ^
@@ -91,8 +91,8 @@ system begin nt
 end
 system begin nt_win
     option osname='Windows NT windowed'
-    libpath /watcom/lib386
-    libpath /watcom/lib386/nt
+    libpath %WATCOM%/lib386
+    libpath %WATCOM%/lib386/nt
     library kernel32,user32,gdi32,advapi32,comdlg32,ole32,oleaut32,winspool,shell32,uuid,comctl32
 #    op stack=0x40000 com st=0x1000
     format windows nt ^
@@ -100,24 +100,24 @@ system begin nt_win
 end
 system begin nt_dll
     option osname='Windows NT'
-    libpath /watcom/lib386
-    libpath /watcom/lib386/nt
+    libpath %WATCOM%/lib386
+    libpath %WATCOM%/lib386/nt
     library kernel32,user32,gdi32,advapi32,comdlg32,ole32,oleaut32,winspool,shell32,uuid,comctl32
     format windows nt dll ^
     runtime windows=4.0
 end
 system begin win32
     option osname='Win32'
-    libpath /watcom/lib386
-    libpath /watcom/lib386/nt
+    libpath %WATCOM%/lib386
+    libpath %WATCOM%/lib386/nt
     library kernel32,user32,gdi32,advapi32,comdlg32,ole32,oleaut32,winspool,shell32,uuid,comctl32
     format windows nt ^
     runtime windows=4.0
 end
 system begin causeway
     option osname='CauseWay'
-    libpath /watcom/lib386
-    libpath /watcom/lib386/dos
+    libpath %WATCOM%/lib386
+    libpath %WATCOM%/lib386/dos
     op stub=cwstub.exe
     format os2 le ^
 end
@@ -137,17 +137,17 @@ system begin cwdllr
 end
 system begin stub32a
     option osname='DOS/32A DOS Extender w/ Standard stub (LE-style)'
-    libpath /watcom/lib386
-    libpath /watcom/lib386/dos
-    libpath /watcom/lib386/l32
+    libpath %WATCOM%/lib386
+    libpath %WATCOM%/lib386/dos
+    libpath %WATCOM%/lib386/l32
     op stub=stub32a.exe
     format os2 le
 end
 system begin stub32x
     option osname='DOS/32A DOS Extender w/ Standard stub (LX-style)'
-    libpath /watcom/lib386
-    libpath /watcom/lib386/dos
-    libpath /watcom/lib386/l32
+    libpath %WATCOM%/lib386
+    libpath %WATCOM%/lib386/dos
+    libpath %WATCOM%/lib386/l32
 #   debug watcom all
 #   op symfile
     op stub=stub32a.exe
@@ -157,16 +157,16 @@ system begin stub32x
 end
 system begin pmodew
     option osname='PMODE/W'
-    libpath /watcom/lib386
-    libpath /watcom/lib386/dos
+    libpath %WATCOM%/lib386
+    libpath %WATCOM%/lib386/dos
     op stub=pmodew.exe
     format os2 le
 end
 
 system begin hxnt
     option osname='HX Extender (Win32 PE)'
-    libpath /watcom/lib386
-    libpath /watcom/lib386/nt
+    libpath %WATCOM%/lib386
+    libpath %WATCOM%/lib386/nt
     library kernel32,user32,advapi32,ole32,oleaut32
     format windows nt ^
     op stub=dpmist32.bin
@@ -175,8 +175,8 @@ end
 
 system begin hxdos
     option osname='HX Extender (DOS PE, stack calling conv)'
-    libpath /watcom/lib386
-    libpath /watcom/lib386/dos
+    libpath %WATCOM%/lib386
+    libpath %WATCOM%/lib386/dos
     library hxow
     libfile cstrtdhx.obj
     op stub=loadpe.bin
@@ -187,8 +187,8 @@ end
 
 system begin hxdosr
     option osname='HX Extender (DOS PE, register calling conv)'
-    libpath /watcom/lib386
-    libpath /watcom/lib386/dos
+    libpath %WATCOM%/lib386
+    libpath %WATCOM%/lib386/dos
     library hxow
     libfile cstrtdhr.obj
     op stub=loadpe.bin
@@ -202,8 +202,8 @@ end
 system begin hxnts
     option osname='HX Extender (DOS PE, static Win32)'
     libpath /hx/lib
-    libpath /watcom/lib386
-    libpath /watcom/lib386/nt
+    libpath %WATCOM%/lib386
+    libpath %WATCOM%/lib386/nt
     libfile initw3ow.obj
     disable 1030
     op stack=0x40000

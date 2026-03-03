@@ -11,7 +11,7 @@
 # the path of the Open Watcom root directory
 WATCOM=\watcom
 
-# set to 0 if the DOS version is NOT to be built!
+# set to 1 if the DOS version is to be built!
 DOS=0
 # set path of HX if DOS=1.
 # The HXDEV package must be installed.
@@ -203,14 +203,13 @@ Library imphlp.lib, dkrnl32s.lib, duser32s.lib
 Libfile $(HXDIR)\Lib\InitW3ow.obj
 disable 1030
 lib { $(xlibs) }
-op stub=$(HXDIR)\Bin\loadpex.bin
+op stub=$(HXDIR)\Bin\loadpero.bin
 op q, map=$^*, noredefs, stack=0x20000, heapsize=0x100000 com stack=0x1000
 !ifndef WLINK
 segment CONST readonly
 segment CONST2 readonly
 !endif
 <<
-	pestub.exe -n $@
 
 
 $(wres_lib):

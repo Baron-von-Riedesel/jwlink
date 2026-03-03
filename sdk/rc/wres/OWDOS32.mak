@@ -86,7 +86,7 @@ extra_c_flags_386 = -3r
 !if $(DEBUG)
 cflags = -od -d2 -w3 -D_INT_DEBUG
 !else
-cflags = -ox -s -DNDEBUG
+cflags = -ox -s -DNDEBUG -D__WATCOM_LFN__
 !endif
 
 # where to look for various files

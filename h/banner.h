@@ -72,7 +72,7 @@
 #define _RC_DELIM_LEFT_         [
 #define _RC_DELIM_RIGHT_        ]
 
-#define BAN_VER_STR "1.9" "beta 19"
+#define BAN_VER_STR "1.9" "beta 20"
 #define _WLINK_VERSION_         BAN_VER_STR
 
 

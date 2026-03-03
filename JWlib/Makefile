@@ -75,7 +75,7 @@ extra_c_flags += -DIDE_PGM
 inc_dirs = -Ih -I"../orl/h" -I"$(lib_misc_dir)/h" -I"$(watcom_dir)/H" -I$(WATCOM)\H
 
 .c{$(OUTD)}.obj: $($(proj_name)_autodepends)
-	$(WATCOM)\binnt\wcc386 -q -zc -bc -bt=nt $(cflags) $(extra_c_flags) $(inc_dirs) -fo$@ $[@
+	@$(WATCOM)\binnt\wcc386 -q -zc -bc -bt=nt $(cflags) $(extra_c_flags) $(inc_dirs) -fo$@ $[@
 
 ALL: $(BOUT) $(OUTD) $(OUTD)/jwlib.exe $(dos_target)
 
@@ -86,7 +86,7 @@ $(OUTD):
 	@if not exist $(OUTD) mkdir $(OUTD)
 
 $(OUTD)/jwlib.exe: $(depends_exe)
-	jwlink format win pe ru console name $*.exe @<<
+	@jwlink format win pe ru console name $*.exe @<<
 f {$(comp_objs_exe)}
 libpath $(WATCOM)\lib386
 libpath $(WATCOM)\lib386\nt
@@ -95,15 +95,16 @@ op q, map=$*, stack=0x100000, heapsize=0x100000 com stack=0x1000
 <<
 
 $(OUTD)/jwlibd.exe : $(depends_exe)
-	jwlink format win pe hx ru console name $*.exe @<<
+	@jwlink format win pe hx ru console name $*.exe @<<
 f {$(comp_objs_exe)}
 Libfile $(HXDIR)\lib\initw3ow.obj
 libpath $(WATCOM)\lib386\nt
 libpath $(WATCOM)\lib386
 libpath $(HXDIR)\lib
+disable 1030
 Lib imphlp, dkrnl32s, duser32s
 lib { $(xlibs) }
-op stub=$(HXDIR)\Bin\loadpex.bin
+op stub=$(HXDIR)\Bin\loadpero.bin
 op q, map=$^*, noredefs, stack=0x20000, heapsize=0x100000 com stack=0x1000
 <<
 

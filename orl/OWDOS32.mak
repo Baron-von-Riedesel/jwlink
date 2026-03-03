@@ -17,10 +17,10 @@ DEBUG=0
 !endif
 
 !if $(DEBUG)
-cflags = -od -d2 -w3 -D_INT_DEBUG
+cflags = -od -d2 -w3 -D_INT_DEBUG -D__WATCOM_LFN__
 OUTD= ..\build\osi386DD
 !else
-cflags = -ox -s -DNDEBUG
+cflags = -ox -s -DNDEBUG -D__WATCOM_LFN__
 OUTD= ..\build\osi386DR
 !endif
 

@@ -1,8 +1,10 @@
 
-WATCOM=\watcom
+# Wmake makefile to create cvpackd.exe
+# OW 1.9 is used because OW 2.0 emits serious warnings that haven't been fixed yet.
 
-host_os  = nt
 proj_name = cvpack
+
+WATCOM=\watcom
 
 !ifndef DEBUG
 DEBUG=0
@@ -30,10 +32,7 @@ exe_file = $(proj_name).exe
 
 h_dir = hpp/
 cpp_dir = cpp/
-makefile = Makefile
-
-HXDIR=\hx
-dos_target=$(OUTD)\cvpackd.exe
+makefile = OWDOS32.mak
 
 object_files =  &
 	$(OUTD)\cvpack.obj   $(OUTD)\retrieve.obj  $(OUTD)\cverror.obj   $(OUTD)\packtype.obj &
@@ -46,16 +45,21 @@ object_files =  &
 .cpp : $(cpp_dir)
 .hpp : $(h_dir)
 
-ALL: $(OUTD) $(OUTD)\cvpackd.exe $(dos_target)
+ALL: $(OUTD) $(OUTD)\cvpackd.exe
 
 $(OUTD):
 	@if not exist $(OUTD) mkdir $(OUTD)
 
-$(OUTD)\cvpackd.exe : $(object_files) $(makefile)
-	$(WATCOM)\binnt\wlink $(LOPTD) format win pe ru console name $*.exe @<<
+$(OUTD)\$(proj_name)d.exe : $(object_files) $(makefile)
+	@jwlink.exe $(LOPTD) format win pe hx ru console name $*.exe @<<
 FILE { $(object_files) }
 libpath $(WATCOM)\lib386\DOS libpath $(WATCOM)\lib386
 libfile cstrtdhr.obj
-op q, map=$*, noredefs, stack=0x20000, heapsize=0x1000
+op q, map=$^*, noredefs, stack=0x20000, heapsize=0x1000, stub=loadpero.bin
 <<
+
+clean: .SYMBOLIC
+	@if exist $(OUTD)\$(proj_name)d.exe erase $(OUTD)\$(proj_name)d.exe
+	@if exist $(OUTD)\$(proj_name)d.map erase $(OUTD)\$(proj_name)d.map
+	@if exist $(OUTD)\*.obj erase $(OUTD)\*.obj
 

@@ -8,7 +8,7 @@ ifndef DEBUG
 DEBUG=0
 endif
 
-inc_dirs  = -Ih -Iwatcom/h
+inc_dirs  = -Ih -Iwatcom/h -Isdk/rc/rc/h -Isdk/rc/wres/h
 
 #cflags stuff
 
@@ -31,7 +31,7 @@ include gccmod.inc
 
 #.c.o:
 #	$(CC) -c $(inc_dirs) $(c_flags) -o $(OUTD)/$*.o $<
-$(OUTD)/%.o: src/%.c
+$(OUTD)/%.o: c/%.c
 	$(CC) -c $(inc_dirs) $(c_flags) -o $(OUTD)/$*.o $<
 
 all:  $(OUTD) $(OUTD)/$(TARGET1)

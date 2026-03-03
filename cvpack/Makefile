@@ -44,7 +44,7 @@ object_files =  &
 	$(OUTD)\typemap.obj  $(OUTD)\typearay.obj  $(OUTD)\typercrd.obj  $(OUTD)\common.obj
 
 .cpp{$(OUTD)}.obj: $($(proj_name)_autodepends)
-	$(WATCOM)\binnt\wpp386 -zq -w4 -we -oaxt -DNDEBUG -mf -zc -bc -bt=nt $(extra_cpp_flags) $(inc_dirs) -fo$@ $[@
+	@$(WATCOM)\binnt\wpp386 -zq -w4 -we -oaxt -DNDEBUG -mf -zc -bc -bt=nt $(extra_cpp_flags) $(inc_dirs) -fo$@ $[@
 
 .cpp : $(cpp_dir)
 .hpp : $(h_dir)
@@ -55,21 +55,22 @@ $(OUTD):
 	@if not exist $(OUTD) mkdir $(OUTD)
 
 $(OUTD)\cvpack.exe : $(object_files) $(makefile)
-	$(WATCOM)\binnt\wlink $(LOPTD) format win pe ru console name $*.exe @<<
+	@$(WATCOM)\binnt\wlink $(LOPTD) format win pe ru console name $*.exe @<<
 FILE { $(object_files) }
 libpath $(WATCOM)\lib386 libpath $(WATCOM)\lib386\nt
 lib kernel32, user32
-op map=$*, noredefs, stack=0x20000, heapsize=0x100000 com stack=0x1000
+op q, map=$*, noredefs, stack=0x20000, heapsize=0x100000 com stack=0x1000
 <<
 
 $(OUTD)\cvpackd.exe : $(object_files) $(makefile)
-	jwlink format win pe hx ru console name $*.exe @<<
-f $(HXDIR)\lib\initw3ow.obj
+	@jwlink format win pe hx ru console name $*.exe @<<
 FILE { $(object_files) }
-op stub=$(HXDIR)\Bin\loadpex.bin
-libpath $(WATCOM)\lib386 libpath $(WATCOM)\lib386\nt
-lib $(HXDIR)\lib\imphlp, $(HXDIR)\lib\dkrnl32s, $(HXDIR)\lib\duser32s
-op map=$*, noredefs, stack=0x20000, heapsize=0x100000 com stack=0x1000
+libfile $(HXDIR)\lib\initw3ow.obj
+libpath $(WATCOM)\lib386 libpath $(WATCOM)\lib386\nt libpath $(HXDIR)\lib
+disable 1030
+lib imphlp, dkrnl32s, duser32s
+op stub=$(HXDIR)\Bin\loadpero.bin
+op q, map=$*, noredefs, stack=0x20000, heapsize=0x100000 com stack=0x1000
 <<
 
 

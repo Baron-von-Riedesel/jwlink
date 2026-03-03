@@ -1,4 +1,11 @@
 
+   changes v19beta20, 01/2026:
+
+   -  format elf: section .symtab, field sh_info wasn't set if there was no
+      global symbol at all.
+   -  dwarf section .debug_abbrev: terminating 0,0 entry was missing.
+   -  dwarf section .debug_aranges: padding bytes after header were missing.
+
    changes v19beta19, 10/2025:
 
    -  fixed bug for COMDAT introduced in beta18.

@@ -729,7 +729,7 @@ static orl_return ProcSymbol( orl_symbol_handle symhdl )
     //snode = FindSegNode( sechdl ); /* jwlink: may fail if 2 sections with identical names are in object module (.drectve) */
     type = ORLSymbolGetType( symhdl );
     name = ORLSymbolGetName( symhdl );
-	DEBUG((DBG_OLD, "objorl.ProcSymbol(%s) enter, type=%h", name, type ));
+    DEBUG((DBG_OLD, "objorl.ProcSymbol(%s) enter, type=%h", name ? name : "NULL", type ));
     snode = FindSegNode( sechdl ); /* jwlink: for debug reasons, search node AFTER name has been retrieved */
     if( type & ORL_SYM_TYPE_FILE ) {
         if( !(CurrMod->modinfo & MOD_GOT_NAME) ) {

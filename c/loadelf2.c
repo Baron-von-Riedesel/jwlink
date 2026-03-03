@@ -116,6 +116,7 @@ void AddSymElfSymTable( ElfSymTable *tab, symbol *sym )
     unsigned_32 hash;
 
     DbgAssert(tab->numElems < tab->maxElems);
+    DEBUG(( DBG_OLD, "AddSymElfSymTable(%s)", sym->name ));
     tab->table[tab->numElems] = sym;
     hash = ElfHash( sym->name ) % tab->numBuckets;
     tab->chains[tab->numElems] = tab->buckets[hash];
@@ -252,12 +253,16 @@ void WriteElfSymTable( ElfSymTable *tab, ElfHdr *hdr, int hashidx,
 			AddBufferStringTable( tab->strtab, sym->name, len );
 			elfsym.st_name = off;
 			off += len;
+			/* set sh_info to first non-local symbol */
 			if( tableSH->sh_info == 0 && !(sym->info & SYM_STATIC) ) {
 				tableSH->sh_info = i;
 			}
 			SetElfSym64( hdr, &elfsym, sym );
 			WriteLoad( &elfsym, sizeof(elfsym) );
 		}
+		/* v19beta20: ensure sh_info is set */
+		if( tableSH->sh_info == 0 ) tableSH->sh_info = i;
+
 		len = tab->numElems * sizeof elfsym;
 		tableSH->sh_offset = hdr->curr_off;
 		tableSH->sh_size = len;
@@ -303,19 +308,23 @@ void WriteElfSymTable( ElfSymTable *tab, ElfHdr *hdr, int hashidx,
 			AddBufferStringTable( tab->strtab, sym->name, len );
 			elfsym.st_name = off;
 			off += len;
+			/* set sh_info to last local symbol index + 1 */
 			if( tableSH->sh_info == 0 && !(sym->info & SYM_STATIC) ) {
 				tableSH->sh_info = i;
 			}
 			SetElfSym32( hdr, &elfsym, sym );
 			WriteLoad( &elfsym, sizeof(elfsym) );
 		}
+		/* v19beta20: ensure sh_info is set */
+		if( tableSH->sh_info == 0 ) tableSH->sh_info = i;
+
 		len = tab->numElems * sizeof elfsym;
 		tableSH->sh_offset = hdr->curr_off;
 		tableSH->sh_size = len;
 		tableSH->sh_entsize = sizeof elfsym;
 		hdr->curr_off += len;
-		DEBUG(( DBG_OLD, "WriteElfSymTable(): symbol table, sh_offset=%h sh_size=%h",
-			   tableSH->sh_offset, tableSH->sh_size ));
+		DEBUG(( DBG_OLD, "WriteElfSymTable(): symbol table, sh_offset=%h sh_size=%h sh_info=%h symbols=%d",
+			   tableSH->sh_offset, tableSH->sh_size, tableSH->sh_info, i ));
 
 		// write hash section:
 		len = (1 + 1 + tab->numBuckets + tab->numElems) * sizeof(unsigned_32);
