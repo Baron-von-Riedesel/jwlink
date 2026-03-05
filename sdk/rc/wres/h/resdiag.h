@@ -132,7 +132,7 @@ typedef struct DialogBoxHeader {
     char *              Caption;        /* '\0' terminated */
     uint_16             PointSize;      /* only here if (Style & DS_SETFONT) */
     char *              FontName;       /* only here if (Style & DS_SETFONT) */
-} _WCUNALIGNED DialogBoxHeader;
+} UNALIGNED DialogBoxHeader;
 
 #if !defined( NATURAL_PACK )
 #include "poppck.h"
@@ -149,7 +149,7 @@ typedef struct DialogBoxHeader32 {
     char                 *Caption;      /* '\0' terminated */
     uint_16               PointSize;    /* only here if (Style & DS_SETFONT) */
     char                 *FontName;     /* only here if (Style & DS_SETFONT) */
-} _WCUNALIGNED DialogBoxHeader32;
+} UNALIGNED DialogBoxHeader32;
 
 typedef struct DialogExHeader32 {
     uint_16             FontWeight;
@@ -178,7 +178,7 @@ typedef struct DialogBoxControl {
     ControlClass       *ClassID;
     ResNameOrOrdinal   *Text;
     uint_8              ExtraBytes;         /* should be 0 */
-} _WCUNALIGNED DialogBoxControl;
+} UNALIGNED DialogBoxControl;
 
 #if !defined( NATURAL_PACK )
 #include "poppck.h"
@@ -193,7 +193,7 @@ typedef struct DialogBoxControl32 {
     ControlClass         *ClassID;
     ResNameOrOrdinal     *Text;
     uint_16               ExtraBytes;       /* should be 0 */
-} _WCUNALIGNED DialogBoxControl32;
+} UNALIGNED DialogBoxControl32;
 
 typedef struct DialogBoxExControl32 {
     uint_32               HelpId;

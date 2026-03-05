@@ -71,7 +71,9 @@
     #define PATH_LIST_SEP ':'
 
     #define CASE_SENSITIVE
-
+# ifndef __WATCOMC__
+    #define memicmp strncasecmp
+# endif
 #else
     #define PATH_SEP '\\'
     #define IS_PATH_SEP( a ) ((a)=='\\' || (a)=='/' || (a)==':')
@@ -96,10 +98,14 @@ typedef unsigned char   byte;
 typedef unsigned long   virt_mem;
 typedef unsigned        f_handle;
 
-#ifndef __386__
-#define UNALIGN _WCUNALIGNED
-#else
+#if defined( __UNIX__ )
 #define UNALIGN
+#else
+# ifndef __386__
+#define UNALIGN _WCUNALIGNED
+# else
+#define UNALIGN
+# endif
 #endif
 
 #if defined( __QNX__ )

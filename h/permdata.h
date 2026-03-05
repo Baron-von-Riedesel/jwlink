@@ -52,16 +52,31 @@ typedef struct {
      carve_info         segdatas;       // segdata info
      carve_info         symbols;        // symbol info
      unsigned_32        altdefsize;     // size of altdef data
-     unsigned_32        rootmodidx;     // Root->mods swizzled pointer
-     unsigned_32        headsymidx;     // HeadSym swizzled pointer
-     unsigned_32        libmodidx;      // LibModules swizzled pointer
+     union {
+         unsigned_32    rootmodidx;     // Root->mods swizzled pointer
+         void          *pv_rootmodidx;
+     };
+     union {
+         unsigned_32    headsymidx;     // HeadSym swizzled pointer
+         void          *pv_headsymidx;
+     };
+     union {
+         unsigned_32    libmodidx;      // LibModules swizzled pointer
+         void          *pv_libmodidx;
+     };
      unsigned_32        linkstate;      // value of LinkState
      unsigned_32        exename;        // name of the .exe
      unsigned_32        symname;        // name of the sym file
      unsigned_32        numdllsyms;     // OS/2&PE only: number of dll symbols
      unsigned_32        numexports;     // OS/2&PE only: number of exports
-     unsigned_32        startmodidx;    // start module swizzled pointer
-     unsigned_32        startidx;       // swizzled pointer to start object
+     union {
+         unsigned_32    startmodidx;    // start module swizzled pointer
+         void          *pv_startmodidx;
+     };
+     union {
+         unsigned_32    startidx;       // swizzled pointer to start object
+         void          *pv_startidx;
+     };
      unsigned_32        startoff;       // delta from object of start addr.
      unsigned_32        flags;          // miscellaneous flags
      unsigned_32        numuserlibs;    // number of user specified libs

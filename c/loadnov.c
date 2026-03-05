@@ -518,7 +518,7 @@ void FiniNovellLoadFile( void )
             pPeriod = filename-1;
         }
     }
-    strupr( lastslash );
+    _strupr( lastslash );
 
     /*
     // cull the module name to 8.3 (NOV_MAX_MODNAME_LEN) if necessary

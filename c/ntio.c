@@ -32,8 +32,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#ifndef __UNIX__
 #include <process.h>
 #include <conio.h>
+#endif
 #include <errno.h>
 #include <fcntl.h>
 #include <unistd.h>

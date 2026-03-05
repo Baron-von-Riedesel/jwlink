@@ -35,8 +35,10 @@
 #include "cofflwlv.h"
 #include "coffload.h"
 #include "orlhash.h"
+#include "debug.h"
 
 coff_handle COFFENTRY CoffInit( orl_funcs * funcs )
+/*************************************************/
 {
     coff_handle                                 coff_hnd;
 
@@ -48,6 +50,7 @@ coff_handle COFFENTRY CoffInit( orl_funcs * funcs )
 }
 
 orl_return COFFENTRY CoffFini( coff_handle coff_hnd )
+/***************************************************/
 {
     orl_return                                  error;
 
@@ -60,6 +63,7 @@ orl_return COFFENTRY CoffFini( coff_handle coff_hnd )
 }
 
 coff_file_handle COFFENTRY CoffFileInit( coff_handle coff_hnd, void *file )
+/*************************************************************************/
 {
     coff_file_handle    coff_file_hnd;
     orl_return          return_val;
@@ -75,6 +79,7 @@ coff_file_handle COFFENTRY CoffFileInit( coff_handle coff_hnd, void *file )
     CoffAddFileLinks( coff_hnd, coff_file_hnd );
     return_val = CoffLoadFileStructure( coff_file_hnd );
     if( return_val != ORL_OKAY ) {
+        DEBUG(( DBG_OLD, "CoffFileInit(): CoffLoadFileStructure() failed"));
         CoffRemoveFileLinks( coff_file_hnd );
         return( NULL );
     }
@@ -87,6 +92,7 @@ orl_return COFFENTRY CoffFileFini( coff_file_handle coff_file_hnd )
 }
 
 orl_return COFFENTRY CoffFileScan( coff_file_handle coff_file_hnd, char *desired, orl_sec_return_func return_func )
+/*****************************************************************************************************************/
 {
     orl_hash_data_struct *              data_struct;
     int                                 loop;
@@ -220,6 +226,7 @@ orl_sec_offset COFFENTRY CoffSecGetOffset( coff_sec_handle coff_sec_hnd )
 }
 
 orl_return COFFENTRY CoffSecGetContents( coff_sec_handle coff_sec_hnd, char **buffer )
+/************************************************************************************/
 {
     if( coff_sec_hnd->contents != NULL ) {
         *buffer = coff_sec_hnd->contents;
@@ -229,6 +236,7 @@ orl_return COFFENTRY CoffSecGetContents( coff_sec_handle coff_sec_hnd, char **bu
 }
 
 orl_return COFFENTRY CoffSecQueryReloc( coff_sec_handle coff_sec_hnd, coff_sec_offset sec_offset, orl_reloc_return_func return_func )
+/***********************************************************************************************************************************/
 {
     int                                         index;
     coff_sec_handle                             reloc_sec_hnd;
@@ -278,6 +286,7 @@ coff_sec_handle COFFENTRY CoffCvtIdxToSecHdl( coff_file_handle fhdl,
 }
 
 orl_return COFFENTRY CoffSecScanReloc( coff_sec_handle coff_sec_hnd, orl_reloc_return_func return_func )
+/******************************************************************************************************/
 {
     int                                         index;
     coff_sec_handle                             reloc_sec_hnd;
@@ -323,6 +332,7 @@ orl_return COFFENTRY CoffRelocSecScan( coff_sec_handle coff_sec_hnd, orl_reloc_r
 }
 
 orl_return COFFENTRY CoffSymbolSecScan( coff_sec_handle coff_sec_hnd, orl_symbol_return_func return_func )
+/********************************************************************************************************/
 {
     int                                         index;
     orl_return                                  error;

@@ -38,6 +38,7 @@
 #include "pcobj.h"
 
 orl_handle ORLENTRY ORLInit( orl_funcs * funcs )
+/**********************************************/
 {
     orl_handle                  orl_hnd;
 
@@ -65,10 +66,12 @@ orl_handle ORLENTRY ORLInit( orl_funcs * funcs )
 }
 
 orl_return ORLENTRY ORLGetError( orl_handle orl_hnd ) {
+/*****************************************************/
     return( orl_hnd->error );
 }
 
 orl_return ORLENTRY ORLFini( orl_handle orl_hnd ) {
+/*************************************************/
     orl_return                  error;
 
     if( ( error = ElfFini( orl_hnd->elf_hnd ) ) != ORL_OKAY ) return( error );
@@ -198,6 +201,7 @@ orl_file_format ORLFileIdentify( orl_handle orl_hnd, void * file )
 }
 
 orl_file_handle ORLENTRY ORLFileInit( orl_handle orl_hnd, void * file, orl_file_format type )
+/*******************************************************************************************/
 {
     orl_file_handle             orl_file_hnd;
 
@@ -250,6 +254,7 @@ orl_file_handle ORLENTRY ORLFileInit( orl_handle orl_hnd, void * file, orl_file_
 }
 
 orl_return ORLENTRY ORLFileFini( orl_file_handle orl_file_hnd )
+/*************************************************************/
 {
     orl_return                          error = ORL_ERROR;
     /* jump table replace: */
@@ -283,6 +288,7 @@ unsigned long ORLENTRY ORLExportTableRVA(orl_file_handle orl_file_hnd)
 }
 
 orl_return ORLENTRY ORLFileScan( orl_file_handle orl_file_hnd, char *desired, orl_sec_return_func return_func )
+/*************************************************************************************************************/
 {
     switch( orl_file_hnd->type ) {
     case( ORL_ELF ):
@@ -297,6 +303,7 @@ orl_return ORLENTRY ORLFileScan( orl_file_handle orl_file_hnd, char *desired, or
 }
 
 orl_machine_type ORLENTRY ORLFileGetMachineType( orl_file_handle orl_file_hnd )
+/*****************************************************************************/
 {
     switch( orl_file_hnd->type ) {
     case( ORL_ELF ):
@@ -311,6 +318,7 @@ orl_machine_type ORLENTRY ORLFileGetMachineType( orl_file_handle orl_file_hnd )
 }
 
 orl_file_flags ORLENTRY ORLFileGetFlags( orl_file_handle orl_file_hnd )
+/*********************************************************************/
 {
     switch( orl_file_hnd->type ) {
     case( ORL_ELF ):
@@ -325,6 +333,7 @@ orl_file_flags ORLENTRY ORLFileGetFlags( orl_file_handle orl_file_hnd )
 }
 
 orl_file_size ORLENTRY ORLFileGetSize( orl_file_handle orl_file_hnd )
+/*******************************************************************/
 {
     switch( orl_file_hnd->type ) {
     case( ORL_ELF ):
@@ -339,6 +348,7 @@ orl_file_size ORLENTRY ORLFileGetSize( orl_file_handle orl_file_hnd )
 }
 
 orl_file_type ORLENTRY ORLFileGetType( orl_file_handle orl_file_hnd )
+/*******************************************************************/
 {
     switch( orl_file_hnd->type ) {
     case( ORL_ELF ):
@@ -353,11 +363,13 @@ orl_file_type ORLENTRY ORLFileGetType( orl_file_handle orl_file_hnd )
 }
 
 orl_file_format ORLENTRY ORLFileGetFormat( orl_file_handle orl_file_hnd )
+/***********************************************************************/
 {
     return( orl_file_hnd->type );
 }
 
 orl_sec_handle ORLENTRY ORLFileGetSymbolTable( orl_file_handle orl_file_hnd )
+/***************************************************************************/
 {
     switch( orl_file_hnd->type ) {
     case( ORL_ELF ):
@@ -372,6 +384,7 @@ orl_sec_handle ORLENTRY ORLFileGetSymbolTable( orl_file_handle orl_file_hnd )
 }
 
 char * ORLENTRY ORLSecGetName( orl_sec_handle orl_sec_hnd )
+/*********************************************************/
 {
     switch( orl_sec_hnd->type ) {
     case( ORL_ELF ):
@@ -386,6 +399,7 @@ char * ORLENTRY ORLSecGetName( orl_sec_handle orl_sec_hnd )
 }
 
 orl_sec_offset ORLENTRY ORLSecGetBase( orl_sec_handle orl_sec_hnd )
+/*****************************************************************/
 {
     switch( orl_sec_hnd->type ) {
     case( ORL_ELF ):
@@ -400,6 +414,7 @@ orl_sec_offset ORLENTRY ORLSecGetBase( orl_sec_handle orl_sec_hnd )
 }
 
 orl_sec_size ORLENTRY ORLSecGetSize( orl_sec_handle orl_sec_hnd )
+/***************************************************************/
 {
     switch( orl_sec_hnd->type ) {
     case( ORL_ELF ):
@@ -414,6 +429,7 @@ orl_sec_size ORLENTRY ORLSecGetSize( orl_sec_handle orl_sec_hnd )
 }
 
 orl_sec_type ORLENTRY ORLSecGetType( orl_sec_handle orl_sec_hnd )
+/***************************************************************/
 {
     switch( orl_sec_hnd->type ) {
     case( ORL_ELF ):
@@ -428,6 +444,7 @@ orl_sec_type ORLENTRY ORLSecGetType( orl_sec_handle orl_sec_hnd )
 }
 
 orl_sec_alignment ORLENTRY ORLSecGetAlignment( orl_sec_handle orl_sec_hnd )
+/*************************************************************************/
 {
     switch( orl_sec_hnd->type ) {
     case( ORL_ELF ):
@@ -442,6 +459,7 @@ orl_sec_alignment ORLENTRY ORLSecGetAlignment( orl_sec_handle orl_sec_hnd )
 }
 
 orl_sec_flags ORLENTRY ORLSecGetFlags( orl_sec_handle orl_sec_hnd )
+/*****************************************************************/
 {
     switch( orl_sec_hnd->type ) {
     case( ORL_ELF ):
@@ -456,6 +474,7 @@ orl_sec_flags ORLENTRY ORLSecGetFlags( orl_sec_handle orl_sec_hnd )
 }
 
 orl_sec_handle ORLENTRY ORLSecGetStringTable( orl_sec_handle orl_sec_hnd )
+/************************************************************************/
 {
     switch( orl_sec_hnd->type ) {
     case( ORL_ELF ):
@@ -470,6 +489,7 @@ orl_sec_handle ORLENTRY ORLSecGetStringTable( orl_sec_handle orl_sec_hnd )
 }
 
 orl_sec_handle ORLENTRY ORLSecGetSymbolTable( orl_sec_handle orl_sec_hnd )
+/************************************************************************/
 {
     switch( orl_sec_hnd->type ) {
     case( ORL_ELF ):
@@ -484,6 +504,7 @@ orl_sec_handle ORLENTRY ORLSecGetSymbolTable( orl_sec_handle orl_sec_hnd )
 }
 
 orl_sec_handle ORLENTRY ORLSecGetRelocTable( orl_sec_handle orl_sec_hnd )
+/***********************************************************************/
 {
     switch( orl_sec_hnd->type ) {
     case( ORL_ELF ):
@@ -498,6 +519,7 @@ orl_sec_handle ORLENTRY ORLSecGetRelocTable( orl_sec_handle orl_sec_hnd )
 }
 
 orl_linnum * ORLENTRY ORLSecGetLines( orl_sec_handle orl_sec_hnd )
+/****************************************************************/
 {
     switch( orl_sec_hnd->type ) {
     case( ORL_ELF ):
@@ -512,6 +534,7 @@ orl_linnum * ORLENTRY ORLSecGetLines( orl_sec_handle orl_sec_hnd )
 }
 
 orl_table_index ORLENTRY ORLSecGetNumLines( orl_sec_handle orl_sec_hnd )
+/**********************************************************************/
 {
     switch( orl_sec_hnd->type ) {
     case( ORL_ELF ):
@@ -526,6 +549,7 @@ orl_table_index ORLENTRY ORLSecGetNumLines( orl_sec_handle orl_sec_hnd )
 }
 
 orl_sec_offset ORLENTRY ORLSecGetOffset( orl_sec_handle orl_sec_hnd )
+/*******************************************************************/
 {
     if( orl_sec_hnd->type == ORL_COFF ) {
         return( CoffSecGetOffset( (coff_sec_handle) orl_sec_hnd ) );
@@ -534,6 +558,7 @@ orl_sec_offset ORLENTRY ORLSecGetOffset( orl_sec_handle orl_sec_hnd )
 }
 
 char * ORLENTRY ORLSecGetClassName( orl_sec_handle orl_sec_hnd )
+/**************************************************************/
 {
     if( orl_sec_hnd->type == ORL_OMF ) {
         return( OmfSecGetClassName( (omf_sec_handle) orl_sec_hnd ) );
@@ -542,6 +567,7 @@ char * ORLENTRY ORLSecGetClassName( orl_sec_handle orl_sec_hnd )
 }
 
 orl_sec_combine ORLENTRY ORLSecGetCombine( orl_sec_handle orl_sec_hnd )
+/*********************************************************************/
 {
     if( orl_sec_hnd->type == ORL_OMF ) {
         return( OmfSecGetCombine( (omf_sec_handle) orl_sec_hnd ) );
@@ -550,6 +576,7 @@ orl_sec_combine ORLENTRY ORLSecGetCombine( orl_sec_handle orl_sec_hnd )
 }
 
 orl_sec_frame ORLENTRY ORLSecGetAbsFrame( orl_sec_handle orl_sec_hnd )
+/********************************************************************/
 {
     if( orl_sec_hnd->type == ORL_OMF ) {
         return( OmfSecGetAbsFrame( (omf_sec_handle) orl_sec_hnd ) );
@@ -558,6 +585,7 @@ orl_sec_frame ORLENTRY ORLSecGetAbsFrame( orl_sec_handle orl_sec_hnd )
 }
 
 orl_sec_handle ORLENTRY ORLSecGetAssociated( orl_sec_handle orl_sec_hnd )
+/***********************************************************************/
 {
     if( orl_sec_hnd->type == ORL_OMF ) {
         return( OmfSecGetAssociated( (omf_sec_handle) orl_sec_hnd ) );
@@ -566,6 +594,7 @@ orl_sec_handle ORLENTRY ORLSecGetAssociated( orl_sec_handle orl_sec_hnd )
 }
 
 orl_group_handle ORLENTRY ORLSecGetGroup( orl_sec_handle orl_sec_hnd )
+/********************************************************************/
 {
     if( orl_sec_hnd->type == ORL_OMF ) {
         return( OmfSecGetGroup( (omf_sec_handle) orl_sec_hnd ) );
@@ -574,6 +603,7 @@ orl_group_handle ORLENTRY ORLSecGetGroup( orl_sec_handle orl_sec_hnd )
 }
 
 orl_return ORLENTRY ORLSecGetContents( orl_sec_handle orl_sec_hnd, char **buffer )
+/********************************************************************************/
 {
     switch( orl_sec_hnd->type ) {
     case( ORL_ELF ):
@@ -588,6 +618,7 @@ orl_return ORLENTRY ORLSecGetContents( orl_sec_handle orl_sec_hnd, char **buffer
 }
 
 orl_return ORLENTRY ORLSecQueryReloc( orl_sec_handle orl_sec_hnd, orl_sec_offset sec_offset, orl_reloc_return_func return_func )
+/******************************************************************************************************************************/
 {
     switch( orl_sec_hnd->type ) {
     case( ORL_ELF ):
@@ -602,6 +633,7 @@ orl_return ORLENTRY ORLSecQueryReloc( orl_sec_handle orl_sec_hnd, orl_sec_offset
 }
 
 orl_return ORLENTRY ORLSecScanReloc( orl_sec_handle orl_sec_hnd, orl_reloc_return_func return_func )
+/**************************************************************************************************/
 {
     switch( orl_sec_hnd->type ) {
     case( ORL_ELF ):
@@ -648,6 +680,7 @@ orl_sec_handle ORLENTRY ORLCvtIdxToSecHdl( orl_file_handle fhdl,
 }
 
 orl_return ORLENTRY ORLRelocSecScan( orl_sec_handle orl_sec_hnd, orl_reloc_return_func return_func )
+/**************************************************************************************************/
 {
     switch( orl_sec_hnd->type ) {
     case( ORL_ELF ):
@@ -662,6 +695,7 @@ orl_return ORLENTRY ORLRelocSecScan( orl_sec_handle orl_sec_hnd, orl_reloc_retur
 }
 
 orl_return ORLENTRY ORLSymbolSecScan( orl_sec_handle orl_sec_hnd, orl_symbol_return_func return_func )
+/****************************************************************************************************/
 {
     switch( orl_sec_hnd->type ) {
     case( ORL_ELF ):
@@ -693,6 +727,7 @@ orl_return ORLENTRY ORLNoteSecScan( orl_sec_handle orl_sec_hnd,
 
 
 char * ORLENTRY ORLSymbolGetName( orl_symbol_handle orl_symbol_hnd )
+/******************************************************************/
 {
     switch( orl_symbol_hnd->type ) {
     case( ORL_ELF ):
@@ -707,6 +742,7 @@ char * ORLENTRY ORLSymbolGetName( orl_symbol_handle orl_symbol_hnd )
 }
 
 orl_symbol_value ORLENTRY ORLSymbolGetValue( orl_symbol_handle orl_symbol_hnd )
+/*****************************************************************************/
 {
     switch( orl_symbol_hnd->type ) {
     case( ORL_ELF ):
@@ -721,6 +757,7 @@ orl_symbol_value ORLENTRY ORLSymbolGetValue( orl_symbol_handle orl_symbol_hnd )
 }
 
 orl_symbol_binding ORLENTRY ORLSymbolGetBinding( orl_symbol_handle orl_symbol_hnd )
+/*********************************************************************************/
 {
     switch( orl_symbol_hnd->type ) {
     case( ORL_ELF ):
@@ -735,6 +772,7 @@ orl_symbol_binding ORLENTRY ORLSymbolGetBinding( orl_symbol_handle orl_symbol_hn
 }
 
 orl_symbol_type ORLENTRY ORLSymbolGetType( orl_symbol_handle orl_symbol_hnd )
+/***************************************************************************/
 {
     switch( orl_symbol_hnd->type ) {
     case( ORL_ELF ):
@@ -749,6 +787,7 @@ orl_symbol_type ORLENTRY ORLSymbolGetType( orl_symbol_handle orl_symbol_hnd )
 }
 
 unsigned char ORLENTRY ORLSymbolGetRawInfo( orl_symbol_handle orl_symbol_hnd )
+/****************************************************************************/
 {
     switch( orl_symbol_hnd->type ) {
     case( ORL_ELF ):
@@ -763,6 +802,7 @@ unsigned char ORLENTRY ORLSymbolGetRawInfo( orl_symbol_handle orl_symbol_hnd )
 }
 
 orl_sec_handle ORLENTRY ORLSymbolGetSecHandle( orl_symbol_handle orl_symbol_hnd )
+/*******************************************************************************/
 {
     switch( orl_symbol_hnd->type ) {
     case( ORL_ELF ):
@@ -777,6 +817,7 @@ orl_sec_handle ORLENTRY ORLSymbolGetSecHandle( orl_symbol_handle orl_symbol_hnd 
 }
 
 orl_symbol_handle ORLENTRY ORLSymbolGetAssociated( orl_symbol_handle hnd )
+/************************************************************************/
 {
     switch( hnd->type ) {
     case( ORL_ELF ):
@@ -792,6 +833,7 @@ orl_symbol_handle ORLENTRY ORLSymbolGetAssociated( orl_symbol_handle hnd )
 
 orl_return ORLENTRY ORLGroupsScan( orl_file_handle hnd,
                                    orl_group_return_func func )
+/*************************************************************/
 {
     switch( hnd->type ) {
     case( ORL_ELF ):
@@ -805,6 +847,7 @@ orl_return ORLENTRY ORLGroupsScan( orl_file_handle hnd,
 }
 
 char * ORLENTRY ORLGroupName( orl_group_handle hnd )
+/**************************************************/
 {
     if( hnd->type == ORL_OMF ) {
         return OmfGroupName( (omf_grp_handle)hnd );
@@ -813,6 +856,7 @@ char * ORLENTRY ORLGroupName( orl_group_handle hnd )
 }
 
 orl_table_index ORLENTRY ORLGroupSize( orl_group_handle hnd )
+/***********************************************************/
 {
     if( hnd->type == ORL_OMF ) {
         return OmfGroupSize( (omf_grp_handle)hnd );
@@ -821,6 +865,7 @@ orl_table_index ORLENTRY ORLGroupSize( orl_group_handle hnd )
 }
 
 char * ORLENTRY ORLGroupMember( orl_group_handle hnd, orl_table_index idx )
+/*************************************************************************/
 {
     if( hnd->type == ORL_OMF ) {
         return OmfGroupMember( (omf_grp_handle)hnd, idx );

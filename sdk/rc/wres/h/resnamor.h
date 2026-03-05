@@ -45,7 +45,7 @@ typedef union ResNameOrOrdinal {
         uint_16 wOrdinalID;
     } ord;
     char        name[ 1 ];          /* '\0' terminated */
-} _WCUNALIGNED ResNameOrOrdinal;
+} UNALIGNED ResNameOrOrdinal;
 
 #if !defined( NATURAL_PACK )
 #include "poppck.h"

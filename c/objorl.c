@@ -951,7 +951,7 @@ static orl_return DoReloc( orl_reloc *reloc )
     }
     if( !skip ) {
         seg = FindSegNode( reloc->section );
-        DEBUG(( DBG_OLD, "DoReloc(): seg=%s", seg ? seg->entry->u.leader->segname : "NULL" ))
+        DEBUG(( DBG_OLD, "DoReloc(): seg=%s", ( seg && seg->entry ) ? seg->entry->u.leader->segname : "NULL" ))
         addend = 0;
         if( seg != NULL && !(seg->info & SEG_DEAD) && seg->entry != NULL
                                                    && !seg->entry->isdead ) {
@@ -1109,6 +1109,7 @@ unsigned long ORLPass1( void )
     PermStartMod( CurrMod );
     filehdl = InitFile();
     if( filehdl == NULL ) {
+        DEBUG((DBG_OLD, "objorl.ORLPass1(): filehdl = NULL" ));
         LnkMsg( FTL+MSG_BAD_OBJECT, "s", CurrMod->f.source->file->name );
         CurrMod->f.source->file->flags |= INSTAT_IOERR;
         return( -1 );

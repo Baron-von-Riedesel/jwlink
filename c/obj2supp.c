@@ -424,6 +424,8 @@ static void BuildReloc( save_fixup *save, frame_spec *targ, frame_spec *frame )
     Relocate( save, &fix, targ );
 }
 
+/* increment thru a module's relocs (called by IterateModRelocs() in permdata.c) */
+
 unsigned IncExecRelocs( void *_save )
 /******************************************/
 {
@@ -433,10 +435,14 @@ unsigned IncExecRelocs( void *_save )
     frame_spec  frame;
 
     if( save->flags & FIX_CHANGE_SEG ) {
-        sdata = (segdata *)( save->flags & ~FIX_CHANGE_SEG );
+        //sdata = (segdata *)( save->flags & ~FIX_CHANGE_SEG );
+        save->flags &= ~FIX_CHANGE_SEG;
+        sdata = (segdata *)save->pv_flags;
+        save->flags |= FIX_CHANGE_SEG;
         DEBUG(( DBG_OLD, "IncExecReloc(%h): FIX_CHANGE_SEG, off=%h sdata=%h", _save, save->off, sdata ))
         if( LinkFlags & INC_LINK_FLAG ) {
-            save->flags = (unsigned_32) CarveGetIndex( CarveSegData, sdata );
+            //save->flags = (unsigned_32) CarveGetIndex( CarveSegData, sdata );
+            save->pv_flags = CarveGetIndex( CarveSegData, sdata );
             save->flags |= FIX_CHANGE_SEG;
         }
         if( !sdata->isdead ) {
@@ -489,9 +495,11 @@ unsigned RelocMarkSyms( void *_fix )
     symbol *    sym;
 
     if( fix->flags & FIX_CHANGE_SEG ) {
-        sdata = CarveMapIndex( CarveSegData,
-                                (void *)( fix->flags & ~FIX_CHANGE_SEG ) );
-        fix->flags = (unsigned_32) sdata | FIX_CHANGE_SEG;
+        //sdata = CarveMapIndex( CarveSegData, (void *)( fix->flags & ~FIX_CHANGE_SEG ) );
+        fix->flags &= ~FIX_CHANGE_SEG;
+        sdata = CarveMapIndex( CarveSegData, fix->pv_flags );
+        fix->pv_flags = sdata;
+        fix->flags |= FIX_CHANGE_SEG;
     } else {
         frame = FIX_GET_FRAME( fix->flags );
         if( FRAME_HAS_DATA( frame ) ) {
@@ -534,7 +542,8 @@ void StoreFixup( offset off, fix_type type, frame_spec *frame,
     if( LastSegData != CurrRec.seg ) {
         DbgAssert( CurrRec.seg != NULL );
         LastSegData = CurrRec.seg;
-        save.flags = (unsigned_32) CurrRec.seg;
+        //save.flags = (unsigned_32) CurrRec.seg;
+        save.pv_flags = CurrRec.seg;
         save.flags |= FIX_CHANGE_SEG;   // DANGER! assume pointers word aligned
         PermSaveFixup( &save, sizeof( unsigned_32 ) );
     }
@@ -592,7 +601,10 @@ unsigned IncSaveRelocs( void *_save )
 	DEBUG(( DBG_OLD, "obj2supp.IncSaveRelocs() enter" ));
     fixsize = CalcSavedFixSize( save->flags );
     if( save->flags & FIX_CHANGE_SEG ) {
-        sdata = (segdata *)( save->flags & ~FIX_CHANGE_SEG );
+        //sdata = (segdata *)( save->flags & ~FIX_CHANGE_SEG );
+        save->flags &= ~FIX_CHANGE_SEG;
+        sdata = (segdata *) save->pv_flags;
+        save->flags |= FIX_CHANGE_SEG;
         if( !sdata->isdead ) {
             LastSegData = sdata;
         } else {

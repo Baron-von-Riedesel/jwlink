@@ -66,7 +66,7 @@ typedef struct WResExtHeader {  /* Only present if WResVer >= 1 */
 typedef struct WResIDName {             /* this is a "Pascal style" string */
     uint_16     NumChars;               /* length */
     char        Name[1];                /* followed by that many characters */
-} _WCUNALIGNED WResIDName;              /* NOTE: there is no trailing '\0' */
+} UNALIGNED WResIDName;              /* NOTE: there is no trailing '\0' */
 
 typedef struct WResID {
     uint_8      IsName; /* if TRUE then ID is a Name otherwise Num */
@@ -74,7 +74,7 @@ typedef struct WResID {
         uint_16     Num;        /* number of the ID */
         WResIDName  Name;       /* name of the ID */
     } ID;
-} _WCUNALIGNED WResID;
+} UNALIGNED WResID;
 
 typedef struct WResHelpID {
     uint_8      IsName; /* if TRUE then ID is a Name otherwise Num */
@@ -82,7 +82,7 @@ typedef struct WResHelpID {
         uint_32     Num;        /* number of the Help ID */
         WResIDName  Name;       /* name of the Help ID */
     } ID;
-} _WCUNALIGNED WResHelpID;
+} UNALIGNED WResHelpID;
 
 typedef struct WResTypeInfo {
     uint_16     NumResources;/* number of resources of this type */
@@ -104,7 +104,7 @@ typedef struct WResID2 {
         uint_16     Num;        /* number of the ID */
         WResIDName2 Name;       /* name of the ID */
     } ID;
-} _WCUNALIGNED WResID2;
+} UNALIGNED WResID2;
 
 typedef struct WResResInfo2 {
     uint_16     NumResources;   /* # of resources of this type and name */
@@ -125,7 +125,7 @@ typedef struct WResResInfo10 {
     uint_32     Offset;/* offset of resource body in file */
     uint_32     Length;/* length in bytes of resource body */
     WResID2     ResName;
-} _WCUNALIGNED WResResInfo1;
+} UNALIGNED WResResInfo1;
 
 
 typedef struct WResResInfo {
@@ -143,7 +143,7 @@ typedef struct WResLangInfo {
     uint_16             MemoryFlags;
     uint_32             Offset; /* offset of resource body in file */
     uint_32             Length; /* length in bytes of resource body */
-} _WCUNALIGNED WResLangInfo;
+} UNALIGNED WResLangInfo;
 
 #if !defined( NATURAL_PACK )
 #include "poppck.h"

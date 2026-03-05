@@ -1,5 +1,5 @@
 
-# Wmake makefile to create Win32 wlib.exe
+# Wmake makefile to create Linux wlib with OW
 
 proj_name = jwlib
 

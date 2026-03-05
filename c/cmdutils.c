@@ -199,7 +199,7 @@ bool ProcOne( parse_entry *entry, sep_type req, bool suicide )
                     CmdFlags |= entry->flags;
                 } else {
                     strcpy( keybuff, entry->keyword );
-                    strupr( keybuff ); /* jwlink: was strlwr() */
+                    _strupr( keybuff ); /* jwlink: was strlwr() */
                     LnkMsg( LOC+LINE+WRN+MSG_FORMAT_BAD_OPTION, "s", keybuff );
                     ret = TRUE;
                 }

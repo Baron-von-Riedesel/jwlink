@@ -205,12 +205,18 @@ void *CarveZeroAlloc( carve_t cv )
 {
     void *v;
     unsigned *p;
+    int i;
 
     if( cv->free_list == NULL ) {
         MakeFreeList( cv, newBlk( cv ), 0 );
     }
     _REMOVE_FROM_FREE( cv, v );
     p = v;
+#if 0//def _INT_DEBUG
+    if ( (cv->elm_size / sizeof(*p)) > 16 )
+        DEBUG(( DBG_OLD, "CarveZeroAlloc: elm_size=%h sizeof(*p)=%h", cv->elm_size, sizeof(*p) ));
+#endif
+#if 0
     DbgAssert( ( cv->elm_size / sizeof(*p) ) <= 16 );
     switch( cv->elm_size / sizeof(*p) ) {
     case 16:
@@ -246,6 +252,10 @@ void *CarveZeroAlloc( carve_t cv )
     case 1:
         p[0] = 0;
     }
+#else
+    for ( i = (cv->elm_size / sizeof(*p)) - 1; i >= 0; i-- )
+        p[i] = 0;
+#endif
     return p;
 }
 

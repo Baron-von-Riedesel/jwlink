@@ -68,7 +68,7 @@ typedef struct FontInfo {
     uint_32         dfDevice;       /* offset from top of struct to Dev Name */
     uint_32         dfFace;         /* offset from top of struct to Face Name */
     uint_32         dfBitsPointer;
-} _WCUNALIGNED FontInfo;
+} UNALIGNED FontInfo;
 
 typedef struct FontDirEntry {
     uint_16         StructSize;     /* See note below */

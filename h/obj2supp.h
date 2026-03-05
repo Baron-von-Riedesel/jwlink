@@ -111,7 +111,10 @@ typedef struct {
 } frame_spec;
 
 typedef struct {
-    unsigned_32 flags;
+    union {
+        unsigned_32 flags;
+        void *pv_flags;
+    };
     unsigned_32 off;
     void *      target;
 } save_fixup;

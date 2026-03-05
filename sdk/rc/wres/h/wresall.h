@@ -33,6 +33,10 @@
 #ifndef WRESALL_INCLUDED
 #define WRESALL_INCLUDED
 
+#ifdef __UNIX__
+#define UNALIGNED
+#endif
+
 #include "layer1.h"
 
 #include "wres.h"

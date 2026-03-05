@@ -29,6 +29,9 @@
 *
 ****************************************************************************/
 
+#ifdef _INT_DEBUG
+#include <stddef.h>
+#endif
 
 #include "coffload.h"
 #include "coffimpl.h"
@@ -243,7 +246,7 @@ static orl_return load_coff_sec_handles( coff_file_handle coff_file_hnd,
                                          coff_file_header * f_hdr )
 /**********************************************************************/
 {
-    coff_section_header *               s_hdr;
+    coff_section_header *               s_hdr; /* section header in COFF file, defined in coff.h! */
     coff_sec_handle                     coff_sec_hnd;
     coff_sec_handle                     coff_reloc_sec_hnd;
     int                                 loop;
@@ -299,6 +302,7 @@ static orl_return load_coff_sec_handles( coff_file_handle coff_file_hnd,
             coff_sec_hnd->name = s_hdr->name;
             coff_sec_hnd->name_alloced = COFF_FALSE;
         }
+        DEBUG((DBG_OLD, "load_coff_sec_handles: size=%h offset=%h rawdata=%h", s_hdr->size, s_hdr->offset, s_hdr->rawdata_ptr ));
         coff_sec_hnd->file_format = ORL_COFF;
         coff_sec_hnd->relocs_done = COFF_FALSE;
         coff_sec_hnd->coff_file_hnd = coff_file_hnd;
@@ -425,6 +429,7 @@ orl_return CoffLoadFileStructure( coff_file_handle coff_file_hnd )
     pe_hdr = _ClientRead( coff_file_hnd, 2 );
     _ClientSeek( coff_file_hnd, -2, SEEK_CUR );
     if( pe_hdr->MZ[0] == 'M' && pe_hdr->MZ[1] == 'Z' ) {
+	    DEBUG(( DBG_OLD, "CoffLoadFileStructure(): file has MZ header"));
         pe_hdr = _ClientRead( coff_file_hnd, sizeof( pe_header ) );
         _ClientSeek( coff_file_hnd, pe_hdr->offset - sizeof( pe_header ), SEEK_CUR );
         PE = _ClientRead( coff_file_hnd, 4 );
@@ -434,6 +439,11 @@ orl_return CoffLoadFileStructure( coff_file_handle coff_file_hnd )
             _ClientSeek( coff_file_hnd, -pe_hdr->offset-4, SEEK_CUR );
         }
     }
+#ifdef _INT_DEBUG
+	if ( sizeof( coff_file_header ) != 5*4 ) {
+		DEBUG(( DBG_OLD, "CoffLoadFileStructure: error, COFF file header size != 20, missing LONG_IS_64BITS?" ));
+	}	
+#endif    
     coff_file_hnd->f_hdr_buffer = _ClientRead( coff_file_hnd, sizeof( coff_file_header ) );
     if( !(coff_file_hnd->f_hdr_buffer) ) return( ORL_OUT_OF_MEMORY );
     f_hdr = (coff_file_header *) coff_file_hnd->f_hdr_buffer;
@@ -442,9 +452,10 @@ orl_return CoffLoadFileStructure( coff_file_handle coff_file_hnd )
         // convert short import library structures to long import
         // library structures, change _ClientRead and _ClientSeek
         // macros to read from converted metadata
+	    DEBUG(( DBG_OLD, "CoffLoadFileStructure(): import object header detected"));
         error = convert_import_library( coff_file_hnd );
         if ( error != ORL_OKAY ) {
-			DEBUG((DBG_OLD, "CoffLoadFileStructure(): error 1"));
+            DEBUG((DBG_OLD, "CoffLoadFileStructure(): convert_import_library() failed"));
             return( error );
         }
         // reread new converted file header and next process as normal
@@ -455,6 +466,7 @@ orl_return CoffLoadFileStructure( coff_file_handle coff_file_hnd )
     }
     if( f_hdr->opt_hdr_size > 0 ) {     // skip optional header
         pe_opt_hdr *opt_hdr = (pe_opt_hdr *)_ClientRead( coff_file_hnd, f_hdr->opt_hdr_size );
+	    DEBUG(( DBG_OLD, "CoffLoadFileStructure(): optional header detected"));
 
         if( (opt_hdr->magic == 0x10b) || (opt_hdr->magic == 0x20b) ) {
             coff_file_hnd->export_table_rva = opt_hdr->export_table_rva;
@@ -465,43 +477,47 @@ orl_return CoffLoadFileStructure( coff_file_handle coff_file_hnd )
     coff_file_hnd->initial_size = sizeof( coff_file_header ) + f_hdr->opt_hdr_size + PEoffset;
     switch( coff_file_hnd->machine_type ) {
     case ORL_MACHINE_TYPE_UNKNOWN:
-		DEBUG((DBG_OLD, "CoffLoadFileStructure(): error 2"));
+        DEBUG((DBG_OLD, "CoffLoadFileStructure(): error ORL_MACHINE_TYPE_UNKNOWN"));
         return( ORL_ERROR );
     default:
         break;
     }
     coff_file_hnd->num_symbols = f_hdr->num_symbols;
     coff_file_hnd->num_sections = f_hdr->num_sections;
+    DEBUG((DBG_OLD, "CoffLoadFileStructure(): start section table=%h, num_sections=%h", coff_file_hnd->initial_size, coff_file_hnd->num_sections ));
     sec_header_table_size = coff_file_hnd->num_sections * sizeof( coff_section_header );
     if( coff_file_hnd->num_sections > 0 ) {
         coff_file_hnd->s_hdr_table_buffer = _ClientRead( coff_file_hnd,
                                                          sec_header_table_size);
         if( !(coff_file_hnd->s_hdr_table_buffer) ) {
-			DEBUG((DBG_OLD, "CoffLoadFileStructure(): error 3"));
+            DEBUG((DBG_OLD, "CoffLoadFileStructure(): _ClientRead() failed (s_hdr_table_buffer)"));
             return( ORL_ERROR );
         }
     }
-    error = load_coff_sec_handles( coff_file_hnd, f_hdr );
+    error = load_coff_sec_handles( coff_file_hnd, f_hdr ); /* may increase # of sections! */
     if( error != ORL_OKAY ) {
-		DEBUG((DBG_OLD, "CoffLoadFileStructure(): error 4"));
+        DEBUG((DBG_OLD, "CoffLoadFileStructure(): load_coff_sec_handles() failed"));
         return( error );
     }
     last_sec_hnd = coff_file_hnd->coff_sec_hnd[coff_file_hnd->num_sections - 1];
     coff_file_hnd->initial_size += sec_header_table_size;
+    DEBUG((DBG_OLD, "CoffLoadFileStructure(): num_sections=%h", coff_file_hnd->num_sections ));
 
     buf_size = 0;
     for( loop=0; loop < coff_file_hnd->num_sections; loop++ ) {
         coff_sec_hnd = coff_file_hnd->coff_sec_hnd[loop];
+	    DEBUG((DBG_OLD, "CoffLoadFileStructure(): coff_sec_hnd[%h] offset=%h, size=%h", loop, coff_sec_hnd->offset, coff_sec_hnd->size ));
         if( (coff_sec_hnd->offset + coff_sec_hnd->size) > buf_size &&
                 !(coff_sec_hnd->flags & ORL_SEC_FLAG_UNINITIALIZED_DATA) ) {
             buf_size = coff_sec_hnd->offset + coff_sec_hnd->size;
         }
     }
+    DEBUG((DBG_OLD, "CoffLoadFileStructure(): buf_size=%h", buf_size ));
     coff_file_hnd->size = buf_size;
     buf_size -= coff_file_hnd->initial_size;
     coff_file_hnd->rest_of_file_buffer = _ClientRead( coff_file_hnd, buf_size );
     if( !(coff_file_hnd->rest_of_file_buffer ) ) {
-		DEBUG((DBG_OLD, "CoffLoadFileStructure(): error 5"));
+        DEBUG((DBG_OLD, "CoffLoadFileStructure(): _ClientRead() failed; rest_of_file_buffer=0, initial_size=%h, buf_size=%h", coff_file_hnd->initial_size, buf_size ));
         return( ORL_ERROR );
     }
     loop_limit = coff_file_hnd->num_sections;
@@ -529,7 +545,7 @@ orl_return CoffLoadFileStructure( coff_file_handle coff_file_hnd )
                         sizeof( coff_sec_size );
             }
             if( !(last_sec_hnd->contents ) ) {
-				DEBUG((DBG_OLD, "CoffLoadFileStructure(): error 6"));
+                DEBUG((DBG_OLD, "CoffLoadFileStructure(): error, last_sec_hnd->contents = NULL"));
                 return( ORL_ERROR );
             }
         } else {
@@ -566,6 +582,6 @@ orl_return CoffLoadFileStructure( coff_file_handle coff_file_hnd )
             coff_sec_hnd->name = &(coff_file_hnd->string_table->contents[string_table_index]);
         }
     }
-	DEBUG((DBG_OLD, "CoffLoadFileStructure() exit"));
+    DEBUG((DBG_OLD, "CoffLoadFileStructure() exit"));
     return( ORL_OKAY );
 }

@@ -107,6 +107,11 @@ static char     *ArgSave;
 //extern int              __nheapblk;
 
 #if !defined( _DLLHOST )           // it's the standalone linker
+
+#ifdef __UNIX__
+extern char **_argv;
+#endif
+
 int main( int argc, char ** argv )
 /***************************************/
 {
@@ -114,7 +119,9 @@ int main( int argc, char ** argv )
     argv = argv;
 #ifndef __WATCOMC__
     _argv = argv;
+# ifndef __UNIX__
     _argc = argc;
+# endif
 #endif
     InitSubSystems();
     LinkMainLine( NULL );

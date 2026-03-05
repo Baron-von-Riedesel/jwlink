@@ -29,6 +29,11 @@
 *
 ****************************************************************************/
 
+#ifdef __WATCOMC__
+#define UNALIGNED _WCUNALIGNED
+#else 
+#define UNALIGNED
+#endif
 
 #include <string.h>
 #include <ctype.h>
@@ -503,7 +508,7 @@ unsigned long ResNonResNameTable( bool dores )
         if( exp->isanonymous ) continue;
         if( (dores && exp->isresident) || (!dores && !exp->isresident) ) {
             if( !(LinkFlags & CASE_FLAG) ) {
-                strupr( exp->name );
+                _strupr( exp->name );
             }
             namelen = strlen( exp->name );
             WriteLoad( &namelen, 1 );

@@ -17,10 +17,10 @@ DEBUG=0
 !endif
 
 !if $(DEBUG)
-cflags = -od -d2 -w3 -D_INT_DEBUG
+c_flags = -od -d2 -w3 -D_INT_DEBUG
 OUTD= ..\build\osi386WD
 !else
-cflags = -ox -s -DNDEBUG
+c_flags = -ox -s -DNDEBUG
 OUTD= ..\build\osi386WR
 !endif
 
@@ -53,7 +53,7 @@ orl_objs  = $(OUTD)/orlentry.obj &
             $(coff_objs)
 
 .c{$(OUTD)}.obj: $($(proj_name)_autodepends)
-	$(WATCOM)\binnt\wcc386 -q -zc -bc -bt=nt $(cflags) $(inc_dirs) -fo$@ $[@
+	$(WATCOM)\binnt\wcc386 -q -zc -bc -bt=nt $(c_flags) $(inc_dirs) -fo$@ $[@
 
 .c: ./c;./elf/c;./coff/c;./omf/c
 .h: ./h;./elf/h;./coff/h;./omf/h

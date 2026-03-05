@@ -152,11 +152,12 @@ void DBIGenLocal( seg_leader * leader, offset length )
     length = length;
 }
 
-void DBIAddGlobal( symbol *sym, unsigned add )
+//void DBIAddGlobal( symbol *sym, unsigned add )
+void DBIAddGlobal( symbol *sym )
 /*****************************************************/
 {
     sym = sym;
-    add = add;
+    //add = add;
 }
 
 void DBIGenGlobal( symbol * sym, section *sect )
@@ -166,12 +167,13 @@ void DBIGenGlobal( symbol * sym, section *sect )
     sect = sect;
 }
 
-void DBIAddLines( seg_leader * seg, bool is32bit, bool issdata )
+//void DBIAddLines( seg_leader * seg, bool is32bit, bool issdata )
+void DBIAddLines( seg_leader * seg, void *line, unsigned size, bool is32bit )
 /***********************************************************************/
 {
     seg = seg;
     is32bit = is32bit;
-    issdata = issdata;
+    //issdata = issdata;
 }
 
 void DBIStoreLines( unsigned_32 size )

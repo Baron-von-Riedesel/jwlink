@@ -493,20 +493,21 @@ static void PrepStartValue( inc_file_header *hdr )
 /************************************************/
 {
     if( StartInfo.mod != NULL && !StartInfo.user_specd ) {
-        hdr->startmodidx = (unsigned_32) CarveGetIndex( CarveModEntry,
-                                                        StartInfo.mod );
+        //hdr->startmodidx = (unsigned_32) CarveGetIndex( CarveModEntry, StartInfo.mod );
+        hdr->pv_startmodidx = CarveGetIndex( CarveModEntry, StartInfo.mod );
         if( StartInfo.type == START_IS_SDATA ) {
             hdr->flags |= INC_FLAG_START_SEG;
-            hdr->startidx = (unsigned_32) CarveGetIndex( CarveSegData,
-                                                        StartInfo.targ.sdata );
+            //hdr->startidx = (unsigned_32) CarveGetIndex( CarveSegData, StartInfo.targ.sdata );
+            hdr->pv_startidx = CarveGetIndex( CarveSegData, StartInfo.targ.sdata );
         } else {
             DbgAssert( StartInfo.type == START_IS_SYM );
-            hdr->startidx = (unsigned_32) CarveGetIndex( CarveSymbol,
-                                                        StartInfo.targ.sym );
+            //hdr->startidx = (unsigned_32) CarveGetIndex( CarveSymbol, StartInfo.targ.sym );
+            hdr->pv_startidx = CarveGetIndex( CarveSymbol, StartInfo.targ.sym );
         }
         hdr->startoff = StartInfo.off;
     } else {
-        hdr->startmodidx = 0;
+        //hdr->startmodidx = 0;
+        hdr->pv_startmodidx = NULL;
     }
 }
 
@@ -594,9 +595,12 @@ void WritePermData( void )
     FiniStringBlock( &info.strtab, (unsigned *) &hdr.strtabsize, &info, WriteStringBlock );
     QWrite( info.incfhdl, ReadRelocs, SizeRelocs, IncFileName );
     memcpy( hdr.signature, INC_FILE_SIG, INC_FILE_SIG_SIZE );
-    hdr.rootmodidx = (unsigned_32) CarveGetIndex( CarveModEntry, Root->mods );
-    hdr.headsymidx = (unsigned_32) CarveGetIndex( CarveSymbol, HeadSym );
-    hdr.libmodidx = (unsigned_32) CarveGetIndex( CarveModEntry, LibModules );
+    //hdr.rootmodidx = (unsigned_32) CarveGetIndex( CarveModEntry, Root->mods );
+    //hdr.headsymidx = (unsigned_32) CarveGetIndex( CarveSymbol, HeadSym );
+    //hdr.libmodidx = (unsigned_32) CarveGetIndex( CarveModEntry, LibModules );
+    hdr.pv_rootmodidx = CarveGetIndex( CarveModEntry, Root->mods );
+    hdr.pv_headsymidx = CarveGetIndex( CarveSymbol, HeadSym );
+    hdr.pv_libmodidx = CarveGetIndex( CarveModEntry, LibModules );
     hdr.linkstate = LinkState & ~CLEAR_ON_INC;
     hdr.relocsize = SizeRelocs;
     PrepStartValue( &hdr );
@@ -863,17 +867,19 @@ static void ReadBinary( char **buf, unsigned_32 nameidx, time_t modtime )
 static void ReadStartInfo( inc_file_header *hdr )
 /***********************************************/
 {
-    if( hdr->startmodidx != 0 ) {
+    //if( hdr->startmodidx != 0 ) {
+    if( hdr->pv_startmodidx != NULL ) {
         StartInfo.from_inc = TRUE;
-        StartInfo.mod = CarveMapIndex( CarveModEntry, (void *)hdr->startmodidx);
+        //StartInfo.mod = CarveMapIndex( CarveModEntry, (void *)hdr->startmodidx );
+        StartInfo.mod = CarveMapIndex( CarveModEntry, hdr->pv_startmodidx );
         if( hdr->flags & INC_FLAG_START_SEG ) {
             StartInfo.type = START_IS_SDATA;
-            StartInfo.targ.sdata = CarveMapIndex( CarveSegData,
-                                                    (void *)hdr->startidx );
+            //StartInfo.targ.sdata = CarveMapIndex( CarveSegData, (void *)hdr->startidx );
+            StartInfo.targ.sdata = CarveMapIndex( CarveSegData, hdr->pv_startidx );
         } else {
             StartInfo.type = START_IS_SYM;
-            StartInfo.targ.sym = CarveMapIndex( CarveSymbol,
-                                                    (void *)hdr->startidx );
+            //StartInfo.targ.sym = CarveMapIndex( CarveSymbol, (void *)hdr->startidx );
+            StartInfo.targ.sym = CarveMapIndex( CarveSymbol, hdr->pv_startidx );
         }
         StartInfo.off = hdr->startoff;
     }
@@ -947,9 +953,12 @@ void ReadPermData( void )
     CarveWalkAll( CarveModEntry, RebuildModEntry, &info );
     CarveWalkAll( CarveSegData, RebuildSegData, &info );
     CarveWalkAll( CarveSymbol, RebuildSymbol, &info );
-    Root->mods = CarveMapIndex( CarveModEntry, (void *) hdr->rootmodidx );
-    HeadSym = CarveMapIndex( CarveSymbol, (void *) hdr->headsymidx );
-    LibModules = CarveMapIndex( CarveModEntry, (void *) hdr->libmodidx );
+    //Root->mods = CarveMapIndex( CarveModEntry, (void *) hdr->rootmodidx );
+    //HeadSym = CarveMapIndex( CarveSymbol, (void *) hdr->headsymidx );
+    //LibModules = CarveMapIndex( CarveModEntry, (void *) hdr->libmodidx );
+    Root->mods = CarveMapIndex( CarveModEntry, hdr->pv_rootmodidx );
+    HeadSym = CarveMapIndex( CarveSymbol, hdr->pv_headsymidx );
+    LibModules = CarveMapIndex( CarveModEntry, hdr->pv_libmodidx );
     LinkState = hdr->linkstate | GOT_PREV_STRUCTS | (LinkState & CLEAR_ON_INC);
     ReadStartInfo( hdr );
     _LnkFree( info.buffer );
@@ -962,7 +971,16 @@ void PermSaveFixup( void *fix, unsigned size )
     AddBufferStringTable( &StoredRelocs, fix, size );
 }
 
- void IterateModRelocs( unsigned offset, unsigned sizeleft,
+/* go thru a module's relocations;
+ * will call
+ * - IncSaveRelocs() ; objpass1.c, IncPass1()
+ * - IncExecRelocs() ; objpass2.c, PModule()
+ * - RelocMarkSyms() ; procfile.c, MarkRelocs()
+ * called by:
+ * -
+ */
+
+void IterateModRelocs( unsigned offset, unsigned sizeleft,
                               unsigned (*fn)(void *) )
 /***************************************************************/
 {

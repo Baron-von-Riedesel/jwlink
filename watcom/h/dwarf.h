@@ -281,6 +281,12 @@ typedef enum {
 
 #define LAST_LINKER_ABBREV 4
 
+#ifdef __UNIX__
+#define UNALIGNED
+#else
+#define UNALIGNED _WCUNALIGNED
+#endif
+
 /* handy structures section */
 
 typedef struct {
@@ -293,14 +299,14 @@ typedef struct {
     unsigned_8  line_range;
     unsigned_8  opcode_base;
     unsigned_8  standard_opcode_lengths[DWLINE_OPCODE_BASE - 1];
-} _WCUNALIGNED stmt_prologue;
+} UNALIGNED stmt_prologue;
 
 
 typedef struct {
     unsigned_32 offset;
     unsigned_16 segment;
     unsigned_32 length;
-} _WCUNALIGNED segmented_arange_tuple;
+} UNALIGNED segmented_arange_tuple;
 
 typedef struct {
     unsigned_32 offset;
@@ -319,21 +325,21 @@ typedef struct {
     unsigned_8  offset_size;
     unsigned_8  segment_size;
 //   unsigned_8 padding[ 8 ];   // to make it a multiple of a tuple size.
-} _WCUNALIGNED arange_prologue;
+} UNALIGNED arange_prologue;
 
 typedef struct {
     unsigned_32 length;
     unsigned_16 version;
     unsigned_32 abbrev_offset;
     unsigned_8  addr_size;
-} _WCUNALIGNED compuhdr_prologue;
+} UNALIGNED compuhdr_prologue;
 
 typedef struct {
     unsigned_32 length;
     unsigned_16 version;
     unsigned_32 debug_offset;
     unsigned_32 debug_size;
-} _WCUNALIGNED pubnames_prologue;
+} UNALIGNED pubnames_prologue;
 
 #ifdef __cplusplus
 };

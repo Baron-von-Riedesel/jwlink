@@ -44,7 +44,7 @@ typedef struct VerBlockHeader {
     uint_16     ValSize;        // size of the value array that follow header
     uint_16     Type;           // USED FOR NT ONLY 1 == string 0 == binary
     char *      Key;
-} _WCUNALIGNED VerBlockHeader;
+} UNALIGNED VerBlockHeader;
 
 typedef struct VerValueItem {
     uint_8      IsNum;
@@ -53,7 +53,7 @@ typedef struct VerValueItem {
         uint_16 Num;
         char *  String;
     } Value;
-} _WCUNALIGNED VerValueItem;
+} UNALIGNED VerValueItem;
 
 typedef struct VerFixedInfo {
     uint_32     Signature;

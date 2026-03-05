@@ -100,7 +100,7 @@ char *_fullpath( char *buf, const char *path, size_t size );
 char *strlwr( char *string );
 char *strupr( char *string );
 char *strrev( char *string );
-int memicmp(const void *, const void *, size_t);
+//int memicmp(const void *, const void *, size_t);
 off_t tell( int handle );
 long filelength(int handle);
 int eof( int fildes );

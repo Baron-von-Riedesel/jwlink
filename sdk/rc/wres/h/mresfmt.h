@@ -48,7 +48,7 @@ typedef struct MResResourceHeader {
     uint_32                 Version;
     uint_32                 DataVersion;
     uint_32                 Characteristics;
-} _WCUNALIGNED MResResourceHeader;
+} UNALIGNED MResResourceHeader;
 
 typedef struct M32ResResourceHeader {
     MResResourceHeader      *head16;

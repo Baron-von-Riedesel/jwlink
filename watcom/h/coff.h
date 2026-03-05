@@ -588,3 +588,4 @@ typedef enum
 } coff_import_object_name_type;
 
 #include "poppck.h"
+

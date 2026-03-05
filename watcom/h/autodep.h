@@ -34,6 +34,10 @@
 extern "C" {
 #endif
 
+#ifdef __UNIX__
+#define _WCUNALIGNED
+#endif
+
 #define         DEP_LIST_TYPE   0x79
 #define         DEP_LIST_NAME   "EBWF_XFMMTUPPE"
 
