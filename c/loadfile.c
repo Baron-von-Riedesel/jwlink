@@ -425,6 +425,7 @@ void SetStartSym( char *name )
 {
     size_t      namelen;
 
+    DEBUG(( DBG_OLD, "SetStartSym(%s)", name ));
     if( StartInfo.type != START_UNDEFED ) {
         if( StartInfo.type == START_IS_SYM ) {
             namelen = strlen( name );
@@ -460,6 +461,7 @@ void GetStartAddr( void )
 
     /* jwlink: start symbol "_start" in ELF */
     if( StartInfo.type == START_UNDEFED && ( FmtData.type & MK_ELF ) ) {
+        DEBUG(( DBG_OLD, "GetStartAddr: setting _start as start address" ));
         SetStartSym( "_start" );
     }
 

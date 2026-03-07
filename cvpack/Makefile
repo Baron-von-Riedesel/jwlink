@@ -1,4 +1,6 @@
 
+# creates the Win32 version of cvpack
+
 WATCOM=\watcom
 DOS=0
 

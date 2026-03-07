@@ -843,7 +843,7 @@ static orl_return DoReloc( orl_reloc *reloc )
     bool        skip;
     bool        istoc;
 
-	DEBUG((DBG_OLD, "objorl.DoReloc(): enter" ));
+	DEBUG((DBG_OLD, "objorl.DoReloc(%d): enter", reloc->type ));
     skip = FALSE;
     istoc = FALSE;
     type = 0;
@@ -937,10 +937,11 @@ static orl_return DoReloc( orl_reloc *reloc )
         adjust = reloc->type - ORL_RELOC_TYPE_REL_32_ADJ1 + 1;
         /* jwlink: store adjustment in upper 4 bits of type */
         type = FIX_OFFSET_32 | FIX_REL | (adjust << 28);
-        //printf( "32-bit PC-relative fixup %X at %X, adjust=%u\n", reloc->type, reloc->offset, adjust );
+        DEBUG(( DBG_OLD, "32-bit PC-relative fixup %x at %h, adjust=%u", reloc->type, reloc->offset, adjust ));
         break;
     case ORL_RELOC_TYPE_WORD_64: /* jwlink */
         type = FIX_OFFSET_64;
+        DEBUG(( DBG_OLD, "64-bit offset at %h", reloc->offset ));
         break;
     case ORL_RELOC_TYPE_NONE:
     default:

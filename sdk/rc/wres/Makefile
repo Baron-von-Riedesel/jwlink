@@ -89,6 +89,8 @@ cflags = -od -d2 -w3 -D_INT_DEBUG
 cflags = -ox -s -DNDEBUG
 !endif
 
+cflags += -DUNALIGNED=_WCUNALIGNED
+
 # where to look for various files
 
 .c : $(wres_dir)/c

@@ -218,65 +218,65 @@ typedef enum {
 
 // relocation types - add new types at end if possible, also update objdump!
 typedef enum {
-    ORL_RELOC_TYPE_NONE,        // error type
-    ORL_RELOC_TYPE_ABSOLUTE,    // ref to a 32-bit absolute address
-    ORL_RELOC_TYPE_WORD_16,     // a direct ref to a 16-bit address
-    ORL_RELOC_TYPE_WORD_32,     // a direct ref to a 32-bit address
-    ORL_RELOC_TYPE_WORD_32_NB,  // a direct ref to a 32-bit address (no base added)
-    ORL_RELOC_TYPE_HALF_HI,     // ref to high half of 32-bit address
-    ORL_RELOC_TYPE_HALF_HA,     // ditto adjusted for signed low 16-bits.
-    ORL_RELOC_TYPE_HALF_LO,     // ref to low half of 32-bit address
-    ORL_RELOC_TYPE_PAIR,        // reloc connecting a HALF_HI and HALF_LO
-    ORL_RELOC_TYPE_JUMP,        // ref to the part of a 32-bit address valid for jump
-    ORL_RELOC_TYPE_SECTION,     // ref to an offset from a section address
-    ORL_RELOC_TYPE_SEC_REL,     // direct ref to a 32-bit address relative to the image base
-    ORL_RELOC_TYPE_REL_16,      // relative reference to 16-bit address
-    ORL_RELOC_TYPE_REL_21_SH,   // relative ref. to a 21-bit address shifted 2
-    ORL_RELOC_TYPE_WORD_64,     // NYI: direct ref to a 64-bit address
-    ORL_RELOC_TYPE_SEGMENT,     // 16-bit segment relocation
-    ORL_RELOC_TYPE_WORD_14,     // a direct ref to a 14-bit address shifted 2
-    ORL_RELOC_TYPE_WORD_24,     // a direct ref to a 24-bit address shifted 2
-    ORL_RELOC_TYPE_WORD_26,     // a direct ref to a 28-bit address shifted 2
-    ORL_RELOC_TYPE_REL_14,      // relative ref to a 14-bit address shifted 2
-    ORL_RELOC_TYPE_REL_24,      // relative ref to a 24-bit address shifted 2
-    ORL_RELOC_TYPE_REL_32,      // relative ref to a 32-bit address
-    ORL_RELOC_TYPE_REL_32_NOADJ,// as above, but doesn't need -4 adjustment
+    ORL_RELOC_TYPE_NONE,        // 0 error type
+    ORL_RELOC_TYPE_ABSOLUTE,    // 1 ref to a 32-bit absolute address
+    ORL_RELOC_TYPE_WORD_16,     // 2 a direct ref to a 16-bit address
+    ORL_RELOC_TYPE_WORD_32,     // 3 a direct ref to a 32-bit address
+    ORL_RELOC_TYPE_WORD_32_NB,  // 4 a direct ref to a 32-bit address (no base added)
+    ORL_RELOC_TYPE_HALF_HI,     // 5 ref to high half of 32-bit address
+    ORL_RELOC_TYPE_HALF_HA,     // 6 ditto adjusted for signed low 16-bits.
+    ORL_RELOC_TYPE_HALF_LO,     // 7 ref to low half of 32-bit address
+    ORL_RELOC_TYPE_PAIR,        // 8 reloc connecting a HALF_HI and HALF_LO
+    ORL_RELOC_TYPE_JUMP,        // 9 ref to the part of a 32-bit address valid for jump
+    ORL_RELOC_TYPE_SECTION,     // 10 ref to an offset from a section address
+    ORL_RELOC_TYPE_SEC_REL,     // 11 direct ref to a 32-bit address relative to the image base
+    ORL_RELOC_TYPE_REL_16,      // 12 relative reference to 16-bit address
+    ORL_RELOC_TYPE_REL_21_SH,   // 13 relative ref. to a 21-bit address shifted 2
+    ORL_RELOC_TYPE_WORD_64,     // 14 NYI: direct ref to a 64-bit address
+    ORL_RELOC_TYPE_SEGMENT,     // 15 16-bit segment relocation
+    ORL_RELOC_TYPE_WORD_14,     // 16 a direct ref to a 14-bit address shifted 2
+    ORL_RELOC_TYPE_WORD_24,     // 17 a direct ref to a 24-bit address shifted 2
+    ORL_RELOC_TYPE_WORD_26,     // 18 a direct ref to a 28-bit address shifted 2
+    ORL_RELOC_TYPE_REL_14,      // 19 relative ref to a 14-bit address shifted 2
+    ORL_RELOC_TYPE_REL_24,      // 20 relative ref to a 24-bit address shifted 2
+    ORL_RELOC_TYPE_REL_32,      // 21 relative ref to a 32-bit address
+    ORL_RELOC_TYPE_REL_32_NOADJ,// 22 as above, but doesn't need -4 adjustment
 
-    ORL_RELOC_TYPE_TOCREL_16,   // relative ref to 16-bit offset from TOC base.
-    ORL_RELOC_TYPE_TOCREL_14,   // rel. ref to 14-bit offset from TOC base shifted 2.
-    ORL_RELOC_TYPE_TOCVREL_16,  // ditto, data explicitely defined in .tocd
-    ORL_RELOC_TYPE_TOCVREL_14,  // ditto
-    ORL_RELOC_TYPE_GOT_32,      // direct ref to 32-bit offset from GOT base.
-    ORL_RELOC_TYPE_GOT_16,      // direct ref to 16-bit offset from GOT base.
-    ORL_RELOC_TYPE_GOT_16_HI,   // direct ref to hi 16-bits of offset from GOT base.
-    ORL_RELOC_TYPE_GOT_16_HA,   // ditto adjusted for signed low 16-bits
-    ORL_RELOC_TYPE_GOT_16_LO,   // direct ref to lo 16-bits of offset from GOT base.
-    ORL_RELOC_TYPE_PLTREL_24,   // rel. ref to 24-bit offset from PLT base.
-    ORL_RELOC_TYPE_PLTREL_32,   // rel. ref to 32-bit offset from PLT base.
-    ORL_RELOC_TYPE_PLT_32,      // direct ref to 32-bit offset from PLT base.
-    ORL_RELOC_TYPE_PLT_16_HI,   // direct ref to hi 16-bits of offset from PLT base.
-    ORL_RELOC_TYPE_PLT_16_HA,   // ditto adjusted for signed low 16-bits.
-    ORL_RELOC_TYPE_PLT_16_LO,   // direct ref to lo 16-bits of offset from PLT base.
-    ORL_RELOC_TYPE_IFGLUE,      // Substitute TOC restore instruction iff symbol is glue code
-    ORL_RELOC_TYPE_IMGLUE,      // symbol is glue code; virtual address is TOC restore instruction
+    ORL_RELOC_TYPE_TOCREL_16,   // 23 relative ref to 16-bit offset from TOC base.
+    ORL_RELOC_TYPE_TOCREL_14,   // 24 rel. ref to 14-bit offset from TOC base shifted 2.
+    ORL_RELOC_TYPE_TOCVREL_16,  // 25 ditto, data explicitely defined in .tocd
+    ORL_RELOC_TYPE_TOCVREL_14,  // 26 ditto
+    ORL_RELOC_TYPE_GOT_32,      // 27 direct ref to 32-bit offset from GOT base.
+    ORL_RELOC_TYPE_GOT_16,      // 28 direct ref to 16-bit offset from GOT base.
+    ORL_RELOC_TYPE_GOT_16_HI,   // 29 direct ref to hi 16-bits of offset from GOT base.
+    ORL_RELOC_TYPE_GOT_16_HA,   // 30 ditto adjusted for signed low 16-bits
+    ORL_RELOC_TYPE_GOT_16_LO,   // 31 direct ref to lo 16-bits of offset from GOT base.
+    ORL_RELOC_TYPE_PLTREL_24,   // 32 rel. ref to 24-bit offset from PLT base.
+    ORL_RELOC_TYPE_PLTREL_32,   // 33 rel. ref to 32-bit offset from PLT base.
+    ORL_RELOC_TYPE_PLT_32,      // 34 direct ref to 32-bit offset from PLT base.
+    ORL_RELOC_TYPE_PLT_16_HI,   // 35 direct ref to hi 16-bits of offset from PLT base.
+    ORL_RELOC_TYPE_PLT_16_HA,   // 36 ditto adjusted for signed low 16-bits.
+    ORL_RELOC_TYPE_PLT_16_LO,   // 37 direct ref to lo 16-bits of offset from PLT base.
+    ORL_RELOC_TYPE_IFGLUE,      // 38 Substitute TOC restore instruction iff symbol is glue code
+    ORL_RELOC_TYPE_IMGLUE,      // 39 symbol is glue code; virtual address is TOC restore instruction
 
     // OMF specific relocations
-    ORL_RELOC_TYPE_WORD_8,      // bottom byte of offset
-    ORL_RELOC_TYPE_REL_8,       // relative reference bottom byte of offset
-    ORL_RELOC_TYPE_WORD_16_SEG, // 16 bit offset and segment
-    ORL_RELOC_TYPE_REL_16_SEG,  // relative reference 16 bit offset and segment
-    ORL_RELOC_TYPE_WORD_HI_8,   // high byte of a 16 bit offset
-    ORL_RELOC_TYPE_REL_HI_8,    // relative reference high byte of 16 bit offset
-    ORL_RELOC_TYPE_WORD_32_SEG, // 32-bit offset and segment
-    ORL_RELOC_TYPE_REL_32_SEG,  // relative reference 32 bit offset and segment
+    ORL_RELOC_TYPE_WORD_8,      // 40 bottom byte of offset
+    ORL_RELOC_TYPE_REL_8,       // 41 relative reference bottom byte of offset
+    ORL_RELOC_TYPE_WORD_16_SEG, // 42 16 bit offset and segment
+    ORL_RELOC_TYPE_REL_16_SEG,  // 43 relative reference 16 bit offset and segment
+    ORL_RELOC_TYPE_WORD_HI_8,   // 44 high byte of a 16 bit offset
+    ORL_RELOC_TYPE_REL_HI_8,    // 45 relative reference high byte of 16 bit offset
+    ORL_RELOC_TYPE_WORD_32_SEG, // 46 32-bit offset and segment
+    ORL_RELOC_TYPE_REL_32_SEG,  // 47 relative reference 32 bit offset and segment
 
     // special relications for x64 coff files, there are only used in ndisasm yet!
     // for more information see watcom/h/coff.h in amd64 section
-    ORL_RELOC_TYPE_REL_32_ADJ1, // relative ref to a 32-bit address, need special adjustment
-    ORL_RELOC_TYPE_REL_32_ADJ2, // relative ref to a 32-bit address, need special adjustment
-    ORL_RELOC_TYPE_REL_32_ADJ3, // relative ref to a 32-bit address, need special adjustment
-    ORL_RELOC_TYPE_REL_32_ADJ4, // relative ref to a 32-bit address, need special adjustment
-    ORL_RELOC_TYPE_REL_32_ADJ5, // relative ref to a 32-bit address, need special adjustment
+    ORL_RELOC_TYPE_REL_32_ADJ1, // 48 relative ref to a 32-bit address, need special adjustment
+    ORL_RELOC_TYPE_REL_32_ADJ2, // 49 relative ref to a 32-bit address, need special adjustment
+    ORL_RELOC_TYPE_REL_32_ADJ3, // 50 relative ref to a 32-bit address, need special adjustment
+    ORL_RELOC_TYPE_REL_32_ADJ4, // 51 relative ref to a 32-bit address, need special adjustment
+    ORL_RELOC_TYPE_REL_32_ADJ5, // 52 relative ref to a 32-bit address, need special adjustment
 
     ORL_RELOC_TYPE_MAX          // Must be last value in this enum
 } orl_reloc_type;

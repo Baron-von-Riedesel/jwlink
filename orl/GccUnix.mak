@@ -1,4 +1,5 @@
-#pmake/50: build os_osi os_nt os_os2 os_dos os_linux cpu_386
+
+# jwlink ORL support - compiled with GCC.
 
 host_os  = osi
 host_cpu = 386
@@ -20,8 +21,7 @@ extra_c_flags = -D_INT_DEBUG -g
 OUTD= ../build/osi386LD
 endif
 
-#c_flags = -D__UNIX__ -std=gnu99 -DLONG_IS_64BITS $(extra_c_flags)
-c_flags = -D__UNIX__ -m32 -std=gnu99 $(extra_c_flags)
+c_flags = -D__UNIX__ $(bitopts) -std=gnu99 $(extra_c_flags)
 
 #
 #  List of orl library object files

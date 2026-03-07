@@ -145,13 +145,13 @@ extra_c_flags_dbgdwarf   = -I"$(dwarf_dir)/h"
 !ifeq wlink_trmem 1
 extra_c_flags_debug      = -DTRMEM
 !endif
-extra_c_flags_loadpe     = -I"$(wrc_dir)/h" -I"$(wres_dir)/h"
+extra_c_flags_loadpe     = -DUNALIGNED=_WCUNALIGNED -I"$(wrc_dir)/h" -I"$(wres_dir)/h"
 extra_c_flags_loados2    = -I"$(wrc_dir)/h" -I"$(wres_dir)/h"
 extra_c_flags_demangle   = -I"$(lib_misc_dir)/h"
 extra_c_flags_msg        = -I"$(lib_misc_dir)/h"
-extra_c_flags_rcstr      = -DINSIDE_WLINK -I"$(wrc_dir)/h" -I"$(wres_dir)/h" -I"$(watcom_dir)/h"
-extra_c_flags_exerespe   = -DINSIDE_WLINK -I"$(wrc_dir)/h" -I"$(wres_dir)/h" -I"$(watcom_dir)/h"
-extra_c_flags_sharedio   = -I"$(wrc_dir)/h" -I"$(wres_dir)/h" -I"$(watcom_dir)/h"
+extra_c_flags_rcstr      = -DUNALIGNED=_WCUNALIGNED -DINSIDE_WLINK -I"$(wrc_dir)/h" -I"$(wres_dir)/h" -I"$(watcom_dir)/h"
+extra_c_flags_exerespe   = -DUNALIGNED=_WCUNALIGNED -DINSIDE_WLINK -I"$(wrc_dir)/h" -I"$(wres_dir)/h" -I"$(watcom_dir)/h"
+extra_c_flags_sharedio   = -DUNALIGNED=_WCUNALIGNED -I"$(wrc_dir)/h" -I"$(wres_dir)/h" -I"$(watcom_dir)/h"
 extra_c_flags_trmem      = $(trmem_cflags)
 extra_c_flags_mem        = $(trmem_cover_cflags)
 

@@ -184,9 +184,11 @@ static void SetHeaders( ElfHdr *hdr )
     if ( FmtData.u.elf.elf64 ) {
         hdr->eh64.e_ident[EI_CLASS] = ELFCLASS64;
 		if( StartInfo.type == START_UNDEFED ) {
+            DEBUG(( DBG_OLD, "SetHeaders: undefined entry address" ));
 			hdr->eh64.e_entry = 0;
 		} else {
 			hdr->eh64.e_entry = FindLinearAddr2( &StartInfo.addr );
+            DEBUG(( DBG_OLD, "SetHeaders: entry address=%h startinfo sym=%s addr=%h", hdr->eh64.e_entry, StartInfo.targ.sym ? StartInfo.targ.sym->name : "NULL", StartInfo.addr ));
 		}
 		hdr->eh64.e_flags = 0;
         hdr->eh64.e_ehsize = sizeof(Elf64_Ehdr);
@@ -214,9 +216,11 @@ static void SetHeaders( ElfHdr *hdr )
 	} else {
 		hdr->eh32.e_ident[EI_CLASS] = ELFCLASS32;
 		if( StartInfo.type == START_UNDEFED ) {
+            DEBUG(( DBG_OLD, "SetHeaders: undefined entry address" ));
 			hdr->eh32.e_entry = 0;
 		} else {
 			hdr->eh32.e_entry = FindLinearAddr2( &StartInfo.addr );
+            DEBUG(( DBG_OLD, "SetHeaders: entry address=%h startinfo sym=%s addr=%h", hdr->eh32.e_entry, StartInfo.targ.sym ? StartInfo.targ.sym->name : "NULL", StartInfo.addr ));
 		}
 		hdr->eh32.e_flags = 0;
         hdr->eh32.e_ehsize = sizeof(Elf32_Ehdr);
@@ -560,6 +564,7 @@ static unsigned_32 SetRelocSectName( ElfHdr *hdr, char *secname )
     return( AddSecName( hdr, name ) );
 }
 
+/* write relocs sections; called by FiniELFLoadFile() */
 
 static void WriteRelocsSections( ElfHdr *hdr )
 /********************************************/
@@ -568,14 +573,20 @@ static void WriteRelocsSections( ElfHdr *hdr )
     int         currgrp;
     void        *relocs;
     char        *secname;
+    Elf32_Shdr  *sh32;
+    Elf64_Shdr  *sh64;
+
+    if ( FmtData.u.elf.elf64 )
+        sh64 = hdr->sh64 + hdr->i.relbase;
+    else
+        sh32 = hdr->sh32 + hdr->i.relbase;
 
 	currgrp = hdr->i.grpbase;
-	if ( FmtData.u.elf.elf64 ) {
-		Elf64_Shdr  *sh64;
-		sh64 = hdr->sh64 + hdr->i.relbase;
-		for( group = Groups; group != NULL; group = group->next_group ) {
-			relocs = group->g.grp_relocs;
-			if( relocs != NULL ) {
+	for( group = Groups; group != NULL; group = group->next_group, currgrp++ ) {
+		relocs = group->g.grp_relocs;
+		if( relocs != NULL ) {
+			secname = GroupSecName( group );
+			if ( FmtData.u.elf.elf64 ) {
 				sh64->sh_offset = hdr->curr_off;
 				sh64->sh_entsize = sizeof(elf64_reloc_item);
 				sh64->sh_type = SHT_RELA;
@@ -585,22 +596,13 @@ static void WriteRelocsSections( ElfHdr *hdr )
 				sh64->sh_info = currgrp;
 				sh64->sh_addralign = 8;
 				sh64->sh_size = RelocSize( relocs );
-				secname = GroupSecName( group );
 				sh64->sh_name = SetRelocSectName( hdr, secname );
-				DEBUG(( DBG_OLD, "WriteRelocSections(): %s sh_offset=%h",
+				DEBUG(( DBG_OLD, "WriteRelocsSections(): %s sh_offset=%h",
 					   secname, sh64->sh_offset ));
 				DumpRelocList( relocs );
 				hdr->curr_off += sh64->sh_size;
 				sh64++;
-			}
-			currgrp++;
-		}
-	} else {
-		Elf32_Shdr  *sh32;
-		sh32 = hdr->sh32 + hdr->i.relbase;
-		for( group = Groups; group != NULL; group = group->next_group ) {
-			relocs = group->g.grp_relocs;
-			if( relocs != NULL ) {
+			} else {
 				sh32->sh_offset = hdr->curr_off;
 				sh32->sh_entsize = sizeof(elf32_reloc_item);
 				sh32->sh_type = SHT_RELA;
@@ -610,15 +612,13 @@ static void WriteRelocsSections( ElfHdr *hdr )
 				sh32->sh_info = currgrp;
 				sh32->sh_addralign = 4;
 				sh32->sh_size = RelocSize( relocs );
-				secname = GroupSecName( group );
 				sh32->sh_name = SetRelocSectName( hdr, secname );
-				DEBUG(( DBG_OLD, "WriteRelocSections(): %s sh_offset=%h",
+				DEBUG(( DBG_OLD, "WriteRelocsSections(): %s sh_offset=%h",
 					   secname, sh32->sh_offset ));
 				DumpRelocList( relocs );
 				hdr->curr_off += sh32->sh_size;
 				sh32++;
 			}
-			currgrp++;
 		}
 	}
 }
@@ -628,6 +628,7 @@ void FiniELFLoadFile( void )
 {
     ElfHdr      hdr;
 
+    DEBUG(( DBG_OLD, "FiniElfLoadFile(): enter, calling SetHeaders()" ));
     SetHeaders( &hdr );
     #if 0
     if( IS_PPC_OS2 ) {
@@ -655,11 +656,11 @@ void FiniELFLoadFile( void )
 	/* write section table */
 	if ( FmtData.u.elf.elf64 ) {
 		hdr.eh64.e_shoff = hdr.curr_off;
-		DEBUG(( DBG_OLD, "FiniElfLoadFile(): write section table, e_shoff=%h sh_size=%h",
+		DEBUG(( DBG_OLD, "FiniElfLoadFile(): write elf64 section table, e_shoff=%h sh_size=%h",
 			   hdr.eh64.e_shoff, hdr.sh_size ));
 	} else {
 		hdr.eh32.e_shoff = hdr.curr_off;
-		DEBUG(( DBG_OLD, "FiniElfLoadFile(): write section table, e_shoff=%h sh_size=%h",
+		DEBUG(( DBG_OLD, "FiniElfLoadFile(): write elf32 section table, e_shoff=%h sh_size=%h",
 			   hdr.eh32.e_shoff, hdr.sh_size ));
 	}
 	WriteLoad( hdr.sh32, hdr.sh_size ); /* works for 32- and 64-bit */
@@ -670,9 +671,11 @@ void FiniELFLoadFile( void )
     /* now write the ELF header + Pheader */
     SeekLoad( 0 );
 	if ( FmtData.u.elf.elf64 ) {
+		DEBUG(( DBG_OLD, "FiniElfLoadFile(): write elf64 header, size=%h ph_size=%h", sizeof(Elf64_Ehdr), hdr.ph_size ));
 		WriteLoad( &hdr.eh64, sizeof(Elf64_Ehdr) );
 		WriteLoad( hdr.ph64, hdr.ph_size );
 	} else {
+		DEBUG(( DBG_OLD, "FiniElfLoadFile(): write elf32 header, size=%h ph_size=%h", sizeof(Elf32_Ehdr), hdr.ph_size ));
 		WriteLoad( &hdr.eh32, sizeof(Elf32_Ehdr) );
 		WriteLoad( hdr.ph32, hdr.ph_size );
 	}
@@ -681,6 +684,7 @@ void FiniELFLoadFile( void )
     FiniStringTable( &hdr.secstrtab );
     FiniStringTable( &SymStrTab );
     SeekLoad( hdr.curr_off );
+    DEBUG(( DBG_OLD, "FiniElfLoadFile(): exit" ));
 }
 
 void ChkElfData( void )

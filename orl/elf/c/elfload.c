@@ -30,6 +30,7 @@
 
 
 #include "elfload.h"
+#include "debug.h"
 
 // fixme: finish making ELF SPECIFIC (see next fixme)
 
@@ -543,6 +544,7 @@ orl_return ElfLoadFileStructure( elf_file_handle elf_file_hnd )
     int                 ehsize;
     int                 shstrndx;
 
+    DEBUG(( DBG_OLD, "ElfLoadFileStructure() enter" ));
     e_hdr32 = _ClientRead( elf_file_hnd, sizeof( e_hdr32->e_ident ) );
     if( !(e_hdr32) )
         return( ORL_ERROR );

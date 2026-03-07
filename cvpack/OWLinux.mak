@@ -1,4 +1,6 @@
 
+# creates the 32-bit elf variant of cvpack. Untested.
+
 OUTD=..\build\cvpackLR
 WATCOM=\watcom
 watcom_dir=..\watcom

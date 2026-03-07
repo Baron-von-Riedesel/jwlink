@@ -34,6 +34,7 @@
 #include "walloca.h"
 #include "elflwlv.h"
 #include "orlhash.h"
+#include "debug.h"
 #ifdef _BSD_SOURCE
 #define stricmp strcasecmp
 #endif
@@ -484,6 +485,7 @@ orl_return ElfCreateRelocs( elf_sec_handle orig_sec, elf_sec_handle reloc_sec )
     }
     switch( reloc_sec->type ) {
     case ORL_SEC_TYPE_RELOCS:
+        DEBUG(( DBG_OLD, "ElfCreateRelocs(ORL_SEC_TYPE_RELOCS) enter"));
         num_relocs = reloc_sec->size / reloc_sec->entsize;
         reloc_sec->assoc.reloc.relocs = (orl_reloc *) _ClientSecAlloc( reloc_sec, sizeof( orl_reloc ) * num_relocs );
         if( reloc_sec->assoc.reloc.relocs == NULL )
@@ -512,6 +514,7 @@ orl_return ElfCreateRelocs( elf_sec_handle orig_sec, elf_sec_handle reloc_sec )
         }
         break;
     case ORL_SEC_TYPE_RELOCS_EXPADD:
+        DEBUG(( DBG_OLD, "ElfCreateRelocs(ORL_SEC_TYPE_RELOCS_EXPADD) enter"));
         num_relocs = reloc_sec->size / reloc_sec->entsize;
         reloc_sec->assoc.reloc.relocs = (orl_reloc *) _ClientSecAlloc( reloc_sec, sizeof( orl_reloc ) * num_relocs );
         if( reloc_sec->assoc.reloc.relocs == NULL )
@@ -527,6 +530,14 @@ orl_return ElfCreateRelocs( elf_sec_handle orig_sec, elf_sec_handle reloc_sec )
                 o_rel->type = ElfConvertRelocType( reloc_sec->elf_file_hnd, ELF64_R_TYPE( rela64->r_info ) );
                 o_rel->offset = rela64->r_offset;
                 o_rel->addend = rela64->r_addend;
+                /* jwlink: orl addend is unsigned, but elf addend is signed; negative addends -1 - -5 will
+                 * become special relocs
+                 */
+                if ( rela64->r_addend < 0 && rela64->r_addend >= -6 && ELF64_R_TYPE( rela64->r_info ) == R_X86_64_PC32 ) {
+                    DEBUG(( DBG_OLD, "ElfCreateRelocs: addend=%d info=%h - special conversion", rela64->r_addend, rela64->r_info ));
+                    o_rel->type = ORL_RELOC_TYPE_REL_32_ADJ1 + ( - rela64->r_addend - 1 );
+                    o_rel->addend = 0;
+                }
             } else {
                 rela32 = (Elf32_Rela *) rel;
                 fix_rela_byte_order( reloc_sec->elf_file_hnd, rela32 );

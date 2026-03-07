@@ -1,7 +1,6 @@
 #
-#  Makefile for   WRes library
+#  Makefile for   WRes library - GCC used.
 #
-# path names used in the script
 
 proj_name = wres
 
@@ -74,7 +73,7 @@ extra_c_flags += -D_INT_DEBUG
 endif
 
 #c_flags = -D__UNIX__ -std=gnu99 -DUNALIGNED="" -DLONG_IS_64BITS $(extra_c_flags)
-c_flags = -D__UNIX__ -m32 -std=gnu99 -DUNALIGNED="" $(extra_c_flags)
+c_flags = -D__UNIX__ $(bitopts) -std=gnu99 -DUNALIGNED="" $(extra_c_flags)
 
 # where to look for various files
 

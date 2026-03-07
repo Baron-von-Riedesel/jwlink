@@ -1207,6 +1207,7 @@ static unsigned FindNumObjects( void )
 }
 
 static unsigned long CalcPEChecksum( unsigned long dwInitialCount, unsigned short *pwBuffer, unsigned long dwWordCount )
+/**********************************************************************************************************************/
 {
     unsigned long      __wCrc      = dwInitialCount;
     unsigned short     *__pwBuffer = pwBuffer;

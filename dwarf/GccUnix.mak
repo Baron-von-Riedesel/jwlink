@@ -1,4 +1,6 @@
 
+# jwlink dwarf support - compiled with gcc
+
 proj_name = dwarfw
 
 ifndef DEBUG

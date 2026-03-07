@@ -200,7 +200,8 @@ static unsigned CalcSavedFixSize( fix_type fixtype )
     unsigned    retval;
 
     if( fixtype & FIX_CHANGE_SEG ) {
-        retval = sizeof( unsigned_32 );
+        //retval = sizeof( unsigned_32 );
+        retval = sizeof( void * );
     } else {
         retval = sizeof( save_fixup ) + CalcAddendSize( fixtype );
         if( FRAME_HAS_DATA( FIX_GET_FRAME( fixtype ) ) ) {
@@ -545,7 +546,8 @@ void StoreFixup( offset off, fix_type type, frame_spec *frame,
         //save.flags = (unsigned_32) CurrRec.seg;
         save.pv_flags = CurrRec.seg;
         save.flags |= FIX_CHANGE_SEG;   // DANGER! assume pointers word aligned
-        PermSaveFixup( &save, sizeof( unsigned_32 ) );
+        //PermSaveFixup( &save, sizeof( unsigned_32 ) );
+        PermSaveFixup( &save, sizeof( void * ) );
     }
     save.flags = type;
     save.flags |= (unsigned_32)targ->type << FIX_TARGET_SHIFT;

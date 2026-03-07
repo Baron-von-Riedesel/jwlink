@@ -1,8 +1,6 @@
 
-# Makefile to create jwlink, the Linux binary
-#
-# This depends on the following projects:
-# orl, plusplus, dwarf, watcom, and trmem
+# create jwlink elf binary with Open Watcom tools.
+# This is no longer maintained, it's now recommended to use GccUnix.mak.
 
 # the path of the Open Watcom root directory
 WATCOM=\watcom
@@ -146,13 +144,13 @@ extra_c_flags_dbgdwarf   = -I"$(dwarf_dir)/dw/h"
 !ifdef wlink_trmem
 extra_c_flags_debug      = -DTRMEM
 !endif
-extra_c_flags_loadpe     = -I"$(wrc_dir)/h" -I"$(wres_dir)/h"
+extra_c_flags_loadpe     = -DUNALIGNED=_WCUNALIGNED -I"$(wrc_dir)/h" -I"$(wres_dir)/h"
 extra_c_flags_loados2    = -I"$(wrc_dir)/h" -I"$(wres_dir)/h"
 extra_c_flags_demangle   = -I"$(lib_misc_dir)/h"
 extra_c_flags_msg        = -I"$(lib_misc_dir)/h"
-extra_c_flags_rcstr      = -DINSIDE_WLINK -I"$(wrc_dir)/h" -I"$(wres_dir)/h" -I"$(watcom_dir)/h"
-extra_c_flags_exerespe   = -DINSIDE_WLINK -I"$(wrc_dir)/h" -I"$(wres_dir)/h" -I"$(watcom_dir)/h"
-extra_c_flags_sharedio   = -I"$(wrc_dir)/h" -I"$(wres_dir)/h" -I"$(watcom_dir)/h"
+extra_c_flags_rcstr      = -DUNALIGNED=_WCUNALIGNED -DINSIDE_WLINK -I"$(wrc_dir)/h" -I"$(wres_dir)/h" -I"$(watcom_dir)/h"
+extra_c_flags_exerespe   = -DUNALIGNED=_WCUNALIGNED -DINSIDE_WLINK -I"$(wrc_dir)/h" -I"$(wres_dir)/h" -I"$(watcom_dir)/h"
+extra_c_flags_sharedio   = -DUNALIGNED=_WCUNALIGNED -I"$(wrc_dir)/h" -I"$(wres_dir)/h" -I"$(watcom_dir)/h"
 extra_c_flags_trmem      = $(trmem_cflags)
 extra_c_flags_mem        = $(trmem_cover_cflags)
 

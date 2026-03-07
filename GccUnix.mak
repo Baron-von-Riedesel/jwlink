@@ -1,12 +1,17 @@
 
-# This makefile creates the jwlink Elf binary for Linux/FreeBSD.
-# not finished yet!!!
+# This makefile creates the jwlink Elf binary for Linux/FreeBSD using GCC.
+
+# Currently, a 32-bit version is preferably created; the 64-bit variant
+# should be regarded as "experimental"; see bitopts below.
 
 TARGET1=jwlink
 
 ifndef DEBUG
 DEBUG=0
 endif
+
+#bitopts = -DLONG_IS_64BITS
+bitopts = -m32
 
 ifeq ($(DEBUG),0)
 extra_c_flags = -DNDEBUG -O2
@@ -36,8 +41,7 @@ inc_dirs  = -Ih -I$(watcom_dir)/h -I$(dwarf_dir)/h -Iorl/h -I$(wrc_dir)/h -I$(wr
 
 #cflags stuff
 
-#c_flags =-D__UNIX__ -DUNALIGNED="" -std=gnu99 -DLONG_IS_64BITS $(extra_c_flags)
-c_flags =-D__UNIX__ -m32 -DUNALIGNED="" -std=gnu99 $(extra_c_flags)
+c_flags =-D__UNIX__ $(bitopts) -DUNALIGNED="" -std=gnu99 $(extra_c_flags)
 
 CC = gcc
 
@@ -62,9 +66,9 @@ $(OUTD):
 
 $(OUTD)/$(TARGET1) : $(proj_obj) $(xlibs)
 ifeq ($(DEBUG),0)
-	$(CC) $(proj_obj) $(xlibs) -m32 -s -o $@ -Wl,-Map,$(OUTD)/$(TARGET1).map
+	$(CC) $(proj_obj) $(xlibs) $(bitopts) -s -o $@ -Wl,-Map,$(OUTD)/$(TARGET1).map
 else
-	$(CC) $(proj_obj) $(xlibs) -m32 -o $@ -Wl,-Map,$(OUTD)/$(TARGET1).map
+	$(CC) $(proj_obj) $(xlibs) $(bitopts) -o $@ -Wl,-Map,$(OUTD)/$(TARGET1).map
 endif
 
 $(OUTD)/rcstr.o: sdk/rc/rc/c/rcstr.c
@@ -80,13 +84,13 @@ $(OUTD)/sharedio.o: sdk/rc/rc/c/sharedio.c
 ######
 
 $(orl_lib):
-	make -C $(orl_dir) -f GccUnix.mak DEBUG=$(DEBUG)
+	make -C $(orl_dir) -f GccUnix.mak bitopts=$(bitopts) DEBUG=$(DEBUG)
 
 $(dwarf_lib):
-	make -C $(dwarf_dir) -f GccUnix.mak DEBUG=$(DEBUG)
+	make -C $(dwarf_dir) -f GccUnix.mak bitopts=$(bitopts) DEBUG=$(DEBUG)
 
 $(wres_lib):
-	make -C $(wres_dir) -f GccUnix.mak DEBUG=$(DEBUG)
+	make -C $(wres_dir) -f GccUnix.mak bitopts=$(bitopts) DEBUG=$(DEBUG)
 
 install:
 	@install $(OUTD)/$(TARGET1) /usr/local/bin
@@ -95,7 +99,7 @@ clean:
 	@rm -f $(OUTD)/$(TARGET1)
 	@rm -f $(OUTD)/*.o
 	@rm -f $(OUTD)/*.map
-	@make -C $(orl_dir)   -f GccUnix.mak debug=$(DEBUG) clean
-	@make -C $(dwarf_dir) -f GccUnix.mak debug=$(DEBUG) clean
-	@make -C $(wres_dir)  -f GccUnix.mak debug=$(DEBUG) clean
+	@make -C $(orl_dir)   -f GccUnix.mak DEBUG=$(DEBUG) clean
+	@make -C $(dwarf_dir) -f GccUnix.mak DEBUG=$(DEBUG) clean
+	@make -C $(wres_dir)  -f GccUnix.mak DEBUG=$(DEBUG) clean
 
