@@ -967,7 +967,7 @@ void ReadPermData( void )
 void PermSaveFixup( void *fix, unsigned size )
 /***************************************************/
 {
-	DEBUG(( DBG_OLD, "PermSaveFixup(fix=%h, size=%d) enter", fix, size ))
+	DEBUG(( DBG_OLD, "PermSaveFixup(fix=%p, size=%d) [*fix=%p] enter", fix, size, *(void **)fix ))
     AddBufferStringTable( &StoredRelocs, fix, size );
 }
 
@@ -1036,7 +1036,7 @@ void PermEndMod( mod_entry *mod )
 /**************************************/
 {
     mod->sizerelocs = GetStringTableSize( &StoredRelocs ) - mod->relocs;
-	DEBUG(( DBG_OLD, "PermEndMod(relocs=%h): sizerelocs set to %h", mod->relocs, mod->sizerelocs ))
+	DEBUG(( DBG_OLD, "PermEndMod(relocs=%p): sizerelocs set to %d", mod->relocs, mod->sizerelocs ))
 }
 
 void *GetSegContents( segdata *sdata, virt_mem off )

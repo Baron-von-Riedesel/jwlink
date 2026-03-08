@@ -239,14 +239,14 @@ void DoRelocs( struct objbuff *ob )
                 fthread = FrameThreads[loc & 3];
             } else {
                 GetFrame( loc, &fthread, ob );
-                DEBUG((DBG_OLD, "DoRelocs(typ=%x): GetFrame(%d) returned %h", typ, loc, fthread.u.ptr ));
+                DEBUG((DBG_OLD, "DoRelocs(typ=%x): GetFrame(%d) returned %p", typ, loc, fthread.u.ptr ));
             }
             loc = typ & 7;
             if( typ & 8 ) {
                 tthread = TargThreads[loc & 3];
             } else {
                 GetTarget( loc, &tthread, ob );
-                DEBUG((DBG_OLD, "DoRelocs(typ=%x): GetTarget(%d) returned type=%h,ptr=%h", typ, loc, tthread.type, tthread.u.ptr ));
+                DEBUG((DBG_OLD, "DoRelocs(typ=%x): GetTarget(%d) returned type=%h,ptr=%p", typ, loc, tthread.type, tthread.u.ptr ));
 #if 0
                 /* jwlink 2020/12: ignore fixups with target FLAT */
                 if ( tthread.u.ptr == NULL )

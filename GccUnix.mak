@@ -1,8 +1,8 @@
 
 # This makefile creates the jwlink Elf binary for Linux/FreeBSD using GCC.
 
-# Currently, a 32-bit version is preferably created; the 64-bit variant
-# should be regarded as "experimental"; see bitopts below.
+# The 64-bit variant still is somewhat "experimental"; in case of
+# problems, create the 32-bit variant ( see bitopts below ).
 
 TARGET1=jwlink
 
@@ -10,8 +10,8 @@ ifndef DEBUG
 DEBUG=0
 endif
 
-#bitopts = -DLONG_IS_64BITS
-bitopts = -m32
+bitopts = -DLONG_IS_64BITS
+#bitopts = -m32
 
 ifeq ($(DEBUG),0)
 extra_c_flags = -DNDEBUG -O2

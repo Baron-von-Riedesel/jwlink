@@ -205,7 +205,8 @@ static unsigned CalcSavedFixSize( fix_type fixtype )
     } else {
         retval = sizeof( save_fixup ) + CalcAddendSize( fixtype );
         if( FRAME_HAS_DATA( FIX_GET_FRAME( fixtype ) ) ) {
-            retval += sizeof( unsigned_32 );
+            //retval += sizeof( unsigned_32 );
+            retval += sizeof( void * );
         }
     }
     return( retval );
@@ -341,7 +342,7 @@ static void BuildReloc( save_fixup *save, frame_spec *targ, frame_spec *frame )
     fix_data    fix;
     targ_addr   faddr;
 
-	DEBUG(( DBG_OLD, "BuildReloc(%h, target=%h [type=%d], frame=%h [type=%d]) enter", save, targ, targ->type, frame, frame->type ))
+	DEBUG(( DBG_OLD, "BuildReloc(%p, target type=%d ptr=%p, frame type=%d ptr=%p) enter", save, targ->type, targ->u.ptr, frame->type, frame->u.ptr ))
     memset( &fix, 0, sizeof( fix_data ) );        // to get all bitfields 0
     GetFrameAddr( targ, &fix.tgt_addr, NULL, save->off );
     GetFrameAddr( frame, &faddr, &fix.tgt_addr, save->off );
@@ -440,7 +441,7 @@ unsigned IncExecRelocs( void *_save )
         save->flags &= ~FIX_CHANGE_SEG;
         sdata = (segdata *)save->pv_flags;
         save->flags |= FIX_CHANGE_SEG;
-        DEBUG(( DBG_OLD, "IncExecReloc(%h): FIX_CHANGE_SEG, off=%h sdata=%h", _save, save->off, sdata ))
+        DEBUG(( DBG_OLD, "IncExecReloc(%p): FIX_CHANGE_SEG, off=%h sdata=%p", _save, save->off, sdata ))
         if( LinkFlags & INC_LINK_FLAG ) {
             //save->flags = (unsigned_32) CarveGetIndex( CarveSegData, sdata );
             save->pv_flags = CarveGetIndex( CarveSegData, sdata );
@@ -458,15 +459,17 @@ unsigned IncExecRelocs( void *_save )
         frame.type = FIX_GET_FRAME( save->flags );
         if( FRAME_HAS_DATA( frame.type ) ) {
             frame.u.ptr = *((void **)( save + 1 ));
+            DEBUG(( DBG_OLD, "IncExecReloc: frame has data - %p", frame.u.ptr ));
         }
         UpdateFramePtr( &targ );
         UpdateFramePtr( &frame );
-        DEBUG(( DBG_OLD, "IncExecReloc(%h): flgs/off/tgt=%h/%h/%h tgt.type/ptr=%d/%h frm.type/ptr=%d/%h",
+        DEBUG(( DBG_OLD, "IncExecReloc(%p): save flgs/off/tgt=%h/%h/%p tgt.type/ptr=%d/%p frm.type/ptr=%d/%p",
             _save, save->flags, save->off, save->target, targ.type, targ.u.ptr, frame.type, frame.u.ptr ))
         if( LastSegData != NULL ) {
             BuildReloc( save, &targ, &frame );
         }
         if( LinkFlags & INC_LINK_FLAG ) {
+            DEBUG(( DBG_OLD, "IncExecReloc: calling MapFramePtr" ));
             MapFramePtr( &targ, &save->target );
             MapFramePtr( &frame, (void **)( save + 1 ) );
         }
@@ -539,7 +542,7 @@ void StoreFixup( offset off, fix_type type, frame_spec *frame,
     unsigned    size;
     unsigned_8  buff[2 * sizeof( unsigned_32 )];
 
-	DEBUG(( DBG_OLD, "obj2supp.StoreFixup(off=%h, type=%d, fr.ptr=%h, tgt.ptr=%h, addend=%x) enter", off, type, frame->u.ptr, targ->u.ptr, addend ));
+	DEBUG(( DBG_OLD, "obj2supp.StoreFixup(off=%h, type=%d, fr.ptr=%p, tgt.ptr=%p, addend=%h) enter", off, type, frame->u.ptr, targ->u.ptr, addend ));
     if( LastSegData != CurrRec.seg ) {
         DbgAssert( CurrRec.seg != NULL );
         LastSegData = CurrRec.seg;
@@ -575,7 +578,8 @@ void StoreFixup( offset off, fix_type type, frame_spec *frame,
     }
     PermSaveFixup( &save, sizeof( save_fixup ) );
     if( FRAME_HAS_DATA( frame->type ) ) {
-        PermSaveFixup( &frame->u.abs, sizeof( unsigned_32 ) );
+        //PermSaveFixup( &frame->u.abs, sizeof( unsigned_32 ) );
+        PermSaveFixup( &frame->u.abs, sizeof( void * ) );
     }
     if( !( save.flags & FIX_ADDEND_ZERO ) )  {
         PermSaveFixup( buff, CalcAddendSize( save.flags ) );

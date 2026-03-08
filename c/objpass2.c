@@ -89,7 +89,7 @@ void PModule( mod_entry *obj )
     if( !( obj->modinfo & MOD_NEED_PASS_2 ) )
         return;
     CurrMod = obj;
-	DEBUG(( DBG_OLD, "PModule %s: calling IterateModRelocs( %h, size=%h, IncExecRelocs )", obj->name, obj->relocs, obj->sizerelocs ))
+	DEBUG(( DBG_OLD, "PModule(%s): calling IterateModRelocs( %p, size=%h, IncExecRelocs )", obj->name, obj->relocs, obj->sizerelocs ))
     IterateModRelocs( CurrMod->relocs, CurrMod->sizerelocs, IncExecRelocs );
     DBIGenModule();
     CheckStop();
