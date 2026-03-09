@@ -35,6 +35,7 @@
 #include "elfflhn.h"
 #include "elflwlv.h"
 #include "orlhash.h"
+#include "debug.h"
 
 elf_handle ELFENTRY ElfInit( orl_funcs * funcs )
 {
@@ -152,6 +153,7 @@ orl_sec_size ELFENTRY ElfSecGetSize( elf_sec_handle elf_sec_hnd )
 
 orl_sec_type ELFENTRY ElfSecGetType( elf_sec_handle elf_sec_hnd )
 {
+    DEBUG(( DBG_OLD, "ElfSecGetType()=%d", elf_sec_hnd->type ));
     return( elf_sec_hnd->type );
 }
 

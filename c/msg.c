@@ -109,7 +109,11 @@ unsigned DoFmtStr( char *buff, unsigned len, char *src, va_list *args )
     char            *str;
     unsigned_16     num;
     unsigned_32     num2;
+#ifdef LONG_IS_64BITS
     unsigned long   num3;
+#else
+    unsigned long long num3;
+#endif
     unsigned        size;
     targ_addr *     addr;
     unsigned int    i;
@@ -209,19 +213,23 @@ unsigned DoFmtStr( char *buff, unsigned len, char *src, va_list *args )
                 }
                 break;
             case 'p' :
-                num3 = va_arg( *args, unsigned long );
-                num2 = (unsigned_32)(num3 >> 32);
-                if ( num2 ) {
-                    if( len < 8) return( dest - buff );     //NOTE: premature return
-                    dest += 8;
-                    len -= 8;
-                    str = dest;
-                    for( i = 8; i > 0; i-- ) {
-                        *--str = hexchar[num2 & 0x0f];
-                        num2 >>= 4;
+                if ( sizeof( void *) == 4 )
+                    num2 = va_arg( *args, unsigned_32 );
+                else {
+                    num3 = va_arg( *args, unsigned long );
+                    num2 = (unsigned_32)(num3 >> 32);
+                    if ( num2 ) {
+                        if( len < 8) return( dest - buff );     //NOTE: premature return
+                        dest += 8;
+                        len -= 8;
+                        str = dest;
+                        for( i = 8; i > 0; i-- ) {
+                            *--str = hexchar[num2 & 0x0f];
+                            num2 >>= 4;
+                        }
                     }
+                    num2 = (unsigned_32)num3;
                 }
-                num2 = (unsigned_32)num3;
                 if( len < 8) return( dest - buff );     //NOTE: premature return
                 dest += 8;
                 len -= 8;

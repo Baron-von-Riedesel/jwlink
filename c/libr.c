@@ -396,10 +396,12 @@ mod_entry * SearchLib( file_list *lib, char *name )
     unsigned long       pos;
     bool                retval;
 
+    DEBUG(( DBG_OLD, "SearchLib( %p, %s ): enter", lib, name ));
     if( lib->u.dict == NULL ) {
         if( !CacheOpen( lib ) ) return( NULL );
         if( CheckLibraryType( lib, &pos, TRUE ) == -1 ) return( NULL );
         if( !(lib->status & STAT_IS_LIB) ) {
+            DEBUG(( DBG_OLD, "SearchLib: bad library" ));
             BadLibrary( lib );
             return NULL;
         }
@@ -411,7 +413,10 @@ mod_entry * SearchLib( file_list *lib, char *name )
     } else {
         retval = ARSearchExtLib( lib, name, &pos );
     }
-    if( !retval ) return NULL;
+    if( !retval ) {
+        DEBUG(( DBG_OLD, "xxxSearchExtLib() failed" ));
+        return NULL;
+    }
 
 /*
     update lib struct since we found desired object file

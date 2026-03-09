@@ -1,6 +1,4 @@
 
-# jwlink dwarf support - compiled with gcc
-
 proj_name = dwarfw
 
 ifndef DEBUG
@@ -25,8 +23,7 @@ watcom_dir=../watcom
 
 inc_dirs = -Ih -I$(watcom_dir)/h
 
-#c_flags =-D__UNIX__ -std=gnu99 -DLONG_IS_64BITS $(extra_c_flags)
-c_flags =-D__UNIX__ -m32 -std=gnu99 $(extra_c_flags)
+c_flags =-D__UNIX__ $(bitopts) -std=gnu99 $(extra_c_flags)
 
 $(OUTD)/%.o: c/%.c 
 	gcc -c $(c_flags) $(inc_dirs) -o $(OUTD)/$*.o $<

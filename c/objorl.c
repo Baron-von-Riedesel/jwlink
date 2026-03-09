@@ -253,7 +253,7 @@ static bool CheckFlags( orl_file_handle filehdl )
         LinkState |= typemask;
     }
     if( ORLFileGetType( filehdl ) != ORL_FILE_TYPE_OBJECT ) {
-		DEBUG((DBG_OLD, "objorl.CheckFlags(): error, type %h != ORL_FILE_TYPE_OBJECT", ORLFileGetType( filehdl ) ) );
+        DEBUG((DBG_OLD, "objorl.CheckFlags(): error, type %h != ORL_FILE_TYPE_OBJECT", ORLFileGetType( filehdl ) ) );
         BadObject();
         return( FALSE );
     }
@@ -775,12 +775,12 @@ static orl_return ProcSymbol( orl_symbol_handle symhdl )
         sym = SymOp( symop, name, namelen );
         CheckIfTocSym( sym );
         if( type & ORL_SYM_TYPE_COMMON ) {
-			DEBUG((DBG_OLD, "objorl.ProcSymbol(%s): type ORL_SYM_TYPE_COMMON", name ));
+            DEBUG((DBG_OLD, "objorl.ProcSymbol(%s): type ORL_SYM_TYPE_COMMON", name ));
             value = ORLSymbolGetValue( symhdl );
             sym = MakeCommunalSym( sym, value, FALSE, TRUE );
         } else if( type & ORL_SYM_TYPE_UNDEFINED ) {
             /* ORL_SYM_TYPE_UNDEFINED flag means: symbol has no associated section */
-			DEBUG((DBG_OLD, "objorl.ProcSymbol(%s): type ORL_SYM_TYPE_UNDEFINED, binding=%h", name, binding ));
+            DEBUG((DBG_OLD, "objorl.ProcSymbol(%s): type ORL_SYM_TYPE_UNDEFINED, binding=%h", name, binding ));
             DefineReference( sym );
             isweak = FALSE;
             switch( binding ) {
@@ -800,7 +800,7 @@ static orl_return ProcSymbol( orl_symbol_handle symhdl )
                 }
             }
         } else {
-			DEBUG((DBG_OLD, "objorl.ProcSymbol(%s): type=%h", name, type ));
+            DEBUG((DBG_OLD, "objorl.ProcSymbol(%s): type=%h", name, type ));
             newnode->isdefd = TRUE;
             value = ORLSymbolGetValue( symhdl );
             if( type & ORL_SYM_TYPE_COMMON && type & ORL_SYM_TYPE_OBJECT
@@ -810,7 +810,7 @@ static orl_return ProcSymbol( orl_symbol_handle symhdl )
                                      && snode->entry->iscdat ) {
                 DefineComdatSym( snode, sym, value );
             } else {
-				DEBUG((DBG_OLD, "objorl.ProcSymbol(%s info=%h): calling DefineSymbol", name, sym->info ));
+                DEBUG((DBG_OLD, "objorl.ProcSymbol(%s info=%h): calling DefineSymbol", name, sym->info ));
                 sym->info |= SYM_DEFINED;
                 DefineSymbol( sym, snode, value, 0 );
             }
@@ -843,7 +843,7 @@ static orl_return DoReloc( orl_reloc *reloc )
     bool        skip;
     bool        istoc;
 
-	DEBUG((DBG_OLD, "objorl.DoReloc(%d): enter", reloc->type ));
+    DEBUG((DBG_OLD, "objorl.DoReloc(%d): enter", reloc->type ));
     skip = FALSE;
     istoc = FALSE;
     type = 0;

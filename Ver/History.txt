@@ -1,8 +1,11 @@
 
-   changes v19beta20, 01/2026:
+   changes v19beta20, 03/2026:
 
    -  format elf: section .symtab, field sh_info wasn't set if there was no
       global symbol at all.
+   -  format elf64: fixed, was broken.
+   -  format elf: fixed library handling.
+   -  GccUnix.mak: fixed, was in an unusable state.
    -  dwarf section .debug_abbrev: terminating 0,0 entry was missing.
    -  dwarf section .debug_aranges: padding bytes after header were missing.
 

@@ -171,7 +171,7 @@ unsigned long OMFPass1( void )
 {
     unsigned long retval;
 
-	DEBUG((DBG_OLD, "objomf.OMFPass1(): enter" ));
+    DEBUG((DBG_OLD, "objomf.OMFPass1(): enter" ));
     PermStartMod( CurrMod );
     if( LinkState & (HAVE_MACHTYPE_MASK & ~HAVE_I86_CODE) ) {
         LnkMsg( WRN+MSG_MACHTYPE_DIFFERENT, "s", CurrMod->f.source->file->name);
@@ -182,7 +182,7 @@ unsigned long OMFPass1( void )
     retval = ProcObj( CurrMod->f.source, CurrMod->location, &Pass1Cmd );
     IterateNodelist( SegNodes, CheckUninit, NULL );
     ResolveComdats();
-	DEBUG((DBG_OLD, "objomf.OMFPass1(): exit" ));
+    DEBUG((DBG_OLD, "objomf.OMFPass1(): exit" ));
     return( retval );
 }
 
@@ -255,7 +255,7 @@ static void Pass1Cmd( byte cmd, struct objbuff *ob )
     case CMD_COMDAT:
         CurrMod->modinfo |= MOD_NEED_PASS_2;
         if (!ProcComdat( ob )) {
-			DEBUG((DBG_OLD, "objomf.Pass1Cmd(): ProcComdat() failed" ));
+            DEBUG((DBG_OLD, "objomf.Pass1Cmd(): ProcComdat() failed" ));
         }
         break;
     case CMD_LEDA32:
@@ -367,7 +367,7 @@ static void ProcTHEADR( struct objbuff *ob )
         sym_name = ( (obj_name UNALIGN *) ob->curr )->name;
         sym_len = ( (obj_name UNALIGN *) ob->curr )->len;
         if( sym_len == 0 ) {
-			DEBUG((DBG_OLD, "objomf.ProcTHEADR(): error, sym_len == 0" ));
+            DEBUG((DBG_OLD, "objomf.ProcTHEADR(): error, sym_len == 0" ));
             BadObject();
         }
         memcpy( name, sym_name, sym_len );
@@ -1006,7 +1006,7 @@ static void UseSymbols( bool static_sym, bool iscextdef, struct objbuff *ob )
             sym_len = ( (obj_name *) (ob->curr) )->len;
             sym_name = ( (obj_name *) (ob->curr) )->name;
             if( sym_len == 0 ) {
-				DEBUG((DBG_OLD, "objomf.UseSymbols(): error, sym_len == 0" ));
+                DEBUG((DBG_OLD, "objomf.UseSymbols(): error, sym_len == 0" ));
                 BadObject();
             }
             ob->curr += sym_len + sizeof( byte );
@@ -1093,15 +1093,15 @@ static void ProcLinnum( struct objbuff *ob )
 
     SkipIdx( ob );          /* don't need the group idx */
     seg = (segnode *) FindSegNode( SegNodes, GetIdx( ob ) );
-	DEBUG((DBG_OLD, "objomf.ProcLinnum(): seg=%h (%s) info=%h iscode=%x", seg, seg->entry->u.leader->segname, seg->info, seg->entry->iscode ));
+    DEBUG((DBG_OLD, "objomf.ProcLinnum(): seg=%h (%s) info=%h iscode=%x", seg, seg->entry->u.leader->segname, seg->info, seg->entry->iscode ));
     if( seg->info & SEG_DEAD )                  /* ignore dead segments */
-		return;
+        return;
 
 #if 0
-	/* jwlink: autochange to code if a linnum record is found? */
-	seg->entry->iscode = TRUE;
-	seg->entry->u.leader->info |= SEG_CODE;
-	seg->info |= SEG_CODE;
+    /* jwlink: autochange to code if a linnum record is found? */
+    seg->entry->iscode = TRUE;
+    seg->entry->u.leader->info |= SEG_CODE;
+    seg->info |= SEG_CODE;
 #endif
 
     is32bit = (ObjFormat & FMT_32BIT_REC) != 0;

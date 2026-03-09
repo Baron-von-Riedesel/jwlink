@@ -429,7 +429,7 @@ orl_return CoffLoadFileStructure( coff_file_handle coff_file_hnd )
     pe_hdr = _ClientRead( coff_file_hnd, 2 );
     _ClientSeek( coff_file_hnd, -2, SEEK_CUR );
     if( pe_hdr->MZ[0] == 'M' && pe_hdr->MZ[1] == 'Z' ) {
-	    DEBUG(( DBG_OLD, "CoffLoadFileStructure(): file has MZ header"));
+        DEBUG(( DBG_OLD, "CoffLoadFileStructure(): file has MZ header"));
         pe_hdr = _ClientRead( coff_file_hnd, sizeof( pe_header ) );
         _ClientSeek( coff_file_hnd, pe_hdr->offset - sizeof( pe_header ), SEEK_CUR );
         PE = _ClientRead( coff_file_hnd, 4 );
@@ -440,9 +440,9 @@ orl_return CoffLoadFileStructure( coff_file_handle coff_file_hnd )
         }
     }
 #ifdef _INT_DEBUG
-	if ( sizeof( coff_file_header ) != 5*4 ) {
-		DEBUG(( DBG_OLD, "CoffLoadFileStructure: error, COFF file header size != 20, missing LONG_IS_64BITS?" ));
-	}	
+    if ( sizeof( coff_file_header ) != 5*4 ) {
+        DEBUG(( DBG_OLD, "CoffLoadFileStructure: error, COFF file header size != 20, missing LONG_IS_64BITS?" ));
+    }
 #endif    
     coff_file_hnd->f_hdr_buffer = _ClientRead( coff_file_hnd, sizeof( coff_file_header ) );
     if( !(coff_file_hnd->f_hdr_buffer) ) return( ORL_OUT_OF_MEMORY );
@@ -452,7 +452,7 @@ orl_return CoffLoadFileStructure( coff_file_handle coff_file_hnd )
         // convert short import library structures to long import
         // library structures, change _ClientRead and _ClientSeek
         // macros to read from converted metadata
-	    DEBUG(( DBG_OLD, "CoffLoadFileStructure(): import object header detected"));
+        DEBUG(( DBG_OLD, "CoffLoadFileStructure(): import object header detected"));
         error = convert_import_library( coff_file_hnd );
         if ( error != ORL_OKAY ) {
             DEBUG((DBG_OLD, "CoffLoadFileStructure(): convert_import_library() failed"));
@@ -466,7 +466,7 @@ orl_return CoffLoadFileStructure( coff_file_handle coff_file_hnd )
     }
     if( f_hdr->opt_hdr_size > 0 ) {     // skip optional header
         pe_opt_hdr *opt_hdr = (pe_opt_hdr *)_ClientRead( coff_file_hnd, f_hdr->opt_hdr_size );
-	    DEBUG(( DBG_OLD, "CoffLoadFileStructure(): optional header detected"));
+        DEBUG(( DBG_OLD, "CoffLoadFileStructure(): optional header detected"));
 
         if( (opt_hdr->magic == 0x10b) || (opt_hdr->magic == 0x20b) ) {
             coff_file_hnd->export_table_rva = opt_hdr->export_table_rva;
@@ -506,7 +506,7 @@ orl_return CoffLoadFileStructure( coff_file_handle coff_file_hnd )
     buf_size = 0;
     for( loop=0; loop < coff_file_hnd->num_sections; loop++ ) {
         coff_sec_hnd = coff_file_hnd->coff_sec_hnd[loop];
-	    DEBUG((DBG_OLD, "CoffLoadFileStructure(): coff_sec_hnd[%h] offset=%h, size=%h", loop, coff_sec_hnd->offset, coff_sec_hnd->size ));
+        DEBUG((DBG_OLD, "CoffLoadFileStructure(): coff_sec_hnd[%h] offset=%h, size=%h", loop, coff_sec_hnd->offset, coff_sec_hnd->size ));
         if( (coff_sec_hnd->offset + coff_sec_hnd->size) > buf_size &&
                 !(coff_sec_hnd->flags & ORL_SEC_FLAG_UNINITIALIZED_DATA) ) {
             buf_size = coff_sec_hnd->offset + coff_sec_hnd->size;

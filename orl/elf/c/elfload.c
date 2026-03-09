@@ -353,6 +353,7 @@ static orl_return load_elf_sec_handles( elf_file_handle elf_file_hnd, orl_sec_of
     uint64_t            sh_flags;
     uint64_t            sh_size;
 
+    DEBUG(( DBG_OLD, "load_elf_sec_handles(%p, %p, %p): enter, shentsize=%d", elf_file_hnd, name_index, s_hdr, elf_file_hnd->shentsize ));
     associated_index = (orl_sec_offset *) _ClientAlloc( elf_file_hnd, sizeof( Elf64_Word ) * elf_file_hnd->num_sections );
     if( !associated_index ) return( ORL_OUT_OF_MEMORY );
     associated2_index = (orl_sec_offset *) _ClientAlloc( elf_file_hnd, sizeof( Elf64_Word ) * elf_file_hnd->num_sections );
@@ -412,6 +413,7 @@ static orl_return load_elf_sec_handles( elf_file_handle elf_file_hnd, orl_sec_of
             sh_info = s_hdr32->sh_info;
             sh_size = s_hdr32->sh_size;
         }
+        DEBUG(( DBG_OLD, "load_elf_sec_handles: type=%d, info=%h", sh_type, sh_info ));
         switch( sh_align ) {
         case 0:
         case 1:
@@ -507,6 +509,7 @@ static orl_return load_elf_sec_handles( elf_file_handle elf_file_hnd, orl_sec_of
     memcpy( elf_file_hnd->elf_sec_hnd, elf_file_hnd->orig_sec_hnd, sizeof( elf_sec_handle ) * elf_file_hnd->num_sections );
     _ClientFree( elf_file_hnd, associated_index );
     _ClientFree( elf_file_hnd, associated2_index );
+    DEBUG(( DBG_OLD, "load_elf_sec_handles(): exit" ));
     return( ORL_OKAY );
 }
 
@@ -549,15 +552,19 @@ orl_return ElfLoadFileStructure( elf_file_handle elf_file_hnd )
     if( !(e_hdr32) )
         return( ORL_ERROR );
     determine_file_class( elf_file_hnd, e_hdr32 );
-    _ClientSeek( elf_file_hnd, 0, SEEK_SET );
+    //_ClientSeek( elf_file_hnd, 0, SEEK_SET );
+    _ClientSeek( elf_file_hnd, - sizeof( e_hdr32->e_ident ), SEEK_CUR );
     if( elf_file_hnd->flags & ORL_FILE_FLAG_64BIT_MACHINE ) {
         e_hdr64 = _ClientRead( elf_file_hnd, sizeof( Elf64_Ehdr ) );
         if( !(e_hdr64) )
             return( ORL_ERROR );
+        DEBUG(( DBG_OLD, "ElfLoadFileStructure(): 64-bit, #sections=%d, ofs=%p", e_hdr64->e_shnum, e_hdr64->e_shoff ));
         fix_ehdr64_byte_order( elf_file_hnd, e_hdr64 );        
         shoff = e_hdr64->e_shoff;
         shnum = e_hdr64->e_shnum;
         ehsize = e_hdr64->e_ehsize;
+        if ( ehsize != sizeof( Elf64_Ehdr ) )
+            _ClientSeek( elf_file_hnd, ehsize - sizeof( Elf64_Ehdr ), SEEK_CUR );
         shstrndx = e_hdr64->e_shstrndx;
         elf_file_hnd->shentsize = e_hdr64->e_shentsize;
         determine_file_specs( elf_file_hnd, (Elf32_Ehdr *)e_hdr64 );
@@ -565,10 +572,13 @@ orl_return ElfLoadFileStructure( elf_file_handle elf_file_hnd )
         e_hdr32 = _ClientRead( elf_file_hnd, sizeof( Elf32_Ehdr ) );
         if( !(e_hdr32) )
             return( ORL_ERROR );
+        DEBUG(( DBG_OLD, "ElfLoadFileStructure(): 32-bit" ));
         fix_ehdr_byte_order( elf_file_hnd, e_hdr32 );
         shoff = e_hdr32->e_shoff;
         shnum = e_hdr32->e_shnum;
         ehsize = e_hdr32->e_ehsize;
+        if ( ehsize != sizeof( Elf32_Ehdr ) )
+            _ClientSeek( elf_file_hnd, ehsize - sizeof( Elf32_Ehdr ), SEEK_CUR );
         shstrndx = e_hdr32->e_shstrndx;
         elf_file_hnd->shentsize = e_hdr32->e_shentsize;
         determine_file_specs( elf_file_hnd, e_hdr32 );
@@ -579,7 +589,10 @@ orl_return ElfLoadFileStructure( elf_file_handle elf_file_hnd )
     sec_header_table_size = elf_file_hnd->shentsize * shnum;
 
     // e_ehsize might not be the same as sizeof(Elf32_Ehdr) (different versions)
-    _ClientSeek( elf_file_hnd, ehsize, SEEK_SET );
+    /* for modules in a library, any absolute seek will be wrong - so it has
+     * been replaced by conditional relative seeks above.
+     */
+    //_ClientSeek( elf_file_hnd, ehsize, SEEK_SET );
 
     if( contents_size1 > 0 ) {
         elf_file_hnd->contents_buffer1 = _ClientRead( elf_file_hnd,
@@ -640,5 +653,6 @@ orl_return ElfLoadFileStructure( elf_file_handle elf_file_hnd )
         elf_file_hnd->orig_sec_hnd[loop]->name = string_table +name_index[loop];
     }
     _ClientFree( elf_file_hnd, name_index );
+    DEBUG(( DBG_OLD, "ElfLoadFileStructure(): exit" ));
     return( ORL_OKAY );
 }
