@@ -253,7 +253,7 @@ static bool CheckFlags( orl_file_handle filehdl )
         LinkState |= typemask;
     }
     if( ORLFileGetType( filehdl ) != ORL_FILE_TYPE_OBJECT ) {
-        DEBUG((DBG_OLD, "objorl.CheckFlags(): error, type %h != ORL_FILE_TYPE_OBJECT", ORLFileGetType( filehdl ) ) );
+		DEBUG((DBG_OLD, "objorl.CheckFlags(): error, type %h != ORL_FILE_TYPE_OBJECT", ORLFileGetType( filehdl ) ) );
         BadObject();
         return( FALSE );
     }
@@ -775,12 +775,12 @@ static orl_return ProcSymbol( orl_symbol_handle symhdl )
         sym = SymOp( symop, name, namelen );
         CheckIfTocSym( sym );
         if( type & ORL_SYM_TYPE_COMMON ) {
-            DEBUG((DBG_OLD, "objorl.ProcSymbol(%s): type ORL_SYM_TYPE_COMMON", name ));
+			DEBUG((DBG_OLD, "objorl.ProcSymbol(%s): type ORL_SYM_TYPE_COMMON", name ));
             value = ORLSymbolGetValue( symhdl );
             sym = MakeCommunalSym( sym, value, FALSE, TRUE );
         } else if( type & ORL_SYM_TYPE_UNDEFINED ) {
             /* ORL_SYM_TYPE_UNDEFINED flag means: symbol has no associated section */
-            DEBUG((DBG_OLD, "objorl.ProcSymbol(%s): type ORL_SYM_TYPE_UNDEFINED, binding=%h", name, binding ));
+			DEBUG((DBG_OLD, "objorl.ProcSymbol(%s): type ORL_SYM_TYPE_UNDEFINED, binding=%h", name, binding ));
             DefineReference( sym );
             isweak = FALSE;
             switch( binding ) {
@@ -800,7 +800,7 @@ static orl_return ProcSymbol( orl_symbol_handle symhdl )
                 }
             }
         } else {
-            DEBUG((DBG_OLD, "objorl.ProcSymbol(%s): type=%h", name, type ));
+			DEBUG((DBG_OLD, "objorl.ProcSymbol(%s): type=%h", name, type ));
             newnode->isdefd = TRUE;
             value = ORLSymbolGetValue( symhdl );
             if( type & ORL_SYM_TYPE_COMMON && type & ORL_SYM_TYPE_OBJECT
@@ -810,7 +810,7 @@ static orl_return ProcSymbol( orl_symbol_handle symhdl )
                                      && snode->entry->iscdat ) {
                 DefineComdatSym( snode, sym, value );
             } else {
-                DEBUG((DBG_OLD, "objorl.ProcSymbol(%s info=%h): calling DefineSymbol", name, sym->info ));
+				DEBUG((DBG_OLD, "objorl.ProcSymbol(%s info=%h): calling DefineSymbol", name, sym->info ));
                 sym->info |= SYM_DEFINED;
                 DefineSymbol( sym, snode, value, 0 );
             }
@@ -843,7 +843,7 @@ static orl_return DoReloc( orl_reloc *reloc )
     bool        skip;
     bool        istoc;
 
-    DEBUG((DBG_OLD, "objorl.DoReloc(%d): enter", reloc->type ));
+	DEBUG((DBG_OLD, "objorl.DoReloc(%d): enter", reloc->type ));
     skip = FALSE;
     istoc = FALSE;
     type = 0;
@@ -889,10 +889,24 @@ static orl_return DoReloc( orl_reloc *reloc )
         break;
     case ORL_RELOC_TYPE_REL_32:
         type = FIX_OFFSET_32 | FIX_REL;
+        DEBUG(( DBG_OLD, "32-bit PC-relative fixup %x at %h", reloc->type, reloc->offset ));
         break;
     case ORL_RELOC_TYPE_REL_32_NOADJ:
         type = FIX_OFFSET_32 | FIX_REL | FIX_NOADJ;
+        DEBUG(( DBG_OLD, "32-bit PC-relative fixup %x at %h, no adjust", reloc->type, reloc->offset ));
         break;
+#if 0
+    case ORL_RELOC_TYPE_REL_32_ADJ1: /* jwlink */
+    case ORL_RELOC_TYPE_REL_32_ADJ2: // relative ref to a 32-bit address, need special adjustment
+    case ORL_RELOC_TYPE_REL_32_ADJ3:
+    case ORL_RELOC_TYPE_REL_32_ADJ4:
+    case ORL_RELOC_TYPE_REL_32_ADJ5:
+        adjust = reloc->type - ORL_RELOC_TYPE_REL_32_ADJ1 + 1;
+        /* jwlink: store adjustment in upper 4 bits of type */
+        type = FIX_OFFSET_32 | FIX_REL | (adjust << 28);
+        DEBUG(( DBG_OLD, "32-bit PC-relative fixup %x at %h, adjust=%d", reloc->type, reloc->offset, adjust ));
+        break;
+#endif
     case ORL_RELOC_TYPE_SEGMENT:
         type = FIX_BASE;
         break;
@@ -928,16 +942,6 @@ static orl_return DoReloc( orl_reloc *reloc )
             reloc = &SavedReloc;
             type = FIX_HIGH_OFFSET_16;
         }
-        break;
-    case ORL_RELOC_TYPE_REL_32_ADJ1: /* jwlink */
-    case ORL_RELOC_TYPE_REL_32_ADJ2: // relative ref to a 32-bit address, need special adjustment
-    case ORL_RELOC_TYPE_REL_32_ADJ3:
-    case ORL_RELOC_TYPE_REL_32_ADJ4:
-    case ORL_RELOC_TYPE_REL_32_ADJ5:
-        adjust = reloc->type - ORL_RELOC_TYPE_REL_32_ADJ1 + 1;
-        /* jwlink: store adjustment in upper 4 bits of type */
-        type = FIX_OFFSET_32 | FIX_REL | (adjust << 28);
-        DEBUG(( DBG_OLD, "32-bit PC-relative fixup %x at %h, adjust=%u", reloc->type, reloc->offset, adjust ));
         break;
     case ORL_RELOC_TYPE_WORD_64: /* jwlink */
         type = FIX_OFFSET_64;
@@ -1124,8 +1128,10 @@ unsigned long ORLPass1( void )
             CurrMod->modinfo |= MOD_FLATTEN_DBI;
         }
         CurrMod->modinfo |= MOD_NEED_PASS_2;
+        DEBUG((DBG_OLD, "objorl.ORLPass1(): calling ProcSegments" ));
         ORLFileScan( filehdl, NULL, ProcSegments );
         IterateNodelist( SegNodes, AllocSeg, NULL );
+        DEBUG((DBG_OLD, "objorl.ORLPass1(): calling ProcSymbols" ));
         ORLFileScan( filehdl, NULL, ProcSymbols );
         ScanImported();
         ORLFileScan( filehdl, NULL, ProcP1Specific );

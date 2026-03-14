@@ -43,7 +43,6 @@ $(OUTD):
 	@if not exist $(OUTD) mkdir $(OUTD)
 
 $(OUTD)/dw.lib : $(objs)
-	@%create tmp.lbc
-	@for %i in ($(objs)) do @%append tmp.lbc +%i
-	@$(WATCOM)\binnt\wlib -n $(OUTD)/dw.lib @tmp.lbc
-
+	@$(WATCOM)\binnt\wlib -n $(OUTD)/dw.lib @<<
+$(objs:$(OUTD)=+$(OUTD))
+<<

@@ -542,7 +542,7 @@ void StoreFixup( offset off, fix_type type, frame_spec *frame,
     unsigned    size;
     unsigned_8  buff[2 * sizeof( unsigned_32 )];
 
-	DEBUG(( DBG_OLD, "obj2supp.StoreFixup(off=%h, type=%d, fr.ptr=%p, tgt.ptr=%p, addend=%h) enter", off, type, frame->u.ptr, targ->u.ptr, addend ));
+	DEBUG(( DBG_OLD, "obj2supp.StoreFixup(off=%h, type=%h, fr.ptr=%p, tgt.ptr=%p, addend=%h) enter", off, type, frame->u.ptr, targ->u.ptr, addend ));
     if( LastSegData != CurrRec.seg ) {
         DbgAssert( CurrRec.seg != NULL );
         LastSegData = CurrRec.seg;

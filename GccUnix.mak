@@ -23,29 +23,23 @@ endif
 
 OUTD=build/GccUnix$(outd_suffix)
 
-outd_orl_lib   = build/osi386L$(outd_suffix)
-outd_dwarf_lib = build/osi386L$(outd_suffix)
 outd_wres_lib  = build/wresL$(outd_suffix)
-orl_lib  = $(outd_orl_lib)/orl.lib
-dwarf_lib= $(outd_dwarf_lib)/dw.lib
 wres_lib = $(outd_wres_lib)/wres.lib
 
 wres_dir=sdk/rc/wres
 wrc_dir=sdk/rc/rc
 lib_misc_dir=lib_misc
 dwarf_dir=dwarf
-orl_dir=orl
 watcom_dir=watcom
 
 inc_dirs  = -Ih -I$(watcom_dir)/h -I$(dwarf_dir)/h -Iorl/h -I$(wrc_dir)/h -I$(wres_dir)/h -I$(lib_misc_dir)/h
+orl_inc_dirs = -Iorl/h -I$(watcom_dir)/h -Ih
 
 #cflags stuff
 
 c_flags =-D__UNIX__ $(bitopts) -DUNALIGNED="" -std=gnu99 $(extra_c_flags)
 
 CC = gcc
-
-xlibs = $(dwarf_lib) $(orl_lib) $(wres_lib)
 
 .SUFFIXES:
 .SUFFIXES: .c .o
@@ -54,40 +48,47 @@ include gccmod.inc
 
 proj_obj += $(OUTD)/rcstr.o $(OUTD)/exerespe.o $(OUTD)/sharedio.o
 
-#.c.o:
-#	$(CC) -c $(inc_dirs) $(c_flags) -o $(OUTD)/$*.o $<
+include orl/gccmod.inc
+
+dwarf_obj = $(OUTD)/dwlngen.o $(OUTD)/dwutils.o
+
 $(OUTD)/%.o: c/%.c
 	$(CC) -c $(inc_dirs) $(c_flags) -o $(OUTD)/$*.o $<
+
+$(OUTD)/%.o: orl/c/%.c
+	$(CC) -c -Iorl/coff/h -Iorl/elf/h -Iorl/omf/h $(orl_inc_dirs) $(c_flags) -o $(OUTD)/$*.o $<
+
+$(OUTD)/%.o: orl/coff/c/%.c
+	$(CC) -c -Iorl/coff/h $(orl_inc_dirs) $(c_flags) -o $(OUTD)/$*.o $<
+
+$(OUTD)/%.o: orl/elf/c/%.c
+	$(CC) -c -Iorl/elf/h $(orl_inc_dirs) $(c_flags) -o $(OUTD)/$*.o $<
+
+$(OUTD)/%.o: orl/omf/c/%.c
+	$(CC) -c -Iorl/omf/h $(orl_inc_dirs) $(c_flags) -o $(OUTD)/$*.o $<
+
+$(OUTD)/%.o: dwarf/c/%.c
+	$(CC) -c $(inc_dirs) $(c_flags) -o $(OUTD)/$*.o $<
+
+$(OUTD)/%.o: sdk/rc/rc/c/%.c
+	$(CC) -c -DINSIDE_WLINK $(inc_dirs) $(c_flags) -o $(OUTD)/$*.o $<
 
 all:  $(OUTD) $(OUTD)/$(TARGET1)
 
 $(OUTD):
 	mkdir -p $(OUTD)
 
-$(OUTD)/$(TARGET1) : $(proj_obj) $(xlibs)
+$(OUTD)/$(TARGET1) : $(OUTD)/$(TARGET1).lib $(wres_lib)
 ifeq ($(DEBUG),0)
-	$(CC) $(proj_obj) $(xlibs) $(bitopts) -s -o $@ -Wl,-Map,$(OUTD)/$(TARGET1).map
+	$(CC) $(OUTD)/$(TARGET1).lib $(wres_lib) $(bitopts) -s -o $@ -Wl,-Map,$(OUTD)/$(TARGET1).map
 else
-	$(CC) $(proj_obj) $(xlibs) $(bitopts) -o $@ -Wl,-Map,$(OUTD)/$(TARGET1).map
+	$(CC) $(OUTD)/$(TARGET1).lib $(wres_lib) $(bitopts) -o $@ -Wl,-Map,$(OUTD)/$(TARGET1).map
 endif
 
-$(OUTD)/rcstr.o: sdk/rc/rc/c/rcstr.c
-	$(CC) -c -DINSIDE_WLINK $(inc_dirs) $(c_flags) -o $*.o $<
-
-$(OUTD)/exerespe.o: sdk/rc/rc/c/exerespe.c
-	$(CC) -c -DINSIDE_WLINK $(inc_dirs) $(c_flags) -o $*.o $<
-
-$(OUTD)/sharedio.o: sdk/rc/rc/c/sharedio.c
-	$(CC) -c $(inc_dirs) $(c_flags) -o $*.o $<
-
+$(OUTD)/$(TARGET1).lib: $(proj_obj) $(orl_obj) $(dwarf_obj)
+	@ar -r $@ $(proj_obj) $(orl_obj) $(dwarf_obj)
 
 ######
-
-$(orl_lib):
-	make -C $(orl_dir) -f GccUnix.mak bitopts=$(bitopts) DEBUG=$(DEBUG)
-
-$(dwarf_lib):
-	make -C $(dwarf_dir) -f GccUnix.mak bitopts=$(bitopts) DEBUG=$(DEBUG)
 
 $(wres_lib):
 	make -C $(wres_dir) -f GccUnix.mak bitopts=$(bitopts) DEBUG=$(DEBUG)
@@ -99,7 +100,5 @@ clean:
 	@rm -f $(OUTD)/$(TARGET1)
 	@rm -f $(OUTD)/*.o
 	@rm -f $(OUTD)/*.map
-	@make -C $(orl_dir)   -f GccUnix.mak DEBUG=$(DEBUG) clean
-	@make -C $(dwarf_dir) -f GccUnix.mak DEBUG=$(DEBUG) clean
 	@make -C $(wres_dir)  -f GccUnix.mak DEBUG=$(DEBUG) clean
 

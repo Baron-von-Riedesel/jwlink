@@ -34,6 +34,7 @@
 #define ORL_COMMON_INCLUDED
 
 /* Used in both orl.h and orlintl.h
+ * types defined in orlglobl.h
  */
 
 typedef struct {
@@ -41,7 +42,10 @@ typedef struct {
     orl_sec_offset                      offset;
     orl_symbol_handle                   symbol;
     orl_reloc_type                      type;
-    orl_reloc_addend                    addend;
+    union {
+        orl_reloc_addend                addend;
+        orl_reloc_addend_signed         addend_signed;
+    };
     orl_symbol_handle                   frame; // used in OMF should be NULL otherwise
 } orl_reloc;
 

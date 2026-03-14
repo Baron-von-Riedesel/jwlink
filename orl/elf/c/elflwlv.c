@@ -529,7 +529,14 @@ orl_return ElfCreateRelocs( elf_sec_handle orig_sec, elf_sec_handle reloc_sec )
                 o_rel->symbol = (orl_symbol_handle) &(reloc_sec->assoc.reloc.symbol_table->assoc.sym.symbols[ELF64_R_SYM( rela64->r_info )]);
                 o_rel->type = ElfConvertRelocType( reloc_sec->elf_file_hnd, ELF64_R_TYPE( rela64->r_info ) );
                 o_rel->offset = rela64->r_offset;
-                o_rel->addend = rela64->r_addend;
+                /* jwlink: elf addend is signed */
+                //o_rel->addend = rela64->r_addend;
+                o_rel->addend_signed = rela64->r_addend;
+                /* jwlink: convertAMD64Reloc() often hasn't guessed correctly */
+                if ( rela64->r_addend && o_rel->type == ORL_RELOC_TYPE_REL_32_NOADJ )
+                    o_rel->type = ORL_RELOC_TYPE_REL_32;
+                DEBUG(( DBG_OLD, "ElfCreateRelocs: 64-bit, elf: addend=%p info=%h offset=%p orl: type=%d addend=%h", rela64->r_addend, rela64->r_info, rela64->r_offset, o_rel->type, o_rel->addend ));
+#if 0
                 /* jwlink: orl addend is unsigned, but elf addend is signed; negative addends -1 - -5 will
                  * become special relocs
                  */
@@ -538,6 +545,7 @@ orl_return ElfCreateRelocs( elf_sec_handle orig_sec, elf_sec_handle reloc_sec )
                     o_rel->type = ORL_RELOC_TYPE_REL_32_ADJ1 + ( - rela64->r_addend - 1 );
                     o_rel->addend = 0;
                 }
+#endif
             } else {
                 rela32 = (Elf32_Rela *) rel;
                 fix_rela_byte_order( reloc_sec->elf_file_hnd, rela32 );

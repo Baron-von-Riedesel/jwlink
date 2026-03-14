@@ -28,29 +28,8 @@ OUTD= ..\build\osi386WR
 #  List of orl library object files
 #
 
-omf_objs =  $(OUTD)/omfload.obj &
-            $(OUTD)/omfmunge.obj &
-            $(OUTD)/omfentr.obj &
-            $(OUTD)/omfflhn.obj &
-            $(OUTD)/omfdrctv.obj
-
-elf_objs  = $(OUTD)/elfentr.obj &
-            $(OUTD)/elflwlv.obj &
-            $(OUTD)/elfflhn.obj &
-            $(OUTD)/elfload.obj
-
-coff_objs = $(OUTD)/coffentr.obj &
-            $(OUTD)/cofflwlv.obj &
-            $(OUTD)/coffflhn.obj &
-            $(OUTD)/coffload.obj &
-            $(OUTD)/coffimpl.obj
-
-orl_objs  = $(OUTD)/orlentry.obj &
-            $(OUTD)/orlflhnd.obj &
-            $(OUTD)/orlhash.obj &
-            $(omf_objs) &
-            $(elf_objs) &
-            $(coff_objs)
+orl_objs = &
+!include owmod.inc
 
 .c{$(OUTD)}.obj: $($(proj_name)_autodepends)
 	$(WATCOM)\binnt\wcc386 -q -zc -bc -bt=nt $(c_flags) $(inc_dirs) -fo$@ $[@
@@ -66,9 +45,9 @@ $(OUTD):
 	@if not exist $(OUTD) mkdir $(OUTD)
 
 $(OUTD)/orl.lib : $(orl_objs)
-	@%create $^&.lbc
-	@for %i in ($(orl_objs)) do @%append $^&.lbc +%i
-	@$(WATCOM)\binnt\wlib -n $(OUTD)/orl.lib $(libflags) @$^&.lbc
+	@$(WATCOM)\binnt\wlib -n $(OUTD)/orl.lib $(libflags) @<<
+$(orl_objs:$(OUTD)= +$(OUTD))
+<<
 
 clean:
 	@erase $(OUTD)/orl.lib

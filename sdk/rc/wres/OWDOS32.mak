@@ -89,6 +89,8 @@ cflags = -od -d2 -w3 -D_INT_DEBUG
 cflags = -ox -s -DNDEBUG -D__WATCOM_LFN__
 !endif
 
+cflags += -DUNALIGNED=_WCUNALIGNED
+
 # where to look for various files
 
 .c : $(wres_dir)/c
@@ -106,6 +108,6 @@ $(OUTD):
 	@if not exist $(OUTD) mkdir $(OUTD)
 
 $(OUTD)\wres.lib : $(objs) $(__MAKEFILES__) .PRECIOUS
-	%create $(OUTD)\$^&.lbc
-	@for %i in ($(objs)) do @%append $(OUTD)\$^&.lbc +%i
-	@$(WATCOM)\binnt\wlib -n $(OUTD)\wres.lib @$(OUTD)\$^&.lbc
+	@$(WATCOM)\binnt\wlib -n $(OUTD)\wres.lib @<<
+$(objs:$(OUTD)=+$(OUTD))
+<<

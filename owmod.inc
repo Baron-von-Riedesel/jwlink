@@ -19,7 +19,6 @@ $(OUTD)/dbginfo.obj  &
 $(OUTD)/debug.obj    &
 $(OUTD)/demangle.obj &
 $(OUTD)/distrib.obj  &
-$(OUTD)/exerespe.obj &
 $(OUTD)/global.obj   &
 $(OUTD)/hash.obj     &
 $(OUTD)/impexp.obj   &
@@ -58,12 +57,10 @@ $(OUTD)/overlays.obj &
 $(OUTD)/ovlsupp.obj  &
 $(OUTD)/permdata.obj &
 $(OUTD)/procfile.obj &
-$(OUTD)/rcstr.obj    &
 $(OUTD)/reloc.obj    &
 $(OUTD)/ring.obj     &
 $(OUTD)/ring2.obj    &
 $(OUTD)/salloc.obj   &
-$(OUTD)/sharedio.obj &
 $(OUTD)/spillio.obj  &
 $(OUTD)/strtab.obj   &
 $(OUTD)/symmem.obj   &

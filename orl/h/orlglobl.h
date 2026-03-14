@@ -45,6 +45,7 @@ typedef uint_32                         orl_sec_alignment;
 typedef long                            orl_sec_frame;
 
 typedef uint_32                         orl_reloc_addend;
+typedef int_32                          orl_reloc_addend_signed;
 
 typedef uint_32                         orl_symbol_value;
 

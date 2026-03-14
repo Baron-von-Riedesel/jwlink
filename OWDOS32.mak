@@ -191,4 +191,7 @@ clean: .SYMBOLIC
 	@if exist $(OUTD)\$(proj_name).exe erase $(OUTD)\$(proj_name).exe
 	@if exist $(OUTD)\$(proj_name).map erase $(OUTD)\$(proj_name).map
 	@if exist $(OUTD)\*.obj erase $(OUTD)\*.obj
+	@if exist $(orl_lib)   erase $(orl_lib)
+	@if exist $(dwarf_lib) erase $(dwarf_lib)
+	@if exist $(wres_lib)  erase $(wres_lib)
 

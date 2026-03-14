@@ -108,6 +108,6 @@ $(OUTD):
 	@if not exist $(OUTD) mkdir $(OUTD)
 
 $(OUTD)\wres.lib : $(objs) $(__MAKEFILES__) .PRECIOUS
-	%create $(OUTD)\$^&.lbc
-	@for %i in ($(objs)) do @%append $(OUTD)\$^&.lbc +%i
-	@$(WATCOM)\binnt\wlib -n $(OUTD)\wres.lib @$(OUTD)\$^&.lbc
+	@$(WATCOM)\binnt\wlib -n $(OUTD)\wres.lib @<<
+$(objs:$(OUTD)=+$(OUTD))
+<<
