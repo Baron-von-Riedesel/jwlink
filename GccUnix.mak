@@ -14,7 +14,7 @@ bitopts = -DLONG_IS_64BITS
 #bitopts = -m32
 
 ifeq ($(DEBUG),0)
-extra_c_flags = -DNDEBUG -O2
+extra_c_flags = -DNDEBUG -O2 -Wno-error=incompatible-pointer-types -Wno-error=implicit-function-declaration
 outd_suffix=R
 else
 extra_c_flags = -D_INT_DEBUG -g
