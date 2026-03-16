@@ -148,6 +148,7 @@ static void *GetString( perm_write_info *info, char *str )
 
     idx = GetStringTableSize( &info->strtab );
     AddStringStringTable( &info->strtab, str );
+    DEBUG((DBG_OLD,"permdata.GetString(%p, %s): idx=%d", info, str, idx ));
     return( (void *)idx );
 }
 
@@ -546,6 +547,8 @@ static unsigned_32 WriteLibList( perm_write_info *info, bool douser )
     return( numlibs );
 }
 
+/* incremental link: write data file */
+
 void WritePermData( void )
 /*******************************/
 {
@@ -554,6 +557,7 @@ void WritePermData( void )
 
     if( !(LinkFlags & INC_LINK_FLAG) || LinkState & LINK_ERROR )
         return;
+    DEBUG((DBG_OLD, "WritePermData() enter" ));
     InitStringTable( &info.strtab, FALSE );
     AddCharStringTable( &info.strtab, '\0' );   // make 0 idx not valid
     info.incfhdl = QOpenRW( IncFileName );
@@ -607,7 +611,10 @@ void WritePermData( void )
     QSeek( info.incfhdl, 0, IncFileName );
     QWrite( info.incfhdl, &hdr, sizeof(inc_file_header), IncFileName );
     QClose( info.incfhdl, IncFileName );
+    DEBUG((DBG_OLD, "WritePermData() exit" ));
 }
+
+/* incremental link: read data file */
 
 void ReadPermFile( perm_read_info *info, void *data, unsigned len )
 /************************************************************************/
@@ -891,6 +898,7 @@ void ReadPermData( void )
     perm_read_info      info;
     inc_file_header     *hdr;
 
+    DEBUG((DBG_OLD, "ReadPermData(%s) enter", IncFileName ));
     info.incfhdl = QObjOpen( IncFileName );
     if( info.incfhdl == NIL_HANDLE )
         return;
@@ -962,6 +970,7 @@ void ReadPermData( void )
     LinkState = hdr->linkstate | GOT_PREV_STRUCTS | (LinkState & CLEAR_ON_INC);
     ReadStartInfo( hdr );
     _LnkFree( info.buffer );
+    DEBUG((DBG_OLD, "ReadPermData() exit" ));
 }
 
 void PermSaveFixup( void *fix, unsigned size )

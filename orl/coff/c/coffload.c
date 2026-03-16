@@ -439,7 +439,7 @@ orl_return CoffLoadFileStructure( coff_file_handle coff_file_hnd )
             _ClientSeek( coff_file_hnd, -pe_hdr->offset-4, SEEK_CUR );
         }
     }
-#ifdef _INT_DEBUG
+#if 0//def _INT_DEBUG
     if ( sizeof( coff_file_header ) != 5*4 ) {
         DEBUG(( DBG_OLD, "CoffLoadFileStructure: error, COFF file header size != 20, missing LONG_IS_64BITS?" ));
     }

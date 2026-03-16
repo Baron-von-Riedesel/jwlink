@@ -47,6 +47,10 @@ const char  *ImageName;
 #define DLL_NAME "wlibd.dll"
 #define AR_MODE_ENV "WLIB$AR"
 
+#ifdef __UNIX__
+char **_argv;
+#endif
+
 static IDEDRV info =
 {   DLL_NAME
 };
@@ -65,7 +69,7 @@ int main                        // MAIN-LINE FOR DLL DRIVER
     _argv = args;
 #endif
 #ifdef IDE_PGM
-#ifdef __UNIX__
+#if 0//def __UNIX__
     static char buffer[ PATH_MAX ];
     _cmdname( buffer );
     ImageName = buffer;

@@ -843,7 +843,7 @@ static orl_return DoReloc( orl_reloc *reloc )
     bool        skip;
     bool        istoc;
 
-	DEBUG((DBG_OLD, "objorl.DoReloc(%d): enter", reloc->type ));
+	DEBUG((DBG_OLD, "objorl.DoReloc(type=%d): enter", reloc->type ));
     skip = FALSE;
     istoc = FALSE;
     type = 0;
@@ -895,8 +895,8 @@ static orl_return DoReloc( orl_reloc *reloc )
         type = FIX_OFFSET_32 | FIX_REL | FIX_NOADJ;
         DEBUG(( DBG_OLD, "32-bit PC-relative fixup %x at %h, no adjust", reloc->type, reloc->offset ));
         break;
-#if 0
-    case ORL_RELOC_TYPE_REL_32_ADJ1: /* jwlink */
+#if 1  /* jwlink: special types for COFF AMD64 */
+    case ORL_RELOC_TYPE_REL_32_ADJ1:
     case ORL_RELOC_TYPE_REL_32_ADJ2: // relative ref to a 32-bit address, need special adjustment
     case ORL_RELOC_TYPE_REL_32_ADJ3:
     case ORL_RELOC_TYPE_REL_32_ADJ4:
@@ -947,9 +947,14 @@ static orl_return DoReloc( orl_reloc *reloc )
         type = FIX_OFFSET_64;
         DEBUG(( DBG_OLD, "64-bit offset at %h", reloc->offset ));
         break;
+#if 0 /* support not implemented yet */
+    case ORL_RELOC_TYPE_PLT_32: /* jwlink */
+        type = FIX_OFFSET_32 | FIX_REL;
+        break;
+#endif
     case ORL_RELOC_TYPE_NONE:
     default:
-        printf( "unknown reloc type %X at %s:%X\n", reloc->type, ORLSecGetName( reloc->section ), reloc->offset );
+        printf( "unknown reloc type %d at %s:%X\n", reloc->type, ORLSecGetName( reloc->section ), reloc->offset );
         LnkMsg( LOC+ERR+MSG_BAD_RELOC_TYPE, NULL );
         skip = TRUE;
         break;

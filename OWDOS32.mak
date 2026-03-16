@@ -8,23 +8,25 @@
 # - INTDBG - dump symbol table
 
 # the path of the Open Watcom root directory.
-
+!ifndef WATCOM
 WATCOM=\OW20
+!endif
 
 !ifndef DEBUG
 DEBUG=0
 !endif
 
 !if $(DEBUG)
-wlink_trmem = 0
+jwlink_trmem = 0
 outd_suffix=D
 !else
-wlink_trmem = 0
+jwlink_trmem = 0
 outd_suffix=R
 !endif
 
 BOUT=build
 OUTD=$(BOUT)\jwlinkD$(outd_suffix)
+outd_wres = $(BOUT)\wresD$(outd_suffix)
 
 proj_name = jwlink
 host_os  = dos
@@ -58,10 +60,13 @@ common_objs = &
     $(OUTD)/symmem.obj    $(OUTD)/symtrace.obj  $(OUTD)/toc.obj       $(OUTD)/wlink.obj    &
     $(OUTD)/wlnkmsg.obj   $(OUTD)/cmdraw.obj    &
     $(OUTD)/demangle.obj  &
-!ifeq wlink_trmem 1
-    $(OUTD)/$(trmem_objs) &
+
+!ifeq jwlink_trmem 1
+common_objs += $(OUTD)/$(trmem_objs)
 !endif
-    $(OUTD)/exerespe.obj  $(OUTD)/sharedio.obj  $(OUTD)/rcstr.obj 
+
+common_objs += $(OUTD)/demangle.obj
+common_objs += $(OUTD)/exerespe.obj  $(OUTD)/sharedio.obj  $(OUTD)/rcstr.obj 
 
 !ifeq use_virtmem 1
 common_objs += $(OUTD)/virtmem.obj
@@ -75,11 +80,21 @@ common_objs += $(OUTD)/ntio.obj
 
 comp_objs_exe = $(common_objs)
 
-wres_dir=sdk/rc/wres
-wrc_dir=sdk/rc/rc
+orl_objs = &
+!include orl/owmod.inc
+
+dwarf_objs = $(OUTD)/dwlngen.obj $(OUTD)/dwutils.obj
+
+wres_dir=sdk\rc\wres
+wrc_dir=sdk\rc\rc
 lib_misc_dir=lib_misc
 dwarf_dir=dwarf
 watcom_dir=watcom
+
+wres_core_objs = &
+!include $(wres_dir)/owmod.inc
+wres_more_objs = &
+!include $(wres_dir)/owmod2.inc
 
 inc_dirs = -IH -I$(watcom_dir)\H -I$(WATCOM)\H 
 
@@ -89,15 +104,38 @@ cflags = -od -d2 -w3 -hc -D_INT_DEBUG -D__WATCOM_LFN__
 cflags = -ox -s -DNDEBUG -D__WATCOM_LFN__
 !endif
 
-outd_orl_lib   = $(BOUT)\osi386D$(outd_suffix)
-outd_dwarf_lib = $(BOUT)\osi386D$(outd_suffix)
-outd_wres_lib  = $(BOUT)\wresD$(outd_suffix)
-orl_lib  = $(outd_orl_lib)\orl.lib
-dwarf_lib= $(outd_dwarf_lib)\dw.lib
-wres_lib = $(outd_wres_lib)\wres.lib
+orl_lib  = $(OUTD)\orl.lib
+orl_inc_dirs = -Iorl\h -Ih -I$(watcom_dir)\h -I$(WATCOM)\H
+
+dwarf_lib  = $(OUTD)\dwarf.lib
+
+wres_lib = $(outd_wres)\wres.lib
+
+CC = $(WATCOM)\binnt\wcc386 -q -bc -bt=dos
+
+{orl/c}.c{$(OUTD)}.obj: 
+	@$(CC) $(cflags) -Iorl\coff\h -Iorl\elf\h -Iorl\omf\h $(orl_inc_dirs) -fo$@ $[@
+
+{orl/coff/c}.c{$(OUTD)}.obj: 
+	@$(CC) $(cflags) -Iorl\coff\h $(orl_inc_dirs) -fo$@ $[@
+
+{orl/elf/c}.c{$(OUTD)}.obj: 
+	@$(CC) $(cflags) -Iorl\elf\h $(orl_inc_dirs) -fo$@ $[@
+
+{orl/omf/c}.c{$(OUTD)}.obj: 
+	@$(CC) $(cflags) -Iorl\omf\h $(orl_inc_dirs) -fo$@ $[@
+
+{dwarf/c}.c{$(OUTD)}.obj: 
+	@$(CC) $(cflags) -Idwarf\h $(inc_dirs) -fo$@ $[@
+
+wres_extra_cflags = -DMICROSOFT -DUNALIGNED=_WCUNALIGNED
+wres_inc_dirs = -I$(wres_dir)\h -I$(watcom_dir)\h -Ih -I$(WATCOM)\h
+
+{sdk/rc/wres/c}.c{$(outd_wres)}.obj: 
+	@$(CC) $(cflags) $(wres_extra_cflags) $(wres_inc_dirs) -fo$@ $[@
 
 .c{$(OUTD)}.obj: $($(proj_name)_autodepends)
-	$(WATCOM)\binnt\wcc386 -q -bc -bt=dos $(cflags) $(extra_c_flags_$[&) $(inc_dirs) -fo$@ $[@
+	@$(CC) $(cflags) $(extra_c_flags_$[&) $(inc_dirs) -fo$@ $[@
 
 .c: c;$(wrc_dir)/c;$(lib_misc_dir)/c;$(trmem_dir)
 
@@ -113,7 +151,7 @@ extra_c_flags_linkio     = -I"$(wres_dir)/h"
 extra_c_flags_objorl     = -I"orl/h"
 extra_c_flags_orlstubs   = -I"orl/h"
 extra_c_flags_dbgdwarf   = -I"$(dwarf_dir)/h"
-!ifeq wlink_trmem 1
+!ifeq jwlink_trmem 1
 extra_c_flags_debug      = -DTRMEM
 !endif
 extra_c_flags_loadpe     = -DUNALIGNED=_WCUNALIGNED -I"$(wrc_dir)/h" -I"$(wres_dir)/h"
@@ -142,7 +180,7 @@ lflagsd =
 #################
 # explicit rules
 
-ALL: $(BOUT) $(OUTD) $(outd_wres_lib) $(OUTD)/JWlinkD.exe $(xlibs)
+ALL: $(BOUT) $(OUTD) $(outd_wres) $(OUTD)/JWlinkD.exe $(xlibs)
 
 $(BOUT):
 	@if not exist $(BOUT) mkdir $(BOUT)
@@ -150,8 +188,8 @@ $(BOUT):
 $(OUTD):
 	@if not exist $(OUTD) mkdir $(OUTD)
 
-$(outd_wres_lib):
-	@if not exist $(outd_wres_lib) mkdir $(outd_wres_lib)
+$(outd_wres):
+	@if not exist $(outd_wres) mkdir $(outd_wres)
 
 $(OUTD)/JWlinkD.exe : $(comp_objs_exe) $(xlibs)
 	@jwlink.exe @<<
@@ -172,20 +210,20 @@ segment CONST2 readonly
 !endif
 <<
 
-$(wres_lib):
-	@cd $(wres_dir)
-	@wmake -f OWDOS32.mak debug=$(DEBUG) watcom=$(WATCOM)
-	@cd ../../..
+$(orl_lib): $(orl_objs)
+	@$(WATCOM)\binnt\wlib -q -n $(orl_lib) @<<
+$(orl_objs:$(OUTD)= +$(OUTD))
+<<
 
-$(orl_lib):
-	@cd orl
-	@wmake -f OWDOS32.mak debug=$(DEBUG) watcom=$(WATCOM)
-	@cd ..
+$(dwarf_lib): $(dwarf_objs)
+	@$(WATCOM)\binnt\wlib -q -n $(dwarf_lib) @<<
+$(dwarf_objs:$(OUTD)= +$(OUTD))
+<<
 
-$(dwarf_lib):
-	@cd $(dwarf_dir)
-	@wmake -f OWDOS32.mak debug=$(DEBUG) watcom=$(WATCOM)
-	@cd ..
+$(wres_lib): $(wres_core_objs) $(wres_more_objs)
+	@$(WATCOM)\binnt\wlib -q -n $(wres_lib) @<<
+$(wres_core_objs:$(outd_wres)= +$(outd_wres)) $(wres_more_objs:$(outd_wres)= +$(outd_wres))
+<<
 
 clean: .SYMBOLIC
 	@if exist $(OUTD)\$(proj_name).exe erase $(OUTD)\$(proj_name).exe
@@ -194,4 +232,5 @@ clean: .SYMBOLIC
 	@if exist $(orl_lib)   erase $(orl_lib)
 	@if exist $(dwarf_lib) erase $(dwarf_lib)
 	@if exist $(wres_lib)  erase $(wres_lib)
+	@if exist $(outd_wres)\*.obj  erase $(outd_wres)\*.obj
 

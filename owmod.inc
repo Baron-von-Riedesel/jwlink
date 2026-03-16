@@ -17,7 +17,6 @@ $(OUTD)/dbgcv.obj    &
 $(OUTD)/dbgdwarf.obj &
 $(OUTD)/dbginfo.obj  &
 $(OUTD)/debug.obj    &
-$(OUTD)/demangle.obj &
 $(OUTD)/distrib.obj  &
 $(OUTD)/global.obj   &
 $(OUTD)/hash.obj     &

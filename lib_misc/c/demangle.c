@@ -32,8 +32,13 @@
 #ifdef TEST
 #define __DIP__
 #endif
+
 #ifdef __DIP__
 #define __NO_STACK_CHECKING__
+#endif
+
+#ifdef __UNIX__
+#define memicmp strncasecmp
 #endif
 
 #if 0 || defined(TEST) || defined(DUMP)

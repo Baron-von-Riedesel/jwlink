@@ -1,6 +1,7 @@
 
 # Wmake makefile to create cvpackd.exe
-# OW 1.9 is used because OW 2.0 emits serious warnings that haven't been fixed yet.
+# OW 1.9 is used;
+# OW 2.0 emits serious warnings that haven't been fixed yet.
 
 proj_name = cvpack
 
@@ -11,14 +12,16 @@ DEBUG=0
 !endif
 
 !if $(DEBUG)
-OUTD=..\build\cvpackDD
+outd_suffix=D
 LOPTD=debug c op cvp
 COPTD=-d2 -D_DEBUG
 !else
-OUTD=..\build\cvpackDR
+outd_suffix=R
 LOPTD=
 COPTD=
 !endif
+
+OUTD=..\build\cvpackD$(outd_suffix)
 
 watcom_dir=..\watcom
 
@@ -40,7 +43,7 @@ object_files =  &
 	$(OUTD)\typemap.obj  $(OUTD)\typearay.obj  $(OUTD)\typercrd.obj  $(OUTD)\common.obj
 
 .cpp{$(OUTD)}.obj: $($(proj_name)_autodepends)
-	$(WATCOM)\binnt\wpp386 -zq -w4 -we -oaxt -DNDEBUG -mf -zc -bc -bt=dos $(extra_cpp_flags) $(inc_dirs) -fo$@ $[@
+	$(WATCOM)\binnt\wpp386 -zq -w4 -we -oaxt -DNDEBUG -mf -bc -bt=dos $(extra_cpp_flags) $(inc_dirs) -fo$@ $[@
 
 .cpp : $(cpp_dir)
 .hpp : $(h_dir)

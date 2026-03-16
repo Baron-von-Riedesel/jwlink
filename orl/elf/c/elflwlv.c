@@ -484,8 +484,8 @@ orl_return ElfCreateRelocs( elf_sec_handle orig_sec, elf_sec_handle reloc_sec )
             return( return_val );
     }
     switch( reloc_sec->type ) {
-    case ORL_SEC_TYPE_RELOCS:
-        DEBUG(( DBG_OLD, "ElfCreateRelocs(ORL_SEC_TYPE_RELOCS) enter"));
+    case ORL_SEC_TYPE_RELOCS: /* section contains relocs (.rel) */
+    case ORL_SEC_TYPE_RELOCS_EXPADD: /* section contains relocs with addend (.rela) */
         num_relocs = reloc_sec->size / reloc_sec->entsize;
         reloc_sec->assoc.reloc.relocs = (orl_reloc *) _ClientSecAlloc( reloc_sec, sizeof( orl_reloc ) * num_relocs );
         if( reloc_sec->assoc.reloc.relocs == NULL )
@@ -495,26 +495,54 @@ orl_return ElfCreateRelocs( elf_sec_handle orig_sec, elf_sec_handle reloc_sec )
         for( loop = 0; loop < num_relocs; loop++ ) {
             o_rel->section = (orl_sec_handle) orig_sec;
             if( reloc_sec->elf_file_hnd->flags & ORL_FILE_FLAG_64BIT_MACHINE ) {
-                rel64 = (Elf64_Rel *) rel;
-                fix_rel64_byte_order( reloc_sec->elf_file_hnd, rel64 );
-                o_rel->symbol = (orl_symbol_handle) &(reloc_sec->assoc.reloc.symbol_table->assoc.sym.symbols[ELF64_R_SYM( rel64->r_info )]);
-                o_rel->type = ElfConvertRelocType( reloc_sec->elf_file_hnd, ELF64_R_TYPE( rel64->r_info ) );
-                o_rel->offset = rel64->r_offset;
+                if ( reloc_sec->type == ORL_SEC_TYPE_RELOCS ) {
+                    rel64 = (Elf64_Rel *) rel;
+                    fix_rel64_byte_order( reloc_sec->elf_file_hnd, rel64 );
+                    o_rel->symbol = (orl_symbol_handle) &(reloc_sec->assoc.reloc.symbol_table->assoc.sym.symbols[ELF64_R_SYM( rel64->r_info )]);
+                    o_rel->type = ElfConvertRelocType( reloc_sec->elf_file_hnd, ELF64_R_TYPE( rel64->r_info ) );
+                    o_rel->offset = rel64->r_offset;
+                    o_rel->addend = 0;
+                    DEBUG(( DBG_OLD, "ElfCreateRelocs: 64-bit, elf: info=%h offset=%p orl: type=%d", rel64->r_info, rel64->r_offset, o_rel->type ));
+                } else {
+                    rela64 = (Elf64_Rela *) rel;
+                    fix_rela64_byte_order( reloc_sec->elf_file_hnd, rela64 );
+                    o_rel->symbol = (orl_symbol_handle) &(reloc_sec->assoc.reloc.symbol_table->assoc.sym.symbols[ELF64_R_SYM( rela64->r_info )]);
+                    o_rel->type = ElfConvertRelocType( reloc_sec->elf_file_hnd, ELF64_R_TYPE( rela64->r_info ) );
+                    o_rel->offset = rela64->r_offset;
+                    /* jwlink: elf addend is signed */
+                    //o_rel->addend = rela64->r_addend;
+                    o_rel->addend_signed = rela64->r_addend;
+                    /* jwlink: convertAMD64Reloc() often hasn't guessed correctly */
+                    if ( rela64->r_addend && o_rel->type == ORL_RELOC_TYPE_REL_32_NOADJ )
+                        o_rel->type = ORL_RELOC_TYPE_REL_32;
+                    DEBUG(( DBG_OLD, "ElfCreateRelocs: 64-bit, elf: addend=%p info=%h offset=%p orl: type=%d addend=%h", rela64->r_addend, rela64->r_info, rela64->r_offset, o_rel->type, o_rel->addend ));
+                }
             } else {
-                rel32 = (Elf32_Rel *) rel;
-                fix_rel_byte_order( reloc_sec->elf_file_hnd, rel32 );
-                o_rel->symbol = (orl_symbol_handle) &(reloc_sec->assoc.reloc.symbol_table->assoc.sym.symbols[ELF32_R_SYM( rel32->r_info )]);
-                o_rel->type = ElfConvertRelocType( reloc_sec->elf_file_hnd, ELF32_R_TYPE( rel32->r_info ) );
-                o_rel->offset = rel32->r_offset;
+                if( reloc_sec->type == ORL_SEC_TYPE_RELOCS ) {
+                    rel32 = (Elf32_Rel *) rel;
+                    fix_rel_byte_order( reloc_sec->elf_file_hnd, rel32 );
+                    o_rel->symbol = (orl_symbol_handle) &(reloc_sec->assoc.reloc.symbol_table->assoc.sym.symbols[ELF32_R_SYM( rel32->r_info )]);
+                    o_rel->type = ElfConvertRelocType( reloc_sec->elf_file_hnd, ELF32_R_TYPE( rel32->r_info ) );
+                    o_rel->offset = rel32->r_offset;
+                    o_rel->addend = 0;
+                    DEBUG(( DBG_OLD, "ElfCreateRelocs: 32-bit, elf: info=%h offset=%h orl: type=%d", rel32->r_info, rel32->r_offset, o_rel->type ));
+                } else {
+                    rela32 = (Elf32_Rela *) rel;
+                    fix_rela_byte_order( reloc_sec->elf_file_hnd, rela32 );
+                    o_rel->symbol = (orl_symbol_handle) &(reloc_sec->assoc.reloc.symbol_table->assoc.sym.symbols[ELF32_R_SYM( rela32->r_info )]);
+                    o_rel->type = ElfConvertRelocType( reloc_sec->elf_file_hnd, ELF32_R_TYPE( rela32->r_info ) );
+                    o_rel->offset = rela32->r_offset;
+                    o_rel->addend = rela32->r_addend;
+                    DEBUG(( DBG_OLD, "ElfCreateRelocs: 32-bit, elf: addend=%h info=%h offset=%h orl: type=%d addend=%h", rela32->r_addend, rela32->r_info, rela32->r_offset, o_rel->type, o_rel->addend ));
+                }
             }
-            o_rel->addend = 0;
             o_rel->frame = NULL;
             rel += reloc_sec->entsize;
             o_rel++;
         }
         break;
-    case ORL_SEC_TYPE_RELOCS_EXPADD:
-        DEBUG(( DBG_OLD, "ElfCreateRelocs(ORL_SEC_TYPE_RELOCS_EXPADD) enter"));
+#if 0
+    case ORL_SEC_TYPE_RELOCS_EXPADD: /* section contains relocs with addend (.rela) */
         num_relocs = reloc_sec->size / reloc_sec->entsize;
         reloc_sec->assoc.reloc.relocs = (orl_reloc *) _ClientSecAlloc( reloc_sec, sizeof( orl_reloc ) * num_relocs );
         if( reloc_sec->assoc.reloc.relocs == NULL )
@@ -536,16 +564,6 @@ orl_return ElfCreateRelocs( elf_sec_handle orig_sec, elf_sec_handle reloc_sec )
                 if ( rela64->r_addend && o_rel->type == ORL_RELOC_TYPE_REL_32_NOADJ )
                     o_rel->type = ORL_RELOC_TYPE_REL_32;
                 DEBUG(( DBG_OLD, "ElfCreateRelocs: 64-bit, elf: addend=%p info=%h offset=%p orl: type=%d addend=%h", rela64->r_addend, rela64->r_info, rela64->r_offset, o_rel->type, o_rel->addend ));
-#if 0
-                /* jwlink: orl addend is unsigned, but elf addend is signed; negative addends -1 - -5 will
-                 * become special relocs
-                 */
-                if ( rela64->r_addend < 0 && rela64->r_addend >= -6 && ELF64_R_TYPE( rela64->r_info ) == R_X86_64_PC32 ) {
-                    DEBUG(( DBG_OLD, "ElfCreateRelocs: addend=%d info=%h - special conversion", rela64->r_addend, rela64->r_info ));
-                    o_rel->type = ORL_RELOC_TYPE_REL_32_ADJ1 + ( - rela64->r_addend - 1 );
-                    o_rel->addend = 0;
-                }
-#endif
             } else {
                 rela32 = (Elf32_Rela *) rel;
                 fix_rela_byte_order( reloc_sec->elf_file_hnd, rela32 );
@@ -553,12 +571,14 @@ orl_return ElfCreateRelocs( elf_sec_handle orig_sec, elf_sec_handle reloc_sec )
                 o_rel->type = ElfConvertRelocType( reloc_sec->elf_file_hnd, ELF32_R_TYPE( rela32->r_info ) );
                 o_rel->offset = rela32->r_offset;
                 o_rel->addend = rela32->r_addend;
+                DEBUG(( DBG_OLD, "ElfCreateRelocs: 32-bit, elf: addend=%h info=%h offset=%h orl: type=%d addend=%h", rela32->r_addend, rela32->r_info, rela32->r_offset, o_rel->type, o_rel->addend ));
             }
             o_rel->frame = NULL;
             rel += reloc_sec->entsize;
             o_rel++;
         }
         break;
+#endif
     default:
         break;
     }

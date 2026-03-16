@@ -29,7 +29,6 @@
 *
 ****************************************************************************/
 
-
 #include "wlib.h"
 
 static libfile fileList;
@@ -207,6 +206,18 @@ void LibClose( libfile lio )
     MemFreeGlobal( lio->name );
     MemFreeGlobal( lio );
 }
+
+#ifdef __UNIX__
+#define tell( x ) lseek( x, 0, SEEK_CUR )
+long filelength( int io )
+{
+	long rc;
+	long oldpos = tell( io );
+	rc = lseek( io, 0, SEEK_END );
+	lseek( io, oldpos, SEEK_SET );
+	return rc;
+}
+#endif
 
 void LibSeek( libfile lio, long where, int whence )
 {

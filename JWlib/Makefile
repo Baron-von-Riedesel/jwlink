@@ -20,21 +20,22 @@ wlib_autodepends = .AUTODEPEND
 BOUT=..\build
 !if $(debug)
 extra_c_flags += -D__DEBUG__
-OUTD=$(BOUT)\jwlibWD
+outd_suffix=D
 cflags = -od -d2 -w3
 !else
-OUTD=$(BOUT)\jwlibWR
+outd_suffix=R
 cflags = -ox -s -DNDEBUG
 !endif
+
+OUTD=$(BOUT)\jwlibW$(outd_suffix)
 
 !if $(DOS)
 dos_target = $(OUTD)\jwlibd.exe
 !endif
 
+jwlib_trmem = 0
 
-wlib_trmem = 0
-
-orl_dir      = ../build/osi386WR
+orl_dir      = ../build/jwlinkW$(outd_suffix)
 watcom_dir   = ../watcom
 lib_misc_dir = ../lib_misc
 
@@ -51,11 +52,12 @@ common_objs = &
     $(OUTD)/implib.obj   $(OUTD)/elfobjs.obj  $(OUTD)/orlrtns.obj  &
     $(OUTD)/memfuncs.obj $(OUTD)/ideentry.obj $(OUTD)/idedrv.obj   &
     $(OUTD)/idemsgfm.obj $(OUTD)/idemsgpr.obj $(OUTD)/maindrv.obj  &
-!if $(wlib_trmem)
-    $(OUTD)/trmemcvr.obj &
-!endif
     $(OUTD)/demangle.obj $(OUTD)/omfutil.obj  $(OUTD)/coffwrt.obj &
     $(OUTD)/inlib.obj    $(OUTD)/debug.obj
+
+!if $(jwlib_trmem)
+common_objs +=$(OUTD)/trmemcvr.obj
+!endif
 
 comp_objs_exe = $(common_objs)
 
@@ -75,7 +77,7 @@ extra_c_flags += -DIDE_PGM
 inc_dirs = -Ih -I"../orl/h" -I"$(lib_misc_dir)/h" -I"$(watcom_dir)/H" -I$(WATCOM)\H
 
 .c{$(OUTD)}.obj: $($(proj_name)_autodepends)
-	@$(WATCOM)\binnt\wcc386 -q -zc -bc -bt=nt $(cflags) $(extra_c_flags) $(inc_dirs) -fo$@ $[@
+	@$(WATCOM)\binnt\wcc386 -q -bc -bt=nt $(cflags) $(extra_c_flags) $(inc_dirs) -fo$@ $[@
 
 ALL: $(BOUT) $(OUTD) $(OUTD)/jwlib.exe $(dos_target)
 

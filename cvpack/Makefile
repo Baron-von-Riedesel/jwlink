@@ -46,7 +46,7 @@ object_files =  &
 	$(OUTD)\typemap.obj  $(OUTD)\typearay.obj  $(OUTD)\typercrd.obj  $(OUTD)\common.obj
 
 .cpp{$(OUTD)}.obj: $($(proj_name)_autodepends)
-	@$(WATCOM)\binnt\wpp386 -zq -w4 -we -oaxt -DNDEBUG -mf -zc -bc -bt=nt $(extra_cpp_flags) $(inc_dirs) -fo$@ $[@
+	@$(WATCOM)\binnt\wpp386 -zq -w4 -we -oaxt -DNDEBUG -mf -bc -bt=nt $(extra_cpp_flags) $(inc_dirs) -fo$@ $[@
 
 .cpp : $(cpp_dir)
 .hpp : $(h_dir)
