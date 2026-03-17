@@ -1,9 +1,6 @@
 
 # Makefile to create JWlink.exe (Win32) and JWLinkd.exe (DOS)
 #
-# This depends on the following projects:
-# orl, dwarf, sdk/rc/wres ( and optionally trmem )
-#
 # Note: the debug version has 2 additional commands
 # - XDBG=n - debug log ( usually n is 2 )
 # - INTDBG - dump symbol table

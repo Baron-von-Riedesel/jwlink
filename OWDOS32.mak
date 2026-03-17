@@ -41,25 +41,7 @@ wlink_autodepends = .AUTODEPEND
 # common files
 #
 common_objs = &
-    $(OUTD)/autogrp.obj   $(OUTD)/carve.obj     $(OUTD)/wcomdef.obj   $(OUTD)/cmd16m.obj   &
-    $(OUTD)/cmdall.obj    $(OUTD)/cmddos.obj    $(OUTD)/cmdelf.obj    $(OUTD)/cmdline.obj  &
-    $(OUTD)/cmdnov.obj    $(OUTD)/cmdos2.obj    $(OUTD)/cmdphar.obj   $(OUTD)/cmdtable.obj &
-    $(OUTD)/cmdutils.obj  $(OUTD)/cmdqnx.obj    $(OUTD)/dbgall.obj    $(OUTD)/dbgcv.obj    &
-    $(OUTD)/dbgdwarf.obj  $(OUTD)/dbginfo.obj   $(OUTD)/debug.obj     $(OUTD)/distrib.obj  &
-    $(OUTD)/global.obj    $(OUTD)/hash.obj      $(OUTD)/impexp.obj    $(OUTD)/libr.obj     &
-    $(OUTD)/libsupp.obj   $(OUTD)/linkutil.obj  $(OUTD)/load16m.obj   $(OUTD)/loaddos.obj  &
-    $(OUTD)/loadelf.obj   $(OUTD)/loadelf2.obj  $(OUTD)/loadfile.obj  $(OUTD)/loadflat.obj &
-    $(OUTD)/loadnov.obj   $(OUTD)/loados2.obj   $(OUTD)/loadpe.obj    $(OUTD)/loadphar.obj &
-    $(OUTD)/loadqnx.obj   $(OUTD)/loadraw.obj   $(OUTD)/lsymtab.obj   $(OUTD)/mapio.obj    &
-    $(OUTD)/mem.obj       $(OUTD)/mixcache.obj  $(OUTD)/msg.obj       $(OUTD)/objio.obj    &
-    $(OUTD)/obj2supp.obj  $(OUTD)/objcalc.obj   $(OUTD)/objfree.obj   $(OUTD)/objnode.obj  &
-    $(OUTD)/objomf.obj    $(OUTD)/objorl.obj    $(OUTD)/objpass1.obj  $(OUTD)/objpass2.obj &
-    $(OUTD)/objstrip.obj  $(OUTD)/omfreloc.obj  $(OUTD)/overlays.obj  $(OUTD)/ovlsupp.obj  &
-    $(OUTD)/permdata.obj  $(OUTD)/procfile.obj  $(OUTD)/reloc.obj     $(OUTD)/ring.obj     &
-    $(OUTD)/ring2.obj     $(OUTD)/salloc.obj    $(OUTD)/spillio.obj   $(OUTD)/strtab.obj   &
-    $(OUTD)/symmem.obj    $(OUTD)/symtrace.obj  $(OUTD)/toc.obj       $(OUTD)/wlink.obj    &
-    $(OUTD)/wlnkmsg.obj   $(OUTD)/cmdraw.obj    &
-    $(OUTD)/demangle.obj  &
+!include owmod.inc
 
 !ifeq jwlink_trmem 1
 common_objs += $(OUTD)/$(trmem_objs)

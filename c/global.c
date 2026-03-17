@@ -61,6 +61,7 @@ char *_strupr( char *str )
 char *ultoa( unsigned long val, char *s, int radix )
 {
     switch (radix) {
+    case  8:  sprintf( s, "%lo", val ); break;
     case 10:  sprintf( s, "%lu", val ); break;
     case 16:  sprintf( s, "%lx", val ); break;
     default: printf("ultoa: unsupported radix %u\n", radix );

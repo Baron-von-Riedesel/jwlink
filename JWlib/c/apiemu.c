@@ -25,9 +25,7 @@
 *  ========================================================================
 *
 *  Description: API emulations:
-*               gcc:     _makepath(), _splitpath(), _fullpath(), strupr()
-*               OW:      CharUpperA()
-*               PellesC: _makepath()
+*               gcc:     _makepath(), _splitpath(), _fullpath(), ultoa()
 *
 ****************************************************************************/
 
@@ -315,8 +313,9 @@ char *strupr( char *str )
 char *ultoa( unsigned long val, char *s, int radix )
 {
     switch (radix) {
-    case 10:  sprintf( s, "%lu", val ); break;
-    case 16:  sprintf( s, "%lx", val ); break;
+    case  8: sprintf( s, "%lo", val ); break;
+    case 10: sprintf( s, "%lu", val ); break;
+    case 16: sprintf( s, "%lx", val ); break;
     default: printf("ultoa: unsupported radix %u\n", radix );
     }
     return s;
@@ -325,6 +324,7 @@ char *ultoa( unsigned long val, char *s, int radix )
 char *utoa( unsigned int val, char *s, int radix )
 {
     switch (radix) {
+    case  8:  sprintf( s, "%o", val ); break;
     case 10:  sprintf( s, "%u", val ); break;
     case 16:  sprintf( s, "%x", val ); break;
     default: printf("utoa: unsupported radix %u\n", radix );
