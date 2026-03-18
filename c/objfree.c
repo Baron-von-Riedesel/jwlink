@@ -178,26 +178,35 @@ void CleanLinkStruct( void )
 /* free all structures */
 {
     if( Root == NULL ) return;  /* haven't finished initializing */
+    DEBUG(( DBG_OLD, "CleanLinkStruct() enter" ));
     BurnLibs();
+    DEBUG(( DBG_OLD, "CleanLinkStruct(): calling 1. FreeFiles()" ));
     FreeFiles( ObjLibFiles );
+    DEBUG(( DBG_OLD, "CleanLinkStruct(): calling 2. FreeFiles()" ));
     FreeFiles( Root->files );
     ObjLibFiles = NULL;
     Root->files = NULL;
     if( !(LinkFlags & INC_LINK_FLAG) ) {
+        DEBUG(( DBG_OLD, "CleanLinkStruct(): calling FreeMods()" ));
         FreeMods( LibModules );
     }
     if( SymFileName != NULL ) {
         _LnkFree( SymFileName );
     }
+#if 0 /* osname is just a (const) string, not dynamically allocated */
     if( FmtData.osname != NULL ) {
         _LnkFree( FmtData.osname );
     }
+#endif
     if (FmtData.resource != NULL) {
         _LnkFree( FmtData.resource );
     }
+    DEBUG(( DBG_OLD, "CleanLinkStruct(): calling FreeRelocInfo()" ));
     FreeRelocInfo();
+    DEBUG(( DBG_OLD, "CleanLinkStruct(): calling FreeGroups()" ));
     FreeGroups( Groups );
     FreeGroups( AbsGroups );
+    DEBUG(( DBG_OLD, "CleanLinkStruct(): calling FreeSections()" ));
     Groups = NULL;
     AbsGroups = NULL;
     FreeSections( Root );

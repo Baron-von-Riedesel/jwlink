@@ -996,7 +996,7 @@ void IterateModRelocs( unsigned offset, unsigned sizeleft,
     char        *fixoff;
     unsigned    size;
 
-	DEBUG(( DBG_OLD, "IterateModRelocs(ofs=%h, sizeleft=%u) enter", offset, sizeleft ))
+	DEBUG(( DBG_OLD, "IterateModRelocs(ofs=%h, sizeleft=%d) enter", offset, sizeleft ))
     fixoff = ReadRelocs + offset;
     while( sizeleft > 0 ) {
         size = fn( fixoff );

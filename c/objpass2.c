@@ -57,18 +57,23 @@ void ObjPass2( void )
     IncP2Start();
     WalkAllSects( DBIP2Start );
     CurrSect = Root;/*  TAI */
+    DEBUG(( DBG_BASE, "ObjPass2(): calling PModList( Modules )" ));
     PModList( Root->mods );
+    DEBUG(( DBG_BASE, "ObjPass2(): calling OvlPass2()" ));
     OvlPass2();
     if( ( FmtData.type & MK_OVERLAYS ) && FmtData.u.dos.distribute ) {
         ProcDistMods();
     } else {
+        DEBUG(( DBG_BASE, "ObjPass2(): calling PModList( LibModules )" ));
         CurrSect = Root;
         PModList( LibModules );
     }
+    DEBUG(( DBG_BASE, "ObjPass2(): calling WriteUndefined()" ));
     WriteUndefined();
     if( FmtData.type & MK_OVERLAYS ) {
         SetOvlStartAddr();
     }
+    DEBUG(( DBG_BASE, "ObjPass2(): calling WalkAllSects()" ));
     WalkAllSects( DBIFini );
     DEBUG(( DBG_BASE, "ObjPass2() exit" ));
 }
@@ -89,10 +94,12 @@ void PModule( mod_entry *obj )
     if( !( obj->modinfo & MOD_NEED_PASS_2 ) )
         return;
     CurrMod = obj;
-	DEBUG(( DBG_OLD, "PModule(%s): calling IterateModRelocs( %p, size=%h, IncExecRelocs )", obj->name, obj->relocs, obj->sizerelocs ))
+	DEBUG(( DBG_OLD, "PModule(%s): calling IterateModRelocs( relocs=%h, size=%d, IncExecRelocs )", obj->name, obj->relocs, obj->sizerelocs ));
     IterateModRelocs( CurrMod->relocs, CurrMod->sizerelocs, IncExecRelocs );
+	DEBUG(( DBG_OLD, "PModule(%s): calling DBIGenModule()", obj->name ));
     DBIGenModule();
     CheckStop();
+	DEBUG(( DBG_OLD, "PModule(%s): exit", obj->name ));
 }
 
 bool LoadObj( segdata *seg )

@@ -316,7 +316,7 @@ unsigned long IncPass1( void )
     Ring2Walk( publist, DoIncSymbol );
     relocs = CurrMod->relocs;
     PermStartMod( CurrMod );    // destroys currmod->relocs
-	DEBUG(( DBG_OLD, "IncPass1 %s: calling IterateModRelocs( %h, size=%h, IncSaveRelocs )", CurrMod->name, relocs, CurrMod->sizerelocs ))
+	DEBUG(( DBG_OLD, "IncPass1 %s: calling IterateModRelocs( relocs=%d, size=%d, IncSaveRelocs )", CurrMod->name, relocs, CurrMod->sizerelocs ))
     IterateModRelocs( relocs, CurrMod->sizerelocs, IncSaveRelocs );
     return( 0 );
 }

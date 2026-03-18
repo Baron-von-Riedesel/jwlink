@@ -129,14 +129,19 @@ void FiniLoadFile( void )
 /* terminate writing of load file */
 {
     CurrSect = Root;
+    DEBUG(( DBG_OLD, "FiniLoadFile(): calling FreeSavedRelocs()" ));
     FreeSavedRelocs();
+    DEBUG(( DBG_OLD, "FiniLoadFile(): calling OpenOutFiles()" ));
     OpenOutFiles();
+    DEBUG(( DBG_OLD, "FiniLoadFile(): calling SetupImpLib()" ));
     SetupImpLib();
     if ( FmtData.output_raw ) {         // These must come first because
+        DEBUG(( DBG_OLD, "FiniLoadFile(): calling BinOutput()" ));
         BinOutput();                    //    they apply to all formats
     } else if ( FmtData.output_hex ) {  //    and override native output
         HexOutput();
     } else if( FmtData.type & MK_REAL_MODE ) {
+        DEBUG(( DBG_OLD, "FiniLoadFile(): calling FiniDOSLoadFile()" ));
         FiniDOSLoadFile();
 #ifdef _OS2
     } else if( IS_PPC_OS2 ) {
@@ -145,6 +150,7 @@ void FiniLoadFile( void )
     } else if( FmtData.type & MK_OS2_FLAT ) {
         FiniOS2FlatLoadFile();
     } else if( FmtData.type & MK_PE ) {
+        DEBUG(( DBG_OLD, "FiniLoadFile(): calling FiniPELoadFile()" ));
         FiniPELoadFile();
     } else if( FmtData.type & MK_OS2_16BIT ) {
         FiniOS2LoadFile();
@@ -171,12 +177,15 @@ void FiniLoadFile( void )
 #endif
 #ifdef _RAW
     } else if( FmtData.type & MK_RAW ) {
+        DEBUG(( DBG_OLD, "FiniLoadFile(): calling FiniRawLoadFile()" ));
         FiniRawLoadFile();
 #endif
     }
+    DEBUG(( DBG_OLD, "FiniLoadFile(): calling MapSizes()" ));
     MapSizes();
     CloseOutFiles();
     DoCVPack();
+    DEBUG(( DBG_OLD, "FiniLoadFile(): exit" ));
 }
 
 #if defined( __UNIX__ ) && !defined(__WATCOMC__)

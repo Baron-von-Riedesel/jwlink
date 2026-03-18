@@ -14,12 +14,15 @@ bitopts = -DLONG_IS_64BITS
 #bitopts = -m32
 
 ifeq ($(DEBUG),0)
-extra_c_flags = -DNDEBUG -O2 -Wno-error=incompatible-pointer-types -Wno-error=implicit-function-declaration
+extra_c_flags = -DNDEBUG -O2
 outd_suffix=R
 else
 extra_c_flags = -D_INT_DEBUG -g
 outd_suffix=D
 endif
+
+# activate for gcc 14+ if certain errors are still to be emitted as warnings!
+#extra_c_flags += -Wno-error=incompatible-pointer-types -Wno-error=implicit-function-declaration
 
 OUTD=build/jwlinkL$(outd_suffix)
 

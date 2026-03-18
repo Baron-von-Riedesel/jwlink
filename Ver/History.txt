@@ -6,6 +6,7 @@
    -  format elf64: fixed, was broken.
    -  format elf: fixed library handling.
    -  GccUnix.mak: fixed, was in an unusable state.
+   -  jwlib: fixed GccUnix.mak.
    -  dwarf section .debug_abbrev: terminating 0,0 entry was missing.
    -  dwarf section .debug_aranges: padding bytes after header were missing.
 

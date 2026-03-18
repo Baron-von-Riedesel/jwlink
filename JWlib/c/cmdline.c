@@ -288,14 +288,14 @@ static char *ParseOption( char *c, char *buff )
         break;
     case 'f':
         switch( my_tolower( *c++ ) ) {
-        case 'm':
+        case 'm': /* -fm MLIB format library */
             if( Options.libtype != WL_LTYPE_NONE ) {
                 DuplicateOption( start );
             }
             Options.libtype = WL_LTYPE_MLIB;
             Options.elf_found = 1;
             break;
-        case 'a':
+        case 'a': /* -fa AR format library ( -fab, -fac, -fag ) */
             switch( my_tolower( *c++ ) ) {
             case 'b':
                 libformat = AR_FMT_BSD;
@@ -319,7 +319,7 @@ static char *ParseOption( char *c, char *buff )
             Options.libtype = WL_LTYPE_AR;
             Options.coff_found = 1;
             break;
-        case 'o':
+        case 'o': /* -fo OMF format library */
             if( Options.libtype != WL_LTYPE_NONE ) {
                 DuplicateOption( start );
             }

@@ -202,6 +202,7 @@ static void ResetSubSystems( void )
 static void CleanSubSystems( void )
 /*********************************/
 {
+    DEBUG(( DBG_OLD, "CleanSubSystems enter" ));
     if( MapFile != NIL_HANDLE ) {
         QClose( MapFile, MapFName );
         MapFile = NIL_HANDLE;
@@ -209,20 +210,24 @@ static void CleanSubSystems( void )
     FreeOutFiles();
     _LnkFree( MapFName );
     BurnSystemList();
+    DEBUG(( DBG_OLD, "CleanSubSystems: calling FreeList( LibPath )" ));
     FreeList( LibPath );
     CloseSpillFile();
     CleanTraces();
     FreePaths();
     FreeUndefs();
     FreeLocalImports();
+    DEBUG(( DBG_OLD, "CleanSubSystems: calling CleanLoadFile()" ));
     CleanLoadFile();
     CleanLinkStruct();
     FreeFormatStuff();
     FreeObjInfo();
+    DEBUG(( DBG_OLD, "CleanSubSystems: calling FreeVirtMem()" ));
     FreeVirtMem();
     CleanToc();
     CleanSym();
     CleanPermData();
+    DEBUG(( DBG_OLD, "CleanSubSystems exit" ));
 }
 
 void FiniSubSystems( void )
@@ -280,7 +285,7 @@ static void DoLink( char *cmdline )
     ObjPass2();
     CheckErr();
     FiniLoadFile();
-    WritePermData();
+    WritePermData(); /* if incremental linking... */
     BuildImpLib();
     EndTime();
 #ifndef __OSI__
