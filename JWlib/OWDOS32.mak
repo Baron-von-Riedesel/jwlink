@@ -4,7 +4,9 @@
 
 proj_name = JWlib
 
+!ifndef WATCOM
 WATCOM=\OW20
+!endif
 
 !ifndef debug
 debug=0
@@ -16,13 +18,15 @@ wlib_autodepends = .AUTODEPEND
 
 BOUT=..\build
 !if $(debug)
-extra_c_flags += -D__DEBUG__ -D__WATCOM_LFN__
+extra_c_flags += -D__DEBUG__
 outd_suffix=D
 cflags = -od -d2 -w3
 !else
 outd_suffix=R
-cflags = -ox -s -DNDEBUG -D__WATCOM_LFN__
+cflags = -ox -s -DNDEBUG
 !endif
+
+cflags += -D__WATCOM_LFN__
 
 OUTD=$(BOUT)\jwlibD$(outd_suffix)
 
@@ -70,7 +74,7 @@ extra_c_flags += -DIDE_PGM
 inc_dirs = -Ih -I"../orl/h" -I"$(lib_misc_dir)/h" -I"$(watcom_dir)/H" -I$(WATCOM)\H
 
 .c{$(OUTD)}.obj: $($(proj_name)_autodepends)
-	$(WATCOM)\binnt\wcc386 -q -bc -bt=dos $(cflags) $(extra_c_flags) $(inc_dirs) -fo$@ $[@
+	@$(WATCOM)\binnt\wcc386 -q -bc -bt=dos $(cflags) $(extra_c_flags) $(inc_dirs) -fo$@ $[@
 
 ALL: $(BOUT) $(OUTD) $(OUTD)/jwlibd.exe
 
@@ -85,9 +89,9 @@ $(OUTD)/$(proj_name)d.exe : $(depends_exe)
 f {$(comp_objs_exe)}
 libpath $(WATCOM)\lib386\dos
 libpath $(WATCOM)\lib386
-LibFile cstrtdhr.obj
+LibFile cstrtdhr.obj, inirmlfn.obj
 lib { $(xlibs) }
-op q, stack=0x10000, heapsize=0x1000, stub=loadpero.bin, map=$^*, noredefs
+op q, stack=0x10000, heapsize=0x1000, map=$^*, stub=loadpero.bin
 disable 171
 !ifndef WLINK
 segment CONST readonly

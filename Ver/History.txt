@@ -1,5 +1,5 @@
 
-   changes v19beta20, 03/2026:
+   changes v2.0, 03/2026:
 
    -  format elf: section .symtab, field sh_info wasn't set if there was no
       global symbol at all.
@@ -10,7 +10,7 @@
    -  dwarf section .debug_abbrev: terminating 0,0 entry was missing.
    -  dwarf section .debug_aranges: padding bytes after header were missing.
 
-   changes v19beta19, 10/2025:
+   changes v1.9beta19, 10/2025:
 
    -  fixed bug for COMDAT introduced in beta18.
    -  Makefile: replaced (deprecated) libfile CSTRTWHX.OBJ by InitW3OW.OBJ.
@@ -18,51 +18,51 @@
    -  fixed regression since ?: for win pe, transfer code needed for calling
       imports with PC-relative addressing wasn't added.
 
-   changes v19beta18, 04/2025:
+   changes v1.9beta18, 04/2025:
 
    -  support for COMDAT non-explicite records
    -  implib: remove name extension for NE (OS/2 & Win16)
 
-   changes v19beta17, 04/2021:
+   changes v1.9beta17, 04/2021:
 
    -  fixed: help message: [NO]Caseexact changed to [NO]CASEexact.
    -  help display: added DPMI option to FORMAT WINDOWS 
 
-   changes v19beta16, 11/2020:
+   changes v1.9beta16, 11/2020:
 
    -  fixed: in OMF segment fixups, target displacements caused invalid
       code being created. Now target displacements are ignored for segment 
       fixups, and a warning is displayed.
 
-   changes v19beta15, 06/2020:
+   changes v1.9beta15, 06/2020:
 
    -  NODOSSEG option added; this is because for PE binaries, DOSSEG is default
       now, and may be disabled with this new option.
 
-   changes v19beta14, 08/2018:
+   changes v1.9beta14, 08/2018:
 
    -  data group name for COFF read/write data changed from DGROUP to .data.
    -  PE binaries: automatic "dosseg" segment ordering disabled.
 
-   changes v19beta13, 08/2013:
+   changes v1.9beta13, 08/2013:
 
    -  version 19beta12 contained a nasty bug, that may have made it ignore
       fixups in read-only sections.
 
-   changes v19beta12, 08/2013:
+   changes v1.9beta12, 08/2013:
 
    -  attribute SEGMENT READONLY supported for Win32/Win64.
    -  read-only segments are added to ".rdata" and removed from DGROUP for
       PE format.
 
-   changes v19beta11, 04/2013:
+   changes v1.9beta11, 04/2013:
 
    -  bugfix, 64-bit COFF: a GPF may have occured if there were externals that
       did reference the IAT directly and others that caused transfer code to
       be generated.
    -  bugfix: module name in import directive was supposed to contain no dot.
 
-   changes v19beta10, 04/2013:
+   changes v1.9beta10, 04/2013:
 
    -  bugfix: 32-bit flag was never set in Win16 NE segment flags.
    -  bugfix: DATA flag in Win16 NE segment flags had higher priority than 
@@ -74,36 +74,36 @@
       in relocation' is displayed ( test-case: ML with -Zi ).
    -  bugfix, 64-bit COFF: relocation type IMAGE_REL_AMD64_SECTION was rejected.
 
-   changes v19beta9, 12/2012:
+   changes v1.9beta9, 12/2012:
 
    -  bugfix: JWlib was incapable to make 64-bit coff import libraries.
 
-   changes v19beta8, 09/2012:
+   changes v1.9beta8, 09/2012:
 
    -  Wlib renamed to JWlib to avoid confusion with the original OW Wlib.
 
-   changes v19beta7, 09/2012:
+   changes v1.9beta7, 09/2012:
 
    -  bugfix: resource language ID wasn't set, resulting in just
       one resource with default language stored in the binary.
 
-   changes v19beta6, 07/2012:
+   changes v1.9beta6, 07/2012:
 
    -  bugfix: format RAW was inadvertently removed.
 
-   changes v19beta5, 06/2012:
+   changes v1.9beta5, 06/2012:
 
    -  bugfix: PE32+ binaries were linked incorrectly if the IAT was
       addressed directly by a call instruction.
 
-   changes v19beta4, 02/2012:
+   changes v1.9beta4, 02/2012:
 
    -  bugfix: in OMF modules, combine type STACK was ignored; the only way to
       define a stack segment was to set the segment's class name to "STACK". 
    -  bugfix: segments without class (class name == "") were grouped together,
       which may have caused problems (Oberon/M).
 
-   changes v19beta3, 07/2011:
+   changes v1.9beta3, 07/2011:
 
    -  support for PE32+ (Win64 binaries) added
    -  bugfix: image- and section-relative fixups won't make JWlink create
@@ -124,7 +124,7 @@
    -  new FUZZYEXPORT option.
    -  PE: unused entries in linker-generated segment "TRANSFER CODE" removed.
 
-  changes v19beta2, 09/2009:
+  changes v1.9beta2, 09/2009:
 
    -  new option KNOWEAS.
    -  JWlink won't force a DOS EXE's minimum stack size to 0x200.

@@ -9,7 +9,7 @@
 
 # the path of the Open Watcom root directory.
 !ifndef WATCOM
-WATCOM=\OW20
+WATCOM=\ow20
 !endif
 
 !ifndef DEBUG
