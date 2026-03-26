@@ -84,6 +84,7 @@ extern unsigned CalcMsgNum( unsigned );
 
 #define MAX_MSG_SIZE 512
 
-extern unsigned long    MaxErrors;
+//extern unsigned long    MaxErrors;
+extern uint_32          MaxErrors;
 extern byte             MsgFlags[];
 extern bool             BannerPrinted;

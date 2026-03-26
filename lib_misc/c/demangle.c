@@ -99,6 +99,10 @@
 #define WAT_FUN_PREFIX          'w'
 #define ASGN_FUN_PREFIX         'a'
 
+#ifdef __UNIX__
+#define __NO_STACK_CHECKING__
+#endif
+
 typedef char *(*realloc_fn_t)( char *, size_t );
 
 #define MAX_REPLICATE   10

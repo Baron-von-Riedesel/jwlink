@@ -1134,12 +1134,15 @@ unsigned long ORLPass1( void )
         }
         CurrMod->modinfo |= MOD_NEED_PASS_2;
         DEBUG((DBG_OLD, "objorl.ORLPass1(): calling ProcSegments" ));
-        ORLFileScan( filehdl, NULL, ProcSegments );
+        //ORLFileScan( filehdl, NULL, ProcSegments );
+        ORLFileScan( filehdl, 0, ProcSegments );
         IterateNodelist( SegNodes, AllocSeg, NULL );
         DEBUG((DBG_OLD, "objorl.ORLPass1(): calling ProcSymbols" ));
-        ORLFileScan( filehdl, NULL, ProcSymbols );
+        //ORLFileScan( filehdl, NULL, ProcSymbols );
+        ORLFileScan( filehdl, 0, ProcSymbols );
         ScanImported();
-        ORLFileScan( filehdl, NULL, ProcP1Specific );
+        //ORLFileScan( filehdl, NULL, ProcP1Specific );
+        ORLFileScan( filehdl, 0, ProcP1Specific );
         IterateNodelist( SegNodes, DefNosymComdats, NULL );
     }
     FiniFile( filehdl, CurrMod->f.source );

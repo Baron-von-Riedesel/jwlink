@@ -29,7 +29,6 @@
 *
 ****************************************************************************/
 
-
 #include "coffentr.h"
 #include "coffflhn.h"
 #include "cofflwlv.h"
@@ -91,7 +90,9 @@ orl_return COFFENTRY CoffFileFini( coff_file_handle coff_file_hnd )
     return( CoffRemoveFileLinks( coff_file_hnd ) );
 }
 
-orl_return COFFENTRY CoffFileScan( coff_file_handle coff_file_hnd, char *desired, orl_sec_return_func return_func )
+/* param 'desired' is NULL */
+
+orl_return COFFENTRY CoffFileScan( coff_file_handle coff_file_hnd, unsigned long desired, orl_sec_return_func return_func )
 /*****************************************************************************************************************/
 {
     orl_hash_data_struct *              data_struct;

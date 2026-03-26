@@ -287,7 +287,9 @@ unsigned long ORLENTRY ORLExportTableRVA(orl_file_handle orl_file_hnd)
     return rva;
 }
 
-orl_return ORLENTRY ORLFileScan( orl_file_handle orl_file_hnd, char *desired, orl_sec_return_func return_func )
+/* param 'desired' is NULL */
+
+orl_return ORLENTRY ORLFileScan( orl_file_handle orl_file_hnd, unsigned long desired, orl_sec_return_func return_func )
 /*************************************************************************************************************/
 {
     switch( orl_file_hnd->type ) {

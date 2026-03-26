@@ -67,15 +67,11 @@ extern void *CarveAlloc( carve_t cv );
 extern void *CarveZeroAlloc( carve_t cv );
 extern void CarveFree( carve_t cv, void *elm );
 
-#define MK_INDEX( b, o )        (((b)<<16)|(o))
-#define GET_BLOCK( i )          (((i)>>16)&0x0ffff)
-#define GET_OFFSET( i )         ((i)&0x0ffff)
-
 // block 0 is reserved for special indices
 
 enum {
-    CARVE_NULL_INDEX    = MK_INDEX( 0, 0 ),
-    CARVE_INVALID_INDEX = MK_INDEX( 0, 1 ),
+    CARVE_NULL_INDEX    = 0, //MK_INDEX( 0, 0 ),
+    CARVE_INVALID_INDEX = 1, //MK_INDEX( 0, 1 ),
 };
 
 extern void *   CarveGetIndex( carve_t, void * );

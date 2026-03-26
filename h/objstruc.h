@@ -253,7 +253,7 @@ typedef struct mod_entry {
         char            *fname;
     } f;
     char                *name;
-    unsigned_32         location;
+    unsigned long       location;
     symbol              *publist;
     SEGDATA             *segs;
     time_t              modtime;

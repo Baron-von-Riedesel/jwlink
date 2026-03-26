@@ -47,6 +47,10 @@
 
 #define _LinkerPrompt "JWLINK>"
 
+#ifdef __UNIX__
+char * _strupr( char * );
+#endif
+
 cmdfilelist      *CmdFile = NULL;
 
 /* Default File Extension array, see ldefext.h */
@@ -276,7 +280,8 @@ ord_state getatol( unsigned_32 *pnt )
 {
     char            *p;
     unsigned        len;
-    unsigned long   value;
+    //unsigned long   value;
+    uint_32         value;
     unsigned        radix;
     bool            isvalid;
     bool            isdig;

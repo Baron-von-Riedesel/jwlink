@@ -45,6 +45,9 @@
 #include "loadfile.h"
 #include "loadnov.h"
 
+#ifdef __UNIX__
+char * _strupr( char * );
+#endif
 
 #define DUMMY_THREAD_NAME " LONG"
 

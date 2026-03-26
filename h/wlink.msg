@@ -92,7 +92,7 @@ pick(    MSG_MAP_DEFINING_MODULE,       "Module: %s(%s)" )
  *  General help screen.
  *  To start a new page, leave a line undefined or define an empty line.
  */
-pick(    MSG_GENERAL_HELP_0,    "usage: jwlink {directive}" )
+pick(    MSG_GENERAL_HELP_0,    "usage: jwlink {directive} ('jwlink -?' for detailed help)" )
 pick(    MSG_GENERAL_HELP_1,    "\ncommands valid for all executable formats:\n" )
 pick(    MSG_GENERAL_HELP_2,    "directive  ::= \"File\"        obj_spec{\",\"obj_spec}" )
 pick(    MSG_GENERAL_HELP_3,    "            | \"Name\"         exe_file" )

@@ -100,8 +100,7 @@ orl_return OMFENTRY OmfFileFini( omf_file_handle ofh )
 }
 
 
-orl_return OMFENTRY OmfFileScan( omf_file_handle ofh, char *desired,
-                                 orl_sec_return_func func )
+orl_return OMFENTRY OmfFileScan( omf_file_handle ofh, unsigned long desired, orl_sec_return_func func )
 {
     orl_hash_data_struct                *ds;
     omf_sec_handle                      sh;
@@ -111,7 +110,8 @@ orl_return OMFENTRY OmfFileScan( omf_file_handle ofh, char *desired,
     assert( ofh );
     assert( func );
 
-    if( desired == NULL ) {
+    //if( desired == NULL ) {
+    if( desired == 0 ) {
         /* global request */
         sh = ofh->first_sec;
         while( sh ) {

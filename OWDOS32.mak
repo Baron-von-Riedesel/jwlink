@@ -81,7 +81,7 @@ wres_more_objs = &
 inc_dirs = -IH -I$(watcom_dir)\H -I$(WATCOM)\H 
 
 !if $(DEBUG)
-cflags = -od -d2 -w3 -hc -D_INT_DEBUG -D__WATCOM_LFN__
+cflags = -od -d2 -w3 -wcd303 -hc -D_INT_DEBUG -D__WATCOM_LFN__
 !else
 cflags = -ox -s -DNDEBUG -D__WATCOM_LFN__
 !endif
@@ -131,7 +131,7 @@ extra_c_flags_ntio       = -I"$(wres_dir)/h"
 extra_c_flags_posixio    = -I"$(wres_dir)/h"
 extra_c_flags_linkio     = -I"$(wres_dir)/h"
 extra_c_flags_objorl     = -I"orl/h"
-extra_c_flags_orlstubs   = -I"orl/h"
+#extra_c_flags_orlstubs   = -I"orl/h"
 extra_c_flags_dbgdwarf   = -I"$(dwarf_dir)/h"
 !ifeq jwlink_trmem 1
 extra_c_flags_debug      = -DTRMEM

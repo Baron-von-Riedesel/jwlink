@@ -65,8 +65,14 @@ typedef struct {
          void          *pv_libmodidx;
      };
      unsigned_32        linkstate;      // value of LinkState
-     unsigned_32        exename;        // name of the .exe
-     unsigned_32        symname;        // name of the sym file
+     union {
+         unsigned_32    exename;        // name of the .exe
+         void          *pv_exename;
+     };
+     union {
+         unsigned_32    symname;        // name of the sym file
+         void          *pv_symname;
+     };
      unsigned_32        numdllsyms;     // OS/2&PE only: number of dll symbols
      unsigned_32        numexports;     // OS/2&PE only: number of exports
      union {

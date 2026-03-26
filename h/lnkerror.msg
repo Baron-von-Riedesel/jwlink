@@ -81,7 +81,7 @@ pick(    MSG_TOO_MANY_SELECTORS,    "too many selectors needed" )
 pick(    MSG_BAD_REC_TYPE,          "invalid record type 0x%x" )
 pick(    MSG_FRAME_INVALID,         "cannot reference address %A from frame %x" )
 pick(    MSG_BAD_TARG_OFF,          "target offset exceeds 64K at %a" )
-#ifdef _UNIX
+#ifdef __UNIX__
 pick(    MSG_PRESS_CTRL_Z,          "Press CTRL/D to finish" )
 #else
 pick(    MSG_PRESS_CTRL_Z,          "Press CTRL/Z and then RETURN to finish" )

@@ -176,7 +176,8 @@ bool ProcQNXHeapSize( void )
 /*********************************/
 {
     ord_state           ret;
-    unsigned long       value;
+    //unsigned long       value;
+    uint_32             value;
 
     if( !HaveEquals(0) ) return( FALSE );
     ret = getatol( &value );

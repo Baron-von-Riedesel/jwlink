@@ -602,7 +602,11 @@ void ResetSym( void )
     SymList = NULL;
     HeadSym = NULL;
     LastSym = NULL;
+#ifdef LONG_IS_64BITS
+    CmpRtn = (int (*)( const void *, const void *, size_t ))memicmp;
+#else
     CmpRtn = memicmp;
+#endif
     GetSymBlock();
     ClearHashPointers();
 }
@@ -768,7 +772,11 @@ void SetSymCase( void )
     if( LinkFlags & CASE_FLAG ) {
         CmpRtn = memcmp;
     } else {
+#ifdef LONG_IS_64BITS
+        CmpRtn = (int (*)( const void *, const void *, size_t ))memicmp;
+#else
         CmpRtn = memicmp;
+#endif
     }
 }
 

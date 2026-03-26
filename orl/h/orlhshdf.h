@@ -39,7 +39,14 @@ typedef enum {
     ORL_HASH_NUMBER
 } orl_hash_table_type;
 
+/* type of orl_hash_value must be able to hold a pointer */
+#ifdef __UNIX__
+#include <stdint.h>
+//typedef unsigned long   orl_hash_value;
+typedef uintptr_t       orl_hash_value;
+#else
 typedef uint_32         orl_hash_value;
+#endif
 typedef uint_32         orl_hash_table_size;
 typedef void *          orl_hash_data;
 

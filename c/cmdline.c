@@ -196,7 +196,7 @@ void DoCmdFile( char *fname )
 #else
     } else if( *fname == '-' || *fname == '/' ) {
 #endif
-        if( *(fname + 1) == '?' ) {
+        if( *(fname + 1) == '?' || *(fname + 1) == 'h' ) {
             Token.next = fname + 2;     // skip /?
             Help();
         }
@@ -453,8 +453,10 @@ static void DisplayOptions( void )
 
     WriteGenHelp();
     for ( i = 0; i < NUMHTOPICS; i += 2 ) {
+#ifndef __UNIX__
         if ( i && ( CmdFlags & CF_TO_STDOUT ) )
             PressKey();
+#endif
         WriteHelp( htopics[i], htopics[i+1], CmdFlags & CF_TO_STDOUT );
     }
 }
@@ -573,7 +575,9 @@ static void WriteHelp( unsigned first_ln, unsigned last_ln, bool prompt )
         Msg_Get( (int) first_ln, msg_buffer );
         if( previous_null ) {
             if( msg_buffer[0] != '\0' ) {
+#ifndef __UNIX__
                 PressKey();
+#endif
                 WriteMsg( msg_buffer );
                 previous_null = 0;
             } else break;

@@ -77,7 +77,11 @@ static  void            SetDict( file_list *, unsigned_16 );
 static int ARCompName( const void *key, const void *vbase );
 static int ARCompIName( const void *key, const void *vbase );
 int (*CmpARRtn)( const void *, const void * ) = ARCompName;
+#ifdef LONG_IS_64BITS
+int (*CmpOMFRtn)( const void *, const void *, size_t ) = memcmp;
+#else
 int (*CmpOMFRtn)( const void *, const void *, unsigned ) = memcmp;
+#endif
 
 #if defined( _M_IX86 ) && defined(__WATCOMC__)
 #if defined( __386__ )
@@ -119,7 +123,11 @@ void SetLibCase( void )
         CmpOMFRtn = memcmp;
         CmpARRtn = ARCompName;
     } else {
+#ifdef LONG_IS_64BITS
+        CmpOMFRtn = (int (*)( const void *, const void *, size_t ))memicmp;
+#else    
         CmpOMFRtn = memicmp;
+#endif
         CmpARRtn = ARCompIName;
     }
 }

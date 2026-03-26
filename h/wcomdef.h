@@ -29,6 +29,7 @@
 *
 ****************************************************************************/
 
+struct objbuff;
 
 extern void     ProcComdef( bool, struct objbuff * );
 extern void     ProcLinsym( struct objbuff * );

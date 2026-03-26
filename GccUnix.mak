@@ -16,13 +16,12 @@ bitopts = -DLONG_IS_64BITS
 ifeq ($(DEBUG),0)
 extra_c_flags = -DNDEBUG -O2
 outd_suffix=R
+c_flags_link = -s
 else
 extra_c_flags = -D_INT_DEBUG -g
 outd_suffix=D
+c_flags_link =
 endif
-
-# activate for gcc 14+ if certain errors are still to be emitted as warnings!
-#extra_c_flags += -Wno-error=incompatible-pointer-types -Wno-error=implicit-function-declaration
 
 OUTD=build/jwlinkL$(outd_suffix)
 
@@ -61,33 +60,33 @@ include $(wres_dir)/gccmod.inc
 include $(wres_dir)/gccmod2.inc
 
 $(OUTD)/%.o: c/%.c
-	@$(CC) -c $(inc_dirs) $(c_flags) -o $(OUTD)/$*.o $<
+	$(CC) -c $(inc_dirs) $(c_flags) -o $(OUTD)/$*.o $<
 
 $(OUTD)/%.o: $(lib_misc_dir)/c/%.c
-	@$(CC) -c $(inc_dirs) $(c_flags) -o $(OUTD)/$*.o $<
+	$(CC) -c $(inc_dirs) $(c_flags) -o $(OUTD)/$*.o $<
 
 $(OUTD)/%.o: orl/c/%.c
-	@$(CC) -c -Iorl/coff/h -Iorl/elf/h -Iorl/omf/h $(orl_inc_dirs) $(c_flags) -o $(OUTD)/$*.o $<
+	$(CC) -c -Iorl/coff/h -Iorl/elf/h -Iorl/omf/h $(orl_inc_dirs) $(c_flags) -o $(OUTD)/$*.o $<
 
 $(OUTD)/%.o: orl/coff/c/%.c
-	@$(CC) -c -Iorl/coff/h $(orl_inc_dirs) $(c_flags) -o $(OUTD)/$*.o $<
+	$(CC) -c -Iorl/coff/h $(orl_inc_dirs) $(c_flags) -o $(OUTD)/$*.o $<
 
 $(OUTD)/%.o: orl/elf/c/%.c
-	@$(CC) -c -Iorl/elf/h $(orl_inc_dirs) $(c_flags) -o $(OUTD)/$*.o $<
+	$(CC) -c -Iorl/elf/h $(orl_inc_dirs) $(c_flags) -o $(OUTD)/$*.o $<
 
 $(OUTD)/%.o: orl/omf/c/%.c
-	@$(CC) -c -Iorl/omf/h $(orl_inc_dirs) $(c_flags) -o $(OUTD)/$*.o $<
+	$(CC) -c -Iorl/omf/h $(orl_inc_dirs) $(c_flags) -o $(OUTD)/$*.o $<
 
 $(OUTD)/%.o: $(dwarf_dir)/c/%.c
-	@$(CC) -c $(inc_dirs) $(c_flags) -o $(OUTD)/$*.o $<
+	$(CC) -c $(inc_dirs) $(c_flags) -o $(OUTD)/$*.o $<
 
 $(OUTD)/%.o: $(wrc_dir)/c/%.c
-	@$(CC) -c -DINSIDE_WLINK $(inc_dirs) $(c_flags) -o $(OUTD)/$*.o $<
+	$(CC) -c -DINSIDE_WLINK $(inc_dirs) $(c_flags) -o $(OUTD)/$*.o $<
 
 wres_inc_dirs = -I$(wres_dir)/h -I$(watcom_dir)/h -Ih
 
 $(outd_wres)/%.o: $(wres_dir)/c/%.c
-	@$(CC) -c $(wres_inc_dirs) $(c_flags) -DMICROSOFT -o $(outd_wres)/$*.o $<
+	$(CC) -c $(wres_inc_dirs) $(c_flags) -DMICROSOFT -o $(outd_wres)/$*.o $<
 
 all:  $(OUTD) $(outd_wres) $(OUTD)/$(TARGET1)
 
@@ -98,11 +97,7 @@ $(outd_wres):
 	mkdir -p $(outd_wres)
 
 $(OUTD)/$(TARGET1) : $(OUTD)/$(TARGET1).lib $(orl_lib) $(wres_lib)
-ifeq ($(DEBUG),0)
-	@$(CC) $(OUTD)/$(TARGET1).lib $(orl_lib) $(wres_lib) $(bitopts) -s -o $@ -Wl,-Map,$(OUTD)/$(TARGET1).map
-else
-	@$(CC) $(OUTD)/$(TARGET1).lib $(orl_lib) $(wres_lib) $(bitopts) -o $@ -Wl,-Map,$(OUTD)/$(TARGET1).map
-endif
+	$(CC) $(OUTD)/$(TARGET1).lib $(orl_lib) $(wres_lib) $(bitopts) $(c_flags_link) -o $@ -Wl,-Map,$(OUTD)/$(TARGET1).map
 
 $(OUTD)/$(TARGET1).lib: $(proj_obj) $(dwarf_obj)
 	@ar -r $@ $(proj_obj) $(dwarf_obj)

@@ -92,13 +92,14 @@ static void     ResetSubSystems( void );
 static void     DoLink( char * );
 static void     CleanSubSystems( void );
 
-#ifdef _INT_DEBUG
-/*
- *  I have temporarily left these as extern as they are internal data. On the final pass, either find
- *  a library header that defines these or create one!
- */
+#if 0 //def _INT_DEBUG
+# ifdef __UNIX__
 extern char     *_edata;
 extern char     *_end;
+# else
+extern void _cdecl _edata();
+extern void _cdecl _end();
+# endif
 #endif
 
 static char     *ArgSave;
@@ -155,7 +156,7 @@ void LinkMainLine( char *cmds )
 void InitSubSystems( void )
 /********************************/
 {
-#ifdef _INT_DEBUG
+#if 0//def _INT_DEBUG
     memset( _edata, 0xA5, _end - _edata );      // don't rely on BSS == 0
 #endif
     LnkMemInit();

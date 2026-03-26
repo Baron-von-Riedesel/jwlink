@@ -313,8 +313,8 @@ static int RelocCompare( virt_mem a, virt_mem b )
 static void SwapRelocs( virt_mem a, virt_mem b )
 /**********************************************/
 {
-    unsigned    diffa;
-    unsigned    diffb;
+    unsigned long   diffa;
+    unsigned long   diffb;
     unsigned_16 a16;
     unsigned_16 b16;
     unsigned_32 a32;

@@ -109,7 +109,8 @@ bool ProcELFAlignment( void )
 /**********************************/
 {
     ord_state           ret;
-    unsigned long       value;
+    //unsigned long       value;
+    uint_32             value;
 #if 0
     unsigned long       lessone;        // value without the lowest bit.
 #endif

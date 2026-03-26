@@ -123,8 +123,11 @@ static int readResList( WResFileID handle, WResTypeNode * currtype,
             /* copy the new resource info into the new node */
             if( ver < 2 ) {
                 newnode->Info.NumResources = 1;
-                memcpy( &(newnode->Info.ResName), &( newres1.ResName ),
-                        sizeof( WResID ) );
+                /* source is 3 bytes only! */
+                //memcpy( &(newnode->Info.ResName), &( newres1.ResName ), sizeof( WResID ) );
+                newnode->Info.ResName.IsName           = newres1.ResName.IsName;
+                newnode->Info.ResName.ID.Name.NumChars = newres1.ResName.ID.Name.NumChars;
+                newnode->Info.ResName.ID.Name.Name[0]  = newres1.ResName.ID.Name.Name[0]; /* copy first char only? */
             } else {
                 memcpy( &(newnode->Info), &newres, sizeof(WResResInfo) );
             }

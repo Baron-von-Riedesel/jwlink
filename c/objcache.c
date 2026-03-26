@@ -61,6 +61,7 @@ bool CacheOpen( file_list *list )
     if( file->len == 0 ) {
         file->len = QFileSize( file->handle );
         if( file->len == 0 ) {
+            DEBUG((DBG_OLD, "CacheOpen: bad object error" ));
             LnkMsg( ERR+MSG_BAD_OBJECT, "s", file->name );
             file->flags |= INSTAT_IOERR;
             return( FALSE );

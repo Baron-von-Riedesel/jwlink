@@ -146,7 +146,8 @@ bool ProcFlags( void )
 /****************************/
 {
     bool    ret;
-    unsigned long   num;
+    //unsigned long   num;
+    uint_32   num;
 
     ret = GetLong( &num );
     FmtData.u.phar.params->extender_flags = num;

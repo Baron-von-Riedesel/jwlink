@@ -144,11 +144,11 @@ static void MarkSymbol( void *sym )
 static void *GetString( perm_write_info *info, char *str )
 /*********************************************************/
 {
-    unsigned idx;
+    unsigned long idx;
 
     idx = GetStringTableSize( &info->strtab );
     AddStringStringTable( &info->strtab, str );
-    DEBUG((DBG_OLD,"permdata.GetString(%p, %s): idx=%d", info, str, idx ));
+    DEBUG((DBG_OLD,"permdata.GetString(%p, %s): idx=%p", info, str, idx ));
     return( (void *)idx );
 }
 
@@ -326,7 +326,7 @@ static void PrepNameTable( name_list *list, perm_write_info *info )
 
     while( list != NULL ) {
         savename = list->name;
-        list->name = (char *) GetStringTableSize( &info->strtab );
+        list->name = (char *)(unsigned long)GetStringTableSize( &info->strtab );
         AddBufferStringTable( &info->strtab, savename, list->len + 1 );
         list = list->next;
     }
@@ -562,10 +562,10 @@ void WritePermData( void )
     AddCharStringTable( &info.strtab, '\0' );   // make 0 idx not valid
     info.incfhdl = QOpenRW( IncFileName );
     hdr.flags = 0;
-    hdr.exename = (unsigned_32) GetString( &info, Root->outfile->fname );
+    hdr.pv_exename = GetString( &info, Root->outfile->fname );
     QModTime( Root->outfile->fname, &hdr.exemodtime );
     if( SymFileName != NULL ) {
-        hdr.symname = (unsigned_32) GetString( &info, SymFileName );
+        hdr.pv_symname = GetString( &info, SymFileName );
         QModTime( SymFileName, &hdr.symmodtime );
     } else {
         hdr.symname = 0;
@@ -645,12 +645,13 @@ static void BufRead( perm_read_info *info, void *data, unsigned len )
     info->currpos += len;
 }
 
-static char *MapString( char *off )
+//static char *MapString( char *off )
+static char *MapString( unsigned long off )
 /**********************************/
 {
     if( off == 0 )
         return( NULL );
-    return( IncStrTab + (unsigned)off );
+    return( IncStrTab + off );
 }
 
 static void ReadGroups( unsigned count, perm_read_info *info )
@@ -665,11 +666,11 @@ static void ReadGroups( unsigned count, perm_read_info *info )
         _ChkAlloc( def, sizeof(incgroupdef) + (size - 1) * 2 * sizeof(char *) );
         RingAppend( &IncGroupDefs, def );
         def->numsegs = size;
-        def->grpname = MapString( (char *)BufReadU32( info ) );
+        def->grpname = MapString( BufReadU32( info ) );
         p = def->names;
         while( size-- ) {
-            *(p++) = MapString( (char *)BufReadU32( info ) );
-            *(p++) = MapString( (char *)BufReadU32( info ) );
+            *(p++) = MapString( BufReadU32( info ) );
+            *(p++) = MapString( BufReadU32( info ) );
         }
     }
 }
@@ -685,7 +686,7 @@ static void ReadLibList( unsigned count, libnamelist **head,
 
     while( count > 0 ) {
         nameidx = BufReadU32( info );
-        name = MapString( (char *) nameidx );
+        name = MapString( nameidx );
         namelen = strlen( name );
         _ChkAlloc( list, sizeof(libnamelist) + namelen );
         memcpy( list->name, name, namelen + 1 );
@@ -701,9 +702,9 @@ static void RebuildDLLInfo( void *_dll, perm_read_info *info )
     dll_sym_info *dll = _dll;
 
     BufRead( info, dll, offsetof(dll_sym_info, iatsym) );
-    dll->m.modname = MapString( dll->m.modname );
+    dll->m.modname = MapString( (unsigned long)dll->m.modname );
     if( !dll->isordinal ) {
-        dll->u.entname = MapString( dll->u.entname );
+        dll->u.entname = MapString( (unsigned long)dll->u.entname );
     }
 }
 
@@ -715,7 +716,7 @@ static void RebuildExportInfo( void *_exp, perm_read_info *info )
     BufRead( info, exp, offsetof(entry_export, sym) );
     exp->next = CarveMapIndex( CarveExportInfo, exp->next );
     if( exp->name != NULL ) {
-        exp->name = MapString( exp->name );
+        exp->name = MapString( (unsigned long)exp->name );
     }
     exp->impname = NULL;
 }
@@ -731,10 +732,10 @@ static void RebuildModEntry( void *_mod, void *info )
         return;
     }
     mod->n.next_mod = CarveMapIndex( CarveModEntry, mod->n.next_mod );
-    mod->name = MapString( mod->name );
+    mod->name = MapString( (unsigned long)mod->name );
     mod->publist = CarveMapIndex( CarveSymbol, mod->publist );
     mod->segs = CarveMapIndex( CarveSegData, mod->segs );
-    mod->f.fname = MapString( mod->f.fname );
+    mod->f.fname = MapString( (unsigned long)mod->f.fname );
 }
 
 static void RebuildSegData( void *_sdata, void *info )
@@ -749,8 +750,8 @@ static void RebuildSegData( void *_sdata, void *info )
     }
     sdata->next = CarveMapIndex( CarveSegData, sdata->next );  // dont use this?
     sdata->mod_next = CarveMapIndex( CarveSegData, sdata->mod_next );
-    sdata->u.name = MapString( sdata->u.name );
-    sdata->o.clname = MapString( sdata->o.clname );
+    sdata->u.name = MapString( (unsigned long)sdata->u.name );
+    sdata->o.clname = MapString( (unsigned long)sdata->o.clname );
 }
 
 static void RebuildSymbol( void *_sym, void *info )
@@ -766,11 +767,11 @@ static void RebuildSymbol( void *_sym, void *info )
     sym->hash = CarveMapIndex( CarveSymbol, sym->hash );
     sym->link = CarveMapIndex( CarveSymbol, sym->link );
     sym->publink = CarveMapIndex( CarveSymbol, sym->publink );
-    sym->name = MapString( sym->name );
+    sym->name = MapString( (unsigned long)sym->name );
     sym->info &= ~SYM_CLEAR_ON_INC;
     sym->mod = CarveMapIndex( CarveModEntry, sym->mod );
     if( IS_SYM_ALIAS( sym ) ) {
-        sym->p.alias = MapString( sym->p.alias );
+        sym->p.alias = MapString( (unsigned long)sym->p.alias );
     } else if( IS_SYM_IMPORTED(sym) ) {
         if( FmtData.type & (MK_OS2 | MK_PE) ) {
             sym->p.import = CarveMapIndex( CarveDLLInfo, sym->p.import );
@@ -856,7 +857,7 @@ static void ReadBinary( char **buf, unsigned_32 nameidx, time_t modtime )
     f_handle            hdl;
     unsigned long       size;
 
-    fname = MapString( (char *) nameidx );
+    fname = MapString( nameidx );
     hdl = QObjOpen( fname );
     if( hdl == NIL_HANDLE ) {
         return;
@@ -891,6 +892,8 @@ static void ReadStartInfo( inc_file_header *hdr )
         StartInfo.off = hdr->startoff;
     }
 }
+
+/* called if incremental linking is on */
 
 void ReadPermData( void )
 /******************************/

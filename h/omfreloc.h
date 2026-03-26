@@ -29,6 +29,7 @@
 *
 ****************************************************************************/
 
+struct objbuff;
 
 extern void     DoRelocs( struct objbuff * );
 //extern void     ProcBakpat( void );

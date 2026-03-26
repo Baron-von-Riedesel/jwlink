@@ -67,6 +67,10 @@
 #include "loados2.h"
 #include "impexp.h"
 
+#ifdef __UNIX__
+char * _strupr( char * );
+#endif
+
 #define STUB_ALIGN 16
 
 typedef struct FullResourceRecord {

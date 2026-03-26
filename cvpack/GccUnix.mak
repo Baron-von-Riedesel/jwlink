@@ -25,9 +25,9 @@ inc_dirs  = -Ihpp -I$(watcom_dir)/h
 
 #cflags stuff
 
-c_flags =-D__UNIX__ $(bitopts) -DUNALIGNED="" -std=gnu99 $(extra_c_flags)
+c_flags =-D__UNIX__ $(bitopts) -DUNALIGNED="" -std=gnu++98 $(extra_c_flags)
 
-CC = gcc
+CC = g++
 
 .SUFFIXES:
 .SUFFIXES: .cpp .o

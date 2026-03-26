@@ -570,7 +570,7 @@ f_handle SearchPath( char *name )
             }
         }
     }
-    DEBUG(( DBG_OLD, "SearchPath: %s not foune", name ));
+    DEBUG(( DBG_OLD, "SearchPath: %s not found", name ));
     return( NIL_HANDLE );
 }
 

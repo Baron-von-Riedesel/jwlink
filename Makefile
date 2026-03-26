@@ -149,7 +149,7 @@ extra_c_flags_ntio       = -I"$(wres_dir)/h"
 extra_c_flags_posixio    = -I"$(wres_dir)/h"
 extra_c_flags_linkio     = -I"$(wres_dir)/h"
 extra_c_flags_objorl     = -I"orl/h"
-extra_c_flags_orlstubs   = -I"orl/h"
+#extra_c_flags_orlstubs   = -I"orl/h"
 extra_c_flags_dbgdwarf   = -I"$(dwarf_dir)/h"
 !ifeq jwlink_trmem 1
 extra_c_flags_debug      = -DTRMEM

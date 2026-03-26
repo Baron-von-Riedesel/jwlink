@@ -38,6 +38,11 @@
 #include "alloc.h"
 #include "carve.h"
 
+/* this seems to be 16-bit oriented - to be fixed... */
+#define MK_INDEX( b, o )        (((b)<<16)|(o))
+#define GET_BLOCK( i )          (((i)>>16)&0x0ffff)
+#define GET_OFFSET( i )         ((i)&0x0ffff)
+
 struct blk {
     blk_t *     next;
     unsigned    index;
@@ -281,7 +286,7 @@ void CarveDebugFree( carve_t cv, void *elm )
         compare = start + cv->blk_top;
 #if ! ( defined(__COMPACT__) || defined(__LARGE__) )
         /* quick check */
-        if( elm < start || elm > compare ) {
+        if( elm < (void *)start || elm > (void *)compare ) {
             continue;
         }
 #endif
@@ -480,7 +485,7 @@ void CarveInsertFree( carve_t cv, void *data )
 void *CarveMapIndex( carve_t cv, void *aindex )
 /*********************************************/
 {
-    unsigned    index = (unsigned) aindex;
+    unsigned long index = (unsigned long)aindex;
     blk_t *     block;
     blk_t **    block_map;
     unsigned    block_index;
@@ -490,6 +495,7 @@ void *CarveMapIndex( carve_t cv, void *aindex )
     if( index == CARVE_NULL_INDEX ) {
         return( NULL );
     }
+	DEBUG((DBG_OLD, "CarveMapIndex(aindex=%p)", aindex ));
     block_index = GET_BLOCK( index );
     block_offset = GET_OFFSET( index );
     block_map = cv->blk_map;
