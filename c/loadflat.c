@@ -48,6 +48,11 @@
 #define STUB_ALIGN 16
 
 #define PAGE_COUNT( size )  (((size)+(OSF_DEF_PAGE_SIZE-1))>>OSF_PAGE_SHIFT)
+
+/* jwlink: the size of a group's data in the file.  The Windows 3.x VxD
+ * loader allocates only the pages that are in the file, so for VxDs the
+ * uninitialized data (BSS) is written as zeros too, like LINK386 does. */
+#define FILE_SIZE( group )  ( (FmtData.type & MK_WIN_VXD) ? (group)->totalsize : (group)->size )
 #define PAGEMAP_BUF_SIZE (MAX_HEADROOM / sizeof(map_entry) * (unsigned long)OSF_DEF_PAGE_SIZE)
 
 
@@ -169,7 +174,7 @@ static unsigned_32 WriteObjectTables( os2_flat_header *header,unsigned long loc)
         objrec.flags |= (group->segflags & SEG_RESIDENT_MASK)
                                                  << SEG_RESIDENT_SHIFT;
         objrec.mapidx = numpages + 1;
-        objrec.mapsize = PAGE_COUNT( group->size );
+        objrec.mapsize = PAGE_COUNT( FILE_SIZE( group ) );
         WriteLoad( &objrec, sizeof( object_record ) );
         numpages += objrec.mapsize;
         numobjects++;
@@ -182,7 +187,7 @@ static unsigned_32 WriteObjectTables( os2_flat_header *header,unsigned long loc)
     start = 0;
     for( group = Groups; group != NULL; group = group->next_group ) {
         if( group->totalsize == 0 ) continue;   // DANGER DANGER DANGER <--!!!
-        sizeleft = group->size;
+        sizeleft = FILE_SIZE( group );
         while( sizeleft > PAGEMAP_BUF_SIZE ) {
             map_size = NumberBuf( &start, PAGEMAP_BUF_SIZE,
                                   (map_entry *)TokBuff );
@@ -340,7 +345,7 @@ static unsigned_32 WriteFixupTables( os2_flat_header *header, unsigned long loc)
     size = 0;
     for( group = Groups; group != NULL; group = group->next_group ) {
         reloclist = group->g.grp_relocs;
-        numpages = PAGE_COUNT( group->size );
+        numpages = PAGE_COUNT( FILE_SIZE( group ) );
         numentries += numpages;
         highidx = OSF_RLIDX_HIGH(numpages);
         while( highidx > 0 ) {
@@ -375,7 +380,7 @@ static unsigned WriteDataPages( unsigned long loc )
     last_page = 0;
     for( group = Groups; group != NULL; group = group->next_group) {
         DEBUG(( DBG_OLD, "loadflat.WriteDataPages: grp=%s size=%h", group->sym->name , group->size ));
-        if( group->size != 0 ) {
+        if( FILE_SIZE( group ) != 0 ) {
             if( last_page != 0 ) {
                 if( FmtData.type & (MK_OS2_LE|MK_WIN_VXD) ) {
                     size = OSF_DEF_PAGE_SIZE - last_page;
@@ -388,7 +393,11 @@ static unsigned WriteDataPages( unsigned long loc )
             }
             WriteGroupLoad( group );
             loc += group->size;
-            last_page = group->size & (OSF_DEF_PAGE_SIZE-1);
+            if( FILE_SIZE( group ) > group->size ) {    /* VxD: BSS */
+                PadLoad( FILE_SIZE( group ) - group->size );
+                loc += FILE_SIZE( group ) - group->size;
+            }
+            last_page = FILE_SIZE( group ) & (OSF_DEF_PAGE_SIZE-1);
         }
     }
     if( last_page == 0 ) {
@@ -406,13 +415,19 @@ void SetHeaderVxDInfo(os2_flat_header *exe_head)
 /* setup VxD specific info in the header */
 {
     entry_export *exp;
-    vxd_ddb      *ddb;
+    vxd_ddb      ddb;
+    SEGDATA      *seg;
 
     exp = FmtData.u.os2.exports;
-    if(( exp != NULL ) && ( exp->sym != NULL )) {
-        ddb = (vxd_ddb*)((exp->sym->p.seg)->data);
-        exe_head->r.vxd.device_ID = ddb->req_device_number;
-        exe_head->r.vxd.DDK_version = ddb->SDK_version;
+    if(( exp != NULL ) && ( exp->sym != NULL ) && ( exp->sym->p.seg != NULL )) {
+        /* the DDB is at the symbol, not necessarily at the start of its
+           segment; seg->data is a virtual memory handle, not a pointer */
+        seg = exp->sym->p.seg;
+        ReadInfo( seg->data + exp->sym->addr.off
+                  - ( seg->u.leader->seg_addr.off + seg->a.delta ),
+                  &ddb, sizeof( ddb ) );
+        exe_head->r.vxd.device_ID = ddb.req_device_number;
+        exe_head->r.vxd.DDK_version = ddb.SDK_version;
     }
 
 }

@@ -102,6 +102,7 @@ struct fixinfo {
 	frame_spec *frame;
 	frame_spec *targ;
 	offset addend;
+	offset off;         /* position of the fixup in the LIDATA record */
 };
 
 static void ProcIDBlock( obj_format ObjFormat, unsigned_32 *dest, struct objbuff *ob, unsigned_32 iterate, struct fixinfo *fi )
@@ -121,13 +122,23 @@ static void ProcIDBlock( obj_format ObjFormat, unsigned_32 *dest, struct objbuff
     _TargU16toHost( _GetU16UN( ob->curr ), count );
     ob->curr += sizeof( unsigned_16 );
     if( count == 0 ) {
+        unsigned_32 pos;
+
         len = *ob->curr;
         ++ob->curr;
-        do {
-            DEBUG((DBG_OLD, "ProcIDBlock(): curr/start/*dest=%h/%h/%h result=%h, iterate=%d", ob->curr, ob->start_lidata, *dest, *dest - ( ob->curr - ob->start_lidata ), iterate ));
-            StoreFixup( *dest - ( ob->curr - ob->start_lidata ), fi->type, fi->frame, fi->targ, fi->addend );
-            *dest += len;
-        } while( --iterate != 0 );
+        /* jwlink: the fixup belongs to this data block only if its record
+           position lies inside it; then it is applied to every iteration
+           (dest = position in the expanded data) */
+        pos = ob->curr - ob->start_lidata;
+        if( fi->off >= pos && fi->off < pos + len ) {
+            do {
+                DEBUG((DBG_OLD, "ProcIDBlock(): fixup at %h (record pos %h, block %h)", *dest + ( fi->off - pos ), fi->off, pos ));
+                StoreFixup( *dest + ( fi->off - pos ), fi->type, fi->frame, fi->targ, fi->addend );
+                *dest += len;
+            } while( --iterate != 0 );
+        } else {
+            *dest += (unsigned_32)len * iterate;
+        }
         ob->curr += len;
     } else {
         anchor = ob->curr;
@@ -165,12 +176,13 @@ void StoreLidataFixup( offset off, fix_type type, frame_spec *frame,
      */
     unsigned_32 rep;
     struct fixinfo fi;
-    unsigned_32 start = off;
+    unsigned_32 start = 0;      /* position in the expanded data */
 
     fi.type = type;
     fi.frame = frame;
     fi.targ = targ;
     fi.addend = addend;
+    fi.off = off;
 
     while( ob->curr < ob->end ) {
         if( ObjFormat & FMT_MS_386 ) {

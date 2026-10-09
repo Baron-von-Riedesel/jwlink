@@ -1400,6 +1400,16 @@ static void FmtReloc( fix_data *fix, frame_spec *tthread )
         byte    flags;
         byte    fixtype;
 
+        if( ( FmtData.type & MK_WIN_VXD ) && !fix->imported
+          && ( seg->u.leader->group == FindGroup( targ.seg ) ) ) {
+            /* jwlink: like LINK386, no fixup records that need no relocation:
+               self-relative ones within one object and 16-bit offsets within
+               a 16-bit object (the real mode init code).  The Windows 3.x
+               VxD loader rejects 16-bit offset fixups ("damaged" device). */
+            if( ( fix->type & FIX_REL ) || ( ( ftype == FIX_OFFSET_16 ) && !seg->is32bit ) ) {
+                return;
+            }
+        }
         fixptr = new_reloc.item.os2f.buff;
         freedll = FALSE;
         dll = NULL;
