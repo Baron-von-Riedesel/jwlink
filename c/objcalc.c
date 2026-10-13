@@ -278,6 +278,9 @@ static void SortClasses( section *sec )
     for( MatchClass = sec->orderlist; MatchClass != NULL; MatchClass = MatchClass->NextClass ) {
         for( MatchSeg = MatchClass->SegList; MatchSeg != NULL; MatchSeg = MatchSeg->NextSeg ) {
            currcl = MatchClass->Ring;
+            /* jwlink: an ORDER class without segments in this link */
+            if( currcl == NULL )
+                break;
             do {
                 prevseg = currcl->segs;
                 if( prevseg == NULL )
@@ -969,7 +972,8 @@ void ConvertToFrame( targ_addr *addr, segment frame, bool check_16bit )
 
     if( FmtData.type & MK_REAL_MODE ) {
         off = MK_REAL_ADDR( (int)( addr->seg - frame ), addr->off );
-        if( check_16bit && ( off >= 0x10000 )) {
+        /* jwlink: negative offsets wrap around in 16 bits (MS LINK does so) */
+        if( check_16bit && ( off >= 0x10000 ) && !( (signed_32)off < 0 && (signed_32)off >= -0x10000L ) ) {
             LnkMsg( LOC+ERR+MSG_FRAME_INVALID, "Ax", addr, frame );
         }
         addr->off = off;

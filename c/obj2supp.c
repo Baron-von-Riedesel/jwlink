@@ -333,6 +333,7 @@ static bool IsTargAbsolute( frame_spec *targ )
 /********************************************/
 {
     return( ( targ->type == FIX_FRAME_SEG ) && targ->u.sdata->isabs
+        || ( targ->type == FIX_FRAME_GRP ) && targ->u.group->isabsgrp
         || ( targ->type == FIX_FRAME_EXT ) && ( targ->u.sym->info & SYM_ABSOLUTE ) );
 }
 
@@ -388,7 +389,16 @@ static void BuildReloc( save_fixup *save, frame_spec *targ, frame_spec *frame )
         }
     }
     if( !fix.imported ) {
-        if( fix.ffix == FFIX_NOT_A_FLOAT ) {
+        /* jwlink: like Microsoft LINK, the value of an absolute symbol
+         * (a public EQU constant) is used as it is, whatever the frame */
+        if( targ->type == FIX_FRAME_EXT && ( targ->u.sym->info & SYM_ABSOLUTE ) ) {
+            fix.tgt_addr.seg = faddr.seg;
+        /* jwlink: the same for a target in an absolute (AT) segment with a
+         * relocatable frame: the offset in the AT segment is used */
+        } else if( IsTargAbsolute( targ ) && !IsTargAbsolute( frame ) && frame->type != FIX_FRAME_TARG
+                   && ( frame->type == FIX_FRAME_SEG || frame->type == FIX_FRAME_GRP ) ) {
+            fix.tgt_addr.seg = faddr.seg;
+        } else if( fix.ffix == FFIX_NOT_A_FLOAT ) {
             ConvertToFrame( &fix.tgt_addr, faddr.seg, (save->flags & (FIX_OFFSET_8 | FIX_OFFSET_16)) );
         } else {
             fix.tgt_addr.seg = faddr.seg;
@@ -1717,6 +1727,22 @@ static void Relocate( save_fixup *save, fix_data *fix, frame_spec *targ )
         shift = ( save->off < 2 ) ? save->off : 2;
         datasize += shift;
         fix->data += 2;
+    }
+    /* jwlink: restore the addend saved with this fixup first. Data records
+     * may overwrite a location that already had a fixup (forward references
+     * in MASM / JWasm objects); Microsoft LINK applies data and fixups in
+     * record order, so each fixup works on the data of its own record and
+     * the last one wins. Without this, both fixups were added up. */
+    if( !( LinkFlags & INC_LINK_FLAG ) ) {
+        unsigned n = CalcFixupSize( fix->type );
+        if( save->flags & FIX_ADDEND_ZERO ) {
+            PutNulls( CurrRec.seg->data + save->off, n );
+        } else {
+            unsigned asz = CalcAddendSize( save->flags );
+            PutInfo( CurrRec.seg->data + save->off,
+                     (char *)save + CalcSavedFixSize( save->flags ) - asz,
+                     n < asz ? n : asz );
+        }
     }
     ReadInfo( CurrRec.seg->data + save->off - shift, fix->data - shift, datasize );
 

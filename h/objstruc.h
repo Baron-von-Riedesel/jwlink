@@ -324,6 +324,7 @@ typedef struct group_entry {
     unsigned            num;
     unsigned            isfree : 1;
     unsigned            isautogrp : 1;
+    unsigned            isabsgrp  : 1;  /* jwlink: group of an AT segment */
     unsigned            isdup : 1;
 } group_entry;
 

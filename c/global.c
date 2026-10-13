@@ -144,7 +144,9 @@ int _bgetcmd( char *buffer, int len )
 
 char * getcmd( char *buffer )
 {
-    _bgetcmd( buffer, 1024 );
+    /* the buffer of GetCmdLine's caller (ProcCmdLine) has 10 KB; with
+     * 1024 longer command lines were cut off */
+    _bgetcmd( buffer, 10 * 1024 );
     return( buffer );
 }
 

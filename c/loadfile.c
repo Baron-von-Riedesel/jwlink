@@ -407,7 +407,11 @@ void SetStkSize( void )
         if( FmtData.dll ) {
             StackSegPtr->size = StackSize;
         } else if( LinkFlags & STK_SIZE_FLAG ) {
-            if( !(FmtData.type & MK_NOVELL) ) {
+            /* jwlink: like Microsoft LINK, OPTION STACK never makes the
+             * stack segment smaller than defined in the objects */
+            if( StackSegPtr->size > StackSize ) {
+                StackSize = StackSegPtr->size;
+            } else if( !(FmtData.type & MK_NOVELL) ) {
                 StackSegPtr->size = StackSize;
             }
 #if 0 /* JWLink: don't force a min stack size! */

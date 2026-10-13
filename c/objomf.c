@@ -711,6 +711,10 @@ static void ProcSegDef( struct objbuff *ob )
         sdata->combine = COMBINE_ADD;
     }
     sdata->align = OMFAlignTab[acbp >> 5];
+    /* jwlink: like Microsoft LINK, a segment with combine type STACK
+     * starts on a paragraph */
+    if( comb == COMB_STACK && sdata->align < OMFAlignTab[ALIGN_PARA] )
+        sdata->align = OMFAlignTab[ALIGN_PARA];
     if( ObjFormat & FMT_EASY_OMF ) {   // set USE_32 flag.
         sdata->is32bit = TRUE;
     } else if( acbp & 1 ) {
@@ -814,6 +818,15 @@ static void DefineGroup( struct objbuff *ob )
             break;
         ++ob->curr;
         seg = (segnode *)FindSegNode( SegNodes, GetIdx( ob ) );
+        /* jwlink: a group of an absolute (AT) segment has that segment's
+         * frame, as with Microsoft LINK (the segment itself stays in its
+         * automatic group) */
+        if( seg->entry->u.leader->info & SEG_ABSOLUTE ) {
+            group->grp_addr = seg->entry->u.leader->seg_addr;
+            group->grp_addr.off = 0;
+            group->isabsgrp = 1;
+            continue;
+        }
         AddToGroup( group, seg->entry->u.leader );
     }
     return;

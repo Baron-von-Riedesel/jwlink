@@ -297,7 +297,9 @@ static void WriteCOMFile( void )
     oldchop = 0;
     /* write groups */
     for( group = Groups; group != NULL; group = group->next_group ) {
-        chop = SUB_ADDR( group->grp_addr, StartInfo.addr );
+        /* jwlink: 32-bit difference, else a negative one (the 100h bytes
+         * before the start of a .COM file) is positive on 64-bit hosts */
+        chop = (signed_32)SUB_ADDR( group->grp_addr, StartInfo.addr );
         if( chop > 0 ) {
             chop = 0;
         }

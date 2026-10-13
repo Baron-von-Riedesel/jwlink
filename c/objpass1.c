@@ -593,8 +593,12 @@ class_entry *FindClass( section *sect, char *name, bool is32bit,
         if( stricmp( currclass->name, name ) == 0
                         && !((currclass->flags & CLASS_32BIT) ^ is32bit) ) {
             /* jwlink: don't mix STACK combine with other classes */
-            if ( comb == COMBINE_STACK && ( !(currclass->flags & CLASS_STACK ) ) )
+            /* jwlink: keep lastclass up to date, else the new class is
+             * linked in at the wrong place and the classes after it get lost */
+            if ( comb == COMBINE_STACK && ( !(currclass->flags & CLASS_STACK ) ) ) {
+                lastclass = currclass;
                 continue;
+            }
             DEBUG((DBG_OLD,"FindClass(\"%s\"): class found ", name ));
             return( currclass );
         }
@@ -754,6 +758,13 @@ static bool CmpLeaderPtr( void *a, void *b )
     return( a == b );
 }
 
+static bool PieceNotEmpty( void *piece, void *dummy )
+/*****************************************************/
+{
+    dummy = dummy;
+    return( ((segdata *)piece)->length != 0 );
+}
+
 void AddToGroup( group_entry *group, seg_leader *seg )
 /***********************************************************/
 {
@@ -761,6 +772,14 @@ void AddToGroup( group_entry *group, seg_leader *seg )
     if( Ring2Lookup( group->leaders, CmpLeaderPtr, seg ) )
         return;
     if( seg->group != NULL && seg->group != group ) {
+        /* jwlink: an empty segment of the same name in two groups (DATA
+         * of the OpenWatcom startup in DGROUP, DATA of the
+         * assembler modules in another group) is harmless: keep the first group */
+        if( RingLookup( seg->pieces, PieceNotEmpty, NULL ) == NULL ) {
+            LnkMsg( LOC+WRN+MSG_SEG_IN_TWO_GROUPS, "123", seg->segname,
+                                   seg->group->sym->name, group->sym->name );
+            return;
+        }
         LnkMsg( LOC+ERR+MSG_SEG_IN_TWO_GROUPS, "123", seg->segname,
                                    seg->group->sym->name, group->sym->name );
         return;
