@@ -1,4 +1,9 @@
 
+   changes v2.1, 
+
+   -  if jwlink binary was created on systems where type long is 64-bit,
+      FORMAT DOS COM created a binary with 256 bytes "prefix" included.
+
    changes v2.0, 03/2026:
 
    -  format elf: section .symtab, field sh_info wasn't set if there was no

@@ -278,7 +278,9 @@ static void WriteCOMFile( void )
     group_entry         *group;
     bool                repos;
     unsigned long       root_size;
-    signed long         chop;
+    /* v2.1: ensure chop is 32-bit only */
+    //signed long         chop;
+    signed_32           chop;
 
     DEBUG((DBG_OLD, "WriteCOMFile enter" ))
     if( StartInfo.addr.seg != 0 ) {
@@ -298,6 +300,8 @@ static void WriteCOMFile( void )
     /* write groups */
     for( group = Groups; group != NULL; group = group->next_group ) {
         chop = SUB_ADDR( group->grp_addr, StartInfo.addr );
+        DEBUG((DBG_OLD, "WriteCOMFile: chop=0x%h (%h:%h - %h:%h)",
+               chop, group->grp_addr.seg, group->grp_addr.off, StartInfo.addr.seg, StartInfo.addr.off ))
         if( chop > 0 ) {
             chop = 0;
         }

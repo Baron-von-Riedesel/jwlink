@@ -506,13 +506,13 @@ orl_return CoffLoadFileStructure( coff_file_handle coff_file_hnd )
     buf_size = 0;
     for( loop=0; loop < coff_file_hnd->num_sections; loop++ ) {
         coff_sec_hnd = coff_file_hnd->coff_sec_hnd[loop];
-        DEBUG((DBG_OLD, "CoffLoadFileStructure(): coff_sec_hnd[%h] offset=%h, size=%h", loop, coff_sec_hnd->offset, coff_sec_hnd->size ));
+        DEBUG((DBG_OLD, "CoffLoadFileStructure(): coff_sec_hnd[%d] offset=%h, size=%d", loop, coff_sec_hnd->offset, coff_sec_hnd->size ));
         if( (coff_sec_hnd->offset + coff_sec_hnd->size) > buf_size &&
                 !(coff_sec_hnd->flags & ORL_SEC_FLAG_UNINITIALIZED_DATA) ) {
             buf_size = coff_sec_hnd->offset + coff_sec_hnd->size;
         }
     }
-    DEBUG((DBG_OLD, "CoffLoadFileStructure(): buf_size=%h", buf_size ));
+    DEBUG((DBG_OLD, "CoffLoadFileStructure(): buf_size=0x%h", buf_size ));
     coff_file_hnd->size = buf_size;
     buf_size -= coff_file_hnd->initial_size;
     coff_file_hnd->rest_of_file_buffer = _ClientRead( coff_file_hnd, buf_size );
@@ -562,7 +562,7 @@ orl_return CoffLoadFileStructure( coff_file_handle coff_file_hnd )
             coff_sec_hnd->contents = coff_file_hnd->rest_of_file_buffer +
                 coff_sec_hnd->offset - coff_file_hnd->initial_size;
         }
-        DEBUG((DBG_OLD, "CoffLoadFileStructure(): section=%s size=%h contents=%h", coff_sec_hnd->name, coff_sec_hnd->size, coff_sec_hnd->contents ));
+        DEBUG((DBG_OLD, "CoffLoadFileStructure(): section=%s size=%d contents=0x%h", coff_sec_hnd->name, coff_sec_hnd->size, coff_sec_hnd->contents ));
     }
     if( last_sec_hnd != coff_file_hnd->string_table ) {
         memcpy( &(coff_file_hnd->string_table->size),

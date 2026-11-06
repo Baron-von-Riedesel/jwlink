@@ -1103,9 +1103,9 @@ static seg_leader *SetLeaderTable( char *name, pe_hdr_table_entry *entry )
         entry->rva =  leader->group->linear + GetLeaderDelta( leader );
         entry->size = leader->size;
 #if 1 /* JWLink: debug msg */
-        //printf("SetLeaderTable(%s): rva=%Xh, size=%Xh\n", name, entry->rva, entry->size );
+        DEBUG((DBG_OLD, "SetLeaderTable(%s): rva=%h, size=%d\n", name, entry->rva, entry->size ));
     } else {
-        //printf("SetLeaderTable(%s): not found!\n", name );
+        DEBUG((DBG_OLD, "SetLeaderTable(%s): not found!\n", name ));
 #endif
     }
     return( leader );
