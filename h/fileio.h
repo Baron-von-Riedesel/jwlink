@@ -88,7 +88,7 @@ extern bool             QSysHelp( char ** );
 extern bool             QModTime( char *, time_t * );
 extern time_t           QFModTime( int );
 extern char             WaitForKey( void );
-extern void             GetCmdLine( char * );
+extern void             GetCmdLine( char *, int );
 extern char *           GetEnvString( char * );
 extern bool             GetAddtlCommand( unsigned, char * );
 extern bool             IsStdOutConsole( void );

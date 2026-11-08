@@ -142,9 +142,9 @@ int _bgetcmd( char *buffer, int len )
 }
 
 
-char * getcmd( char *buffer )
+char * getcmdn( char *buffer, int max )
 {
-    _bgetcmd( buffer, 1024 );
+    _bgetcmd( buffer, max );
     return( buffer );
 }
 

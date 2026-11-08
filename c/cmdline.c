@@ -174,7 +174,7 @@ void DoCmdFile( char *fname )
     ResetCmdFile();
     if( fname == NULL || *fname == '\0' ) {
         _ChkAlloc( fname, (10*1024) );  // arbitrarily large buffer that won't
-        GetCmdLine( fname );            // be overflowed
+        GetCmdLine( fname, 10*1024 );   // be overflowed
         NewCommandSource( NULL, fname, COMMANDLINE );
     } else {
         NewCommandSource( NULL, fname, ENVIRONMENT );

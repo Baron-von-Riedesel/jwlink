@@ -3,6 +3,7 @@
 
    -  if jwlink binary was created on systems where type long is 64-bit,
       FORMAT DOS COM created a binary with 256 bytes "prefix" included.
+   -  cmdline in Linux increased to max 10k.
 
    changes v2.0, 03/2026:
 

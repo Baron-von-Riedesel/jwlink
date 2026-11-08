@@ -462,10 +462,18 @@ char WaitForKey( void )
     return result;
 }
 
-void GetCmdLine( char *buff )
-/**********************************/
+#ifdef __UNIX__
+extern void getcmdn( char *, int );
+#endif
+
+void GetCmdLine( char *buff, int max )
+/************************************/
 {
+#ifdef __UNIX__
+    getcmdn( buff, max );
+#else
     getcmd( buff );
+#endif
 }
 
 void TrapBreak( int sig_num )

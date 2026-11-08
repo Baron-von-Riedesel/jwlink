@@ -440,8 +440,8 @@ char WaitForKey( void )
     return getch();
 }
 
-void GetCmdLine( char *buff )
-/**********************************/
+void GetCmdLine( char *buff, int max )
+/************************************/
 {
     getcmd( buff );
 }
